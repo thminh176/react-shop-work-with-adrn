@@ -1,0 +1,63 @@
+.payment-modal {
+  background-color: white;
+  padding: 20px;
+  width: 400px;
+  margin: 0 auto;
+  border-radius: 10px;
+  position: relative;
+  text-align: center;
+}
+
+.payment-overlay {
+  background-color: rgba(0, 0, 0, 0.75);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.payment-options {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+
+  label {
+    margin-bottom: 10px;
+  }
+}
+
+.qr-code {
+  margin-top: 20px;
+
+  img {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 10px;
+  }
+
+  p {
+    font-size: 14px;
+    color: #333;
+  }
+}
+
+.payment-actions {
+  margin-top: 20px;
+
+  button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  button:hover {
+    background-color: #0056b3;
+  }
+}

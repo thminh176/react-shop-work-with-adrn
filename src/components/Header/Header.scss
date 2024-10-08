@@ -1,0 +1,44 @@
+.header {
+  position: fixed;
+  top: 0;
+  height: 68px;
+  .header-container {
+    margin: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #ddd;
+
+  width: 100%;
+
+  .logo {
+    img {
+      height: 72px; /* Điều chỉnh kích thước logo */
+      width: auto;
+    }
+  }
+
+  .login-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .welcome-msg {
+      padding-right: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    p {
+      margin: 0;
+      font-size: 18px;
+    }
+  }
+}

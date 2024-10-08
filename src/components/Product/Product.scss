@@ -1,0 +1,25 @@
+.product-item {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin: 10px;
+    text-align: center;
+
+    h3 {
+        margin-bottom: 10px;
+    }
+
+    button {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #218838;
+    }
+    .product-image {
+        width: 100%;
+    }
+}
