@@ -1,0 +1,81 @@
+.product-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.product-modal-content {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  width: 600px; /* Chiều rộng của modal */
+  position: relative; /* Để có thể đặt nút đóng ở góc */
+}
+
+.product-modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+}
+
+.product-modal-details {
+  display: flex; /* Sử dụng flex để sắp xếp nằm ngang */
+  margin-bottom: 15px; /* Khoảng cách giữa thông tin sản phẩm và nút */
+}
+
+.product-modal-image {
+  max-width: 150px; /* Chiều rộng của hình ảnh */
+  border-radius: 8px;
+  margin-right: 20px; /* Khoảng cách giữa hình ảnh và thông tin */
+}
+
+.product-modal-info {
+  display: flex;
+  flex-direction: column; /* Thông tin nằm dọc */
+}
+
+.product-modal-actions {
+  display: flex; /* Đặt các nút nằm ngang */
+  margin-top: 15px; /* Khoảng cách giữa thông tin và nút */
+}
+
+.product-modal-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  flex: 1; /* Mỗi nút chiếm 1/2 chiều ngang */
+  margin-right: 5px; /* Khoảng cách giữa các nút */
+  display: flex; /* Để sắp xếp icon và text */
+  align-items: center; /* Căn giữa icon và text */
+  gap: 5px; /* Khoảng cách giữa icon và text */
+}
+
+.product-modal-button.remove {
+  background-color: #dc3545; /* Màu đỏ cho nút xóa */
+}
+
+.product-modal-button:hover {
+  background-color: #218838; /* Màu xanh đậm khi hover */
+}
+
+.product-modal-button.remove:hover {
+  background-color: #c82333; /* Màu đỏ đậm khi hover */
+}
+
+.icon {
+  font-size: 18px; /* Kích thước icon */
+}

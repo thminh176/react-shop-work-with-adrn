@@ -4,11 +4,24 @@
   margin-top: 68px;
 }
 
+
 .products {
+  display: grid; /* Sử dụng Grid để sắp xếp sản phẩm */
+  grid-template-columns: repeat(3, minmax(250px, 1fr)); /* Chiều rộng tối thiểu cho mỗi sản phẩm là 250px */
+  gap: 20px; /* Khoảng cách giữa các sản phẩm */
+  padding: 20px; /* Khoảng cách bên trong cho container */
   width: 100%;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
 }
-.cart {
-  width: 100%;
+
+/* Optional: Để cho các sản phẩm nhỏ hơn trong màn hình nhỏ hơn */
+@media (max-width: 768px) {
+  .products {
+    grid-template-columns: repeat(2, minmax(200px, 1fr)); /* Hiển thị 2 sản phẩm trên một dòng */
+  }
+}
+
+@media (max-width: 480px) {
+  .products {
+    grid-template-columns: 1fr; /* Hiển thị 1 sản phẩm trên một dòng */
+  }
 }

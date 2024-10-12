@@ -40,7 +40,7 @@ const PaymentModal = ({ isOpen, onClose, onConfirm, totalPrice }) => {
   return (
     <Modal
       isOpen={isOpen}
-      onRequestClose={handleClose}
+      onRequestClose={handleClose} // Đóng modal khi nhấn vào overlay
       contentLabel="Payment Modal"
       className="payment-modal"
       overlayClassName="payment-overlay"

@@ -1,25 +1,162 @@
-.product-item {
-    border: 1px solid #ddd;
-    padding: 20px;
-    margin: 10px;
-    text-align: center;
+.product-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  z-index: 1;
+  margin-top: 80px;
+}
 
-    h3 {
-        margin-bottom: 10px;
-    }
+.wrapper {
+  width: 250px;
+  height: 360px;
+  margin: 0 auto;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+  position: relative;
 
-    button {
-        background-color: #28a745;
-        color: white;
-        border: none;
-        padding: 10px;
-        cursor: pointer;
-    }
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+  }
 
-    button:hover {
-        background-color: #218838;
-    }
-    .product-image {
+  .container {
+    padding: 10px;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer; 
+
+    .top {
+      height: 200px;
+      position: relative;
+
+      .product-image {
         width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
     }
+
+    .bottom {
+      padding: 10px 0;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+
+      .info {
+        flex: 1;
+        padding-right: 10px;
+
+        .details {
+          h1 {
+            font-size: 16px;
+            margin: 0;
+            color: #333;
+          }
+
+          .price {
+            margin: 5px 0 0;
+            color: #888;
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: space-between; /* Đặt khoảng cách giữa 2 nút */
+    margin-top: auto;
+    user-select: none; /* Đẩy xuống dưới cùng */
+    .buy {
+      font-size: 14px; /* Kích thước chữ nhỏ hơn */
+      background: #f0f0f0;
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc; /* Thêm viền cho nút */
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease,
+        border-color 0.3s ease; /* Thêm hiệu ứng cho viền */
+
+      display: flex; /* Đặt chế độ flex cho nút */
+      align-items: center; /* Căn giữa theo chiều dọc */
+      justify-content: flex-start; /* Căn lề trái cho icon và text */
+
+      svg {
+        color: #254053;
+        margin-right: 8px; /* Khoảng cách giữa icon và chữ */
+      }
+
+      span {
+        margin-left: auto; /* Đẩy chữ về bên phải */
+        font-weight: 600; /* Tăng độ đậm của chữ */
+        color: #254053; /* Đặt màu chữ gần giống với màu của icon */
+      }
+
+      &:hover {
+        transform: translateY(-2px);
+        background-color: #e0e0e0;
+        border-color: #aaa; /* Thay đổi màu viền khi hover */
+      }
+    }
+    .button-group {
+      display: flex;
+      justify-content: flex-start; /* Căn trái cho nhóm nút */
+      width: 100%; /* Đảm bảo nhóm nút chiếm toàn bộ chiều rộng */
+
+      .buy {
+        font-size: 14px; /* Kích thước chữ nhỏ hơn */
+        background: #f0f0f0;
+        padding: 10px;
+        border: 1px solid #ccc; /* Thêm viền cho nút */
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease,
+          border-color 0.3s ease; /* Thêm hiệu ứng cho viền */
+
+        display: flex; /* Đặt chế độ flex cho nút */
+        align-items: center; /* Căn giữa theo chiều dọc */
+        justify-content: flex-start; /* Căn lề trái cho icon và text */
+
+        svg {
+          color: #254053;
+          margin-right: 8px; /* Khoảng cách giữa icon và chữ */
+        }
+
+        span {
+          margin-left: auto; /* Đẩy chữ về bên phải */
+          font-weight: 600; /* Tăng độ đậm của chữ */
+          color: #254053; /* Đặt màu chữ gần giống với màu của icon */
+        }
+
+        &:hover {
+          transform: translateY(-2px);
+          background-color: #e0e0e0;
+          border-color: #aaa; /* Thay đổi màu viền khi hover */
+        }
+      }
+
+      .remove {
+        background: #ff4d4d; /* Màu nền đỏ cho nút xóa */
+        color: white; /* Màu chữ trắng */
+        margin-left: 10px; /* Khoảng cách giữa nút xóa và nút thêm */
+        border: 1px solid transparent; /* Đảm bảo có viền trong trường hợp không có màu */
+        border-radius: 4px; /* Đảm bảo viền mềm mại */
+
+        &:hover {
+          background: #ff1a1a; /* Màu khi hover */
+        }
+      }
+    }
+  }
 }

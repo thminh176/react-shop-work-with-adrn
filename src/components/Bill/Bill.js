@@ -1,11 +1,22 @@
 import React, { useEffect } from "react";
 import "./Bill.scss";
 
-const Bill = ({ cartItems, totalPrice, paymentMethod, qrCodeUrl, bankNumber }) => {
+const Bill = ({
+  cartItems,
+  totalPrice,
+  paymentMethod,
+  qrCodeUrl,
+  bankNumber,
+}) => {
   // In hóa đơn sau khi hiển thị
   useEffect(() => {
     window.print(); // Lệnh in bằng máy in nhiệt
   }, []);
+
+  // Kiểm tra xem có sản phẩm trong giỏ hàng không
+  if (!cartItems || cartItems.length === 0) {
+    return <p>Không có sản phẩm nào trong giỏ hàng.</p>;
+  }
 
   return (
     <div className="bill">
@@ -13,14 +24,18 @@ const Bill = ({ cartItems, totalPrice, paymentMethod, qrCodeUrl, bankNumber }) =
       <ul>
         {cartItems.map((item) => (
           <li key={item.id}>
-            {item.name} - {item.quantity} x {Number(item.price).toLocaleString("vi-VN")} VND
+            {item.name} - {item.quantity} x{" "}
+            {Number(item.price).toLocaleString("vi-VN")} VND
           </li>
         ))}
       </ul>
       <p>Tổng Tiền: {Number(totalPrice).toLocaleString("vi-VN")} VND</p>
-      <p>Phương Thức Thanh Toán: {paymentMethod === "cash" ? "Tiền Mặt" : "Chuyển Khoản"}</p>
+      <p>
+        Phương Thức Thanh Toán:{" "}
+        {paymentMethod === "cash" ? "Tiền Mặt" : "Chuyển Khoản"}
+      </p>
 
-      {paymentMethod === "transfer" && (
+      {paymentMethod === "transfer" && qrCodeUrl && bankNumber && (
         <div className="qr-code">
           <h3>Quét Mã QR Để Chuyển Tiền</h3>
           <img src={qrCodeUrl} alt="VietQR - MB Bank" />

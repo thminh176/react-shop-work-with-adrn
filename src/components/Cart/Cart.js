@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import "./Cart.scss";
 import PaymentModal from "../PaymentModal/PaymentModal";
-import Bill from "../Bill/Bill";
-import Loading from "../Loading/Loading"; // Thêm Loading component
+import Loading from "../Loading/Loading";
 
-const Cart = ({ cartItems }) => {
+const Cart = ({ cartItems, removeFromCart }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("");
-  const [loading, setLoading] = useState(false); // State để quản lý trạng thái loading
+  const [loading, setLoading] = useState(false);
 
   const totalPrice = cartItems.reduce(
     (acc, item) => acc + (item.price * item.quantity || 0),
@@ -25,15 +24,7 @@ const Cart = ({ cartItems }) => {
 
   const openBillWindow = (cartItems, totalPrice, paymentMethod) => {
     const newWindow = window.open("", "_blank", "width=800,height=600");
-    const billContent = (
-      <Bill
-        cartItems={cartItems}
-        totalPrice={totalPrice}
-        paymentMethod={paymentMethod}
-      />
-    );
-
-    newWindow.document.write(`
+    newWindow.document.write(` 
       <html>
         <head>
           <title>Hóa Đơn</title>
@@ -44,8 +35,6 @@ const Cart = ({ cartItems }) => {
             ul { list-style: none; padding: 0; font-size: 14px; }
             ul li { margin-bottom: 5px; }
             p { margin: 5px 0; font-size: 14px; }
-            .qr-code { text-align: center; margin-top: 10px; }
-            .qr-code img { max-width: 150px; }
             .thank-you { text-align: center; margin-top: 15px; font-size: 16px; font-weight: bold; }
           </style>
         </head>
@@ -56,7 +45,7 @@ const Cart = ({ cartItems }) => {
               ${cartItems
                 .map(
                   (item) =>
-                    `<li>${item.name} - ${item.quantity} x ${Number(
+                    `<li>${item.name} - ${item.quantity} ${Number(
                       item.price
                     ).toLocaleString("vi-VN")} VND</li>`
                 )
@@ -84,25 +73,41 @@ const Cart = ({ cartItems }) => {
 
   return (
     <div className="cart">
-      {loading ? ( // Hiển thị loading nếu cần
+      {loading ? (
         <Loading />
       ) : (
         <>
           <h2>Giỏ Hàng</h2>
-          <ul>
+
+          <div className="cart-items">
             {cartItems.map((item) => (
-              <li key={item.id}>
-                {item.name} -{" "}
-                {item.price.toLocaleString("vi-VN", {
-                  style: "currency",
-                  currency: "VND",
-                })}{" "}
-                x {item.quantity}
-              </li>
+              <div key={item.id} className="cart-item">
+                <div className="item-details">
+                  <span className="item-quantity">{item.quantity}</span>
+                  <span className="item-name">{item.name}</span>
+                  <span className="item-price">
+                    {item.price.toLocaleString("vi-VN", {
+                      style: "currency",
+                      currency: "VND",
+                    })}
+                  </span>
+                  {/* Nút xóa sản phẩm khỏi giỏ hàng */}
+                  <button
+                    className="remove-button"
+                    onClick={() => removeFromCart(item.id)}
+                    title="Xóa khỏi giỏ hàng"
+                  >
+                    Xóa
+                  </button>
+                </div>
+              </div>
             ))}
-          </ul>
-          <p>Total: {formattedTotalPrice}</p>
-          <button onClick={openModal}>Thanh Toán</button>
+          </div>
+
+          <p className="total-cash">Tổng Tiền: {formattedTotalPrice}</p>
+          <button className="checkout-btn" onClick={openModal}>
+            Thanh Toán
+          </button>
           <PaymentModal
             isOpen={isModalOpen}
             onClose={closeModal}
