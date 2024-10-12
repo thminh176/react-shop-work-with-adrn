@@ -3,7 +3,13 @@ import { IoCartOutline } from "react-icons/io5"; // Icon cho nút thêm vào gi�
 import { IoTrashOutline } from "react-icons/io5"; // Icon cho nút xóa khỏi giỏ hàng
 import "./ProductModal.scss"; // Thêm styles cho modal
 
-const ProductModal = ({ product, onClose, isInCart, addToCart, removeFromCart }) => {
+const ProductModal = ({
+  product,
+  onClose,
+  isInCart,
+  addToCart,
+  removeFromCart,
+}) => {
   const handleOverlayClick = (e) => {
     // Kiểm tra nếu người dùng nhấn vào lớp overlay bên ngoài modal
     if (e.target.className === "product-modal-overlay") {
@@ -21,7 +27,11 @@ const ProductModal = ({ product, onClose, isInCart, addToCart, removeFromCart })
 
         {/* Thông tin sản phẩm nằm ngang */}
         <div className="product-modal-details">
-          <img src={product.image} alt={product.name} className="product-modal-image" />
+          <img
+            src={product.image}
+            alt={product.name}
+            className="product-modal-image"
+          />
           <div className="product-modal-info">
             <h2 className="product-modal-title">{product.name}</h2>
             <p className="product-modal-price">
@@ -38,17 +48,26 @@ const ProductModal = ({ product, onClose, isInCart, addToCart, removeFromCart })
         <div className="product-modal-actions">
           {isInCart ? (
             <>
-              <button className="product-modal-button add" onClick={() => addToCart(product)}>
+              <button
+                className="product-modal-button add"
+                onClick={() => addToCart(product)}
+              >
                 <IoCartOutline className="icon" />
                 Thêm Vào Giỏ Hàng
               </button>
-              <button className="product-modal-button remove" onClick={() => removeFromCart(product.id)}>
+              <button
+                className="product-modal-button remove"
+                onClick={() => removeFromCart(product.id)}
+              >
                 <IoTrashOutline className="icon" />
                 Xóa Khỏi Giỏ Hàng
               </button>
             </>
           ) : (
-            <button className="product-modal-button full-width" onClick={() => addToCart(product)}>
+            <button
+              className="product-modal-button full-width"
+              onClick={() => addToCart(product)}
+            >
               <IoCartOutline className="icon" />
               Thêm Vào Giỏ Hàng
             </button>

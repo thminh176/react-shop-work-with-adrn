@@ -3,56 +3,64 @@
     {
       "id": 1,
       "username": "admin",
-      "password": "admin123"
+      "password": "admin123",
+      "email": "admin@example.com"
     },
     {
       "id": 2,
       "username": "user1",
-      "password": "user123"
+      "password": "user123",
+      "email": "user1@example.com"
     }
   ],
   "products": [
     {
       "id": "1",
       "name": "Laptop Dell XPS 13",
-      "price": 30000000,
+      "price": "30000000",
       "description": "Laptop Dell XPS 13 với viền mỏng và màn hình Full HD",
-      "image": "https://cdn.tgdd.vn/Products/Images/44/327906/dell-xps-13-9340-ultra-5-xpsu5934w1-1-750x500.jpg"
+      "image": "https://cdn.tgdd.vn/Products/Images/44/327906/dell-xps-13-9340-ultra-5-xpsu5934w1-1-750x500.jpg",
+      "shelfId": 1
     },
     {
       "id": "2",
       "name": "Máy tính bảng Samsung Galaxy Tab S7",
       "price": 18000000,
       "description": "Máy tính bảng Samsung Galaxy Tab S7 với màn hình 120Hz",
-      "image": "https://cdn.viettelstore.vn/Images/Product/ProductImage/1252998352.jpeg"
+      "image": "https://cdn.viettelstore.vn/Images/Product/ProductImage/1252998352.jpeg",
+      "shelfId": 2
     },
     {
       "id": "3",
       "name": "Apple MacBook Pro M1",
       "price": 35000000,
       "description": "MacBook Pro M1 với chip Apple Silicon",
-      "image": "https://macone.vn/wp-content/uploads/2021/04/MacBook-Pro-M1-.jpg"
+      "image": "https://macone.vn/wp-content/uploads/2021/04/MacBook-Pro-M1-.jpg",
+      "shelfId": 3
     },
     {
       "id": "4",
       "name": "Tai nghe Sony WH-1000XM4",
       "price": 7000000,
       "description": "Tai nghe chống ồn Sony WH-1000XM4",
-      "image": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/g/r/group_17333.png"
+      "image": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/g/r/group_17333.png",
+      "shelfId": 4
     },
     {
       "id": "5",
       "name": "Loa Bluetooth JBL Charge 4",
       "price": 3000000,
       "description": "Loa Bluetooth JBL Charge 4 với âm bass mạnh mẽ",
-      "image": "https://cdn.dienmaygiakhanh.com/Products/Images/2162/235205/bluetoth-jbl-charge-4-den-1-org.jpg"
+      "image": "https://cdn.dienmaygiakhanh.com/Products/Images/2162/235205/bluetoth-jbl-charge-4-den-1-org.jpg",
+      "shelfId": 5
     },
     {
       "id": "6",
       "name": "Apple iPad Air 4",
       "price": 16000000,
       "description": "iPad Air 4 với chip A14 Bionic và màn hình 10.9 inch",
-      "image": "https://quangminhmobile.com/wp-content/uploads/2022/04/apple-ipad-air4-2020-3-450x413.webp"
+      "image": "https://quangminhmobile.com/wp-content/uploads/2022/04/apple-ipad-air4-2020-3-450x413.webp",
+      "shelfId": 6
     }
   ],
   "orders": [
@@ -60,26 +68,26 @@
       "id": 1,
       "cartItems": [
         {
-          "name": "Sản phẩm A",
+          "name": "Laptop Dell XPS 13",
           "quantity": 1
         },
         {
-          "name": "Sản phẩm B",
+          "name": "Tai nghe Sony WH-1000XM4",
           "quantity": 2
         }
       ],
-      "totalPrice": "500000",
+      "totalPrice": "44000000",
       "paymentMethod": "Thẻ tín dụng"
     },
     {
       "id": 2,
       "cartItems": [
         {
-          "name": "Sản phẩm A",
-          "quantity": 3
+          "name": "Apple MacBook Pro M1",
+          "quantity": 1
         }
       ],
-      "totalPrice": "300000",
+      "totalPrice": "35000000",
       "paymentMethod": "Tiền mặt"
     }
   ],
@@ -90,7 +98,7 @@
       "action": "Sửa",
       "timestamp": "2024-10-09T06:05:38.117Z",
       "changes": {
-        "image": "https://images.unsplash.com/photo-1576486950761-604a23429977?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDR8fGFua2VyJTIwbmVidWxhJTIwY2Fwc3Vsb3xlbnwwfHx8fDE2ODAwMTM4NzI&ixlib=rb-4.0.3&q=80&w=400"
+        "image": "https://images.unsplash.com/photo-1576486950761-604a23429977?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDR8fGFua2VyJTIwbmVidWxhJTIwY2Fwc3VsbG8lMjlxlbnwwfHx8fDE2ODAwMTM4NzI&ixlib=rb-4.0.3&q=80&w=400"
       }
     },
     {
@@ -104,141 +112,26 @@
       "productId": "8",
       "action": "Xóa",
       "timestamp": "2024-10-10T07:47:05.838Z"
-    },
-    {
-      "id": "2ddb",
-      "productId": "9",
-      "action": "Xóa",
-      "timestamp": "2024-10-10T07:47:06.096Z"
-    },
-    {
-      "id": "247b",
-      "productId": "10",
-      "action": "Xóa",
-      "timestamp": "2024-10-10T07:47:06.265Z"
-    },
-    {
-      "id": "67fb",
-      "productId": "11",
-      "action": "Xóa",
-      "timestamp": "2024-10-10T07:47:06.435Z"
-    },
-    {
-      "id": "eb0b",
-      "productId": "12",
-      "action": "Xóa",
-      "timestamp": "2024-10-10T07:47:06.591Z"
-    },
-    {
-      "id": "5db1",
-      "productId": "13",
-      "action": "Xóa",
-      "timestamp": "2024-10-10T07:47:06.737Z"
-    },
-    {
-      "id": "8a0c",
-      "productId": "14",
-      "action": "Xóa",
-      "timestamp": "2024-10-10T07:47:06.895Z"
-    },
-    {
-      "id": "b84e",
-      "productId": "15",
-      "action": "Xóa",
-      "timestamp": "2024-10-10T07:47:07.041Z"
-    },
-    {
-      "id": "bbc4",
-      "productId": "16",
-      "action": "Xóa",
-      "timestamp": "2024-10-10T07:47:07.199Z"
-    },
-    {
-      "id": "3ba9",
-      "productId": "17",
-      "action": "Xóa",
-      "timestamp": "2024-10-10T07:47:07.356Z"
-    },
-    {
-      "id": "e513",
-      "productId": "18",
-      "action": "Xóa",
-      "timestamp": "2024-10-10T07:47:07.525Z"
-    },
-    {
-      "id": "7bcb",
-      "productId": "19",
-      "action": "Xóa",
-      "timestamp": "2024-10-10T07:47:07.683Z"
-    },
-    {
-      "id": "4e41",
-      "productId": "20",
-      "action": "Xóa",
-      "timestamp": "2024-10-10T07:47:07.852Z"
-    },
-    {
-      "id": "e387",
-      "productId": "1",
-      "action": "Sửa",
-      "timestamp": "2024-10-10T07:47:28.957Z",
-      "changes": {
-        "image": "1"
-      }
-    },
-    {
-      "id": "c6a8",
-      "productId": "1",
-      "action": "Sửa",
-      "timestamp": "2024-10-10T07:48:16.893Z",
-      "changes": {
-        "image": "https://cdn.tgdd.vn/Products/Images/44/327906/dell-xps-13-9340-ultra-5-xpsu5934w1-1-750x500.jpg"
-      }
-    },
-    {
-      "id": "7810",
-      "productId": "2",
-      "action": "Sửa",
-      "timestamp": "2024-10-10T07:48:35.771Z",
-      "changes": {
-        "image": "https://cdn.viettelstore.vn/Images/Product/ProductImage/1252998352.jpeg"
-      }
-    },
-    {
-      "id": "5f64",
-      "productId": "3",
-      "action": "Sửa",
-      "timestamp": "2024-10-10T07:48:57.967Z",
-      "changes": {
-        "image": "https://macone.vn/wp-content/uploads/2021/04/MacBook-Pro-M1-.jpg"
-      }
-    },
-    {
-      "id": "407d",
-      "productId": "4",
-      "action": "Sửa",
-      "timestamp": "2024-10-10T07:49:14.596Z",
-      "changes": {
-        "image": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/g/r/group_17333.png"
-      }
-    },
-    {
-      "id": "078e",
-      "productId": "5",
-      "action": "Sửa",
-      "timestamp": "2024-10-10T07:49:32.696Z",
-      "changes": {
-        "image": "https://cdn.dienmaygiakhanh.com/Products/Images/2162/235205/bluetoth-jbl-charge-4-den-1-org.jpg"
-      }
-    },
-    {
-      "id": "156f",
-      "productId": "6",
-      "action": "Sửa",
-      "timestamp": "2024-10-10T07:49:53.723Z",
-      "changes": {
-        "image": "https://quangminhmobile.com/wp-content/uploads/2022/04/apple-ipad-air4-2020-3-450x413.webp"
-      }
     }
+  ],
+  "shelves": [
+    { "id": 1, "name": "Kệ Số 1", "position": { "x": 10, "y": 5, "z": 1 } },
+    { "id": 2, "name": "Kệ Số 2", "position": { "x": 20, "y": 10, "z": 2 } },
+    { "id": 3, "name": "Kệ Số 3", "position": { "x": 30, "y": 15, "z": 1 } },
+    { "id": 4, "name": "Kệ Số 4", "position": { "x": 40, "y": 20, "z": 2 } },
+    { "id": 5, "name": "Kệ Số 5", "position": { "x": 50, "y": 25, "z": 1 } },
+    { "id": 6, "name": "Kệ Số 6", "position": { "x": 60, "y": 30, "z": 2 } },
+    { "id": 7, "name": "Kệ Số 7", "position": { "x": 70, "y": 35, "z": 1 } },
+    { "id": 8, "name": "Kệ Số 8", "position": { "x": 80, "y": 40, "z": 2 } },
+    { "id": 9, "name": "Kệ Số 9", "position": { "x": 90, "y": 45, "z": 1 } },
+    { "id": 10, "name": "Kệ Số 10", "position": { "x": 100, "y": 50, "z": 2 } },
+    { "id": 11, "name": "Kệ Số 11", "position": { "x": 110, "y": 55, "z": 1 } },
+    { "id": 12, "name": "Kệ Số 12", "position": { "x": 120, "y": 60, "z": 2 } },
+    { "id": 13, "name": "Kệ Số 13", "position": { "x": 130, "y": 65, "z": 1 } },
+    { "id": 14, "name": "Kệ Số 14", "position": { "x": 140, "y": 70, "z": 2 } },
+    { "id": 15, "name": "Kệ Số 15", "position": { "x": 150, "y": 75, "z": 1 } },
+    { "id": 16, "name": "Kệ Số 16", "position": { "x": 160, "y": 80, "z": 2 } },
+    { "id": 17, "name": "Kệ Số 17", "position": { "x": 170, "y": 85, "z": 1 } },
+    { "id": 18, "name": "Kệ Số 18", "position": { "x": 180, "y": 90, "z": 2 } }
   ]
 }
