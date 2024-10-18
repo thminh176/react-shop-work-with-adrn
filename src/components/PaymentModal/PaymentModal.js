@@ -3,7 +3,6 @@ import Modal from "react-modal";
 import "./PaymentModal.scss";
 
 Modal.setAppElement("#root");
-
 const PaymentModal = ({ isOpen, onClose, onConfirm, totalPrice }) => {
   const [paymentMethod, setPaymentMethod] = useState("");
   const [qrCode, setQrCode] = useState(null); // State để quản lý mã QR

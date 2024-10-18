@@ -1,0 +1,109 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6); // Tăng độ đậm của nền
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal-content {
+  background: #ffffff;
+  padding: 30px; // Tăng khoảng cách bên trong
+  border-radius: 10px; // Tăng độ cong của viền
+  width: 500px;
+  max-width: 90%; // Giảm bớt kích thước tối đa
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); // Làm cho bóng đổ mạnh hơn
+  transition: all 0.3s ease; // Thêm hiệu ứng chuyển tiếp
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #eee; // Dùng đường viền dày hơn
+  margin-bottom: 20px; // Tăng khoảng cách dưới
+  padding-bottom: 10px; // Thêm khoảng cách dưới
+}
+
+.modal-header h2 {
+  font-size: 1.5rem; // Tăng kích thước tiêu đề
+  color: #333; // Màu sắc tiêu đề
+  margin: 0; // Bỏ margin
+}
+
+.close-button {
+  background: transparent; // Làm cho nút trong suốt
+  border: none;
+  font-size: 24px;
+  color: #ff6b6b; // Thay đổi màu sắc nút đóng
+  cursor: pointer;
+  transition: color 0.3s; // Thêm hiệu ứng chuyển tiếp cho màu sắc
+
+  &:hover {
+    color: #ff4d4d; // Thay đổi màu khi hover
+  }
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-body form {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-body label {
+  margin-bottom: 10px;
+  font-weight: bold; // Làm đậm chữ label
+  color: #555; // Màu sắc chữ
+}
+
+.modal-body input,
+.modal-body textarea {
+  padding: 12px; // Thêm khoảng cách cho input và textarea
+  border: 1px solid #ddd; // Đường viền sáng
+  border-radius: 5px; // Làm cho viền cong
+  margin-bottom: 15px; // Thêm khoảng cách dưới
+  transition: border 0.3s; // Thêm hiệu ứng chuyển tiếp cho border
+
+  &:focus {
+    border-color: #007bff; // Thay đổi màu đường viền khi focus
+    outline: none; // Bỏ outline mặc định
+  }
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px; // Tăng khoảng cách trên
+}
+
+.modal-footer button {
+  margin-left: 10px;
+  padding: 10px 15px; // Thay đổi padding cho button
+  border: none;
+  border-radius: 5px; // Làm cho viền cong
+  background-color: #007bff; // Màu nền button
+  color: #fff; // Màu chữ
+  cursor: pointer;
+  transition: background-color 0.3s; // Thêm hiệu ứng chuyển tiếp cho màu nền
+
+  &:hover {
+    background-color: #0056b3; // Thay đổi màu khi hover
+  }
+}
+
+.modal-footer button.cancel {
+  background-color: #ff6b6b; // Màu nền cho nút hủy
+}
+
+.modal-footer button.cancel:hover {
+  background-color: #ff4d4d; // Màu khi hover cho nút hủy
+}

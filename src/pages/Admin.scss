@@ -1,54 +1,59 @@
 .admin-layout {
+  display: flex;
   margin-top: 68px;
-}
-
-.toggle-nav-btn {
-  margin: 10px; /* Thêm một chút margin cho nút */
-  background-color: white;
-  color: black !important;
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  height: 40px;
-  width: 40px;
-  z-index: 1000; /* Đảm bảo nút hiển thị phía trên các thành phần khác */
-  margin-top: calc(100vh - 68px * 2);
-  position: fixed !important;
-  transition: all 0.3s ease-in-out;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  :nth-child(1) {
-    margin-top: 4px;
-  }
+  height: 100vh; /* Chiều cao của layout bao phủ toàn bộ màn hình */
 }
 
 .admin-nav {
-  background-color: white;
-  transition: transform 0.3s ease; /* Thêm hiệu ứng chuyển động */
-  position: fixed; /* Giữ thanh điều hướng cố định */
-  top: 0;
-  left: 0;
-  box-shadow: 3px 0 8px rgba(0, 0, 0, 0.1);
-  width: 300px; /* Hoặc kích thước bạn mong muốn */
-  height: 100%;
-  margin-top: 68px;
-  height: calc(100vh - 68px);
-  transform: translateX(0); /* Hiển thị nav khi mở */
+  width: 250px;
+  background-color: #ffffff;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 68px; /* Giữ nguyên chiều cao từ đầu */
+  height: calc(100vh - 68px); /* Giữ sidebar chiếm phần còn lại của màn hình */
+  padding: 20px;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+  z-index: 1000;
+  color: black;
 
   &.shrink {
-    transform: translateX(-100%); /* Ẩn nav khi đóng */
+    transform: translateX(-100%); /* Ẩn sidebar */
   }
 
   ul {
     list-style: none;
     padding: 0;
+
     li {
-      margin: 20px;
+      margin: 20px 0;
+
       a {
+        display: flex;
+        align-items: center;
         color: black;
         text-decoration: none;
         font-size: 18px;
+        padding: 10px 15px;
+        transition: background-color 0.3s ease;
+
         &:hover {
-          color: rgb(148, 132, 132);
+          background-color: #f0f0f0;
+        }
+
+        &.active {
+          background-color: #d3d3d3; /* Màu nền khi đang ở trang đó */
+          font-weight: bold;
+        }
+
+        span {
+          margin-left: 10px;
+        }
+
+        svg {
+          margin-right: 10px;
         }
       }
     }
@@ -56,11 +61,67 @@
 }
 
 .admin-content {
-  margin-left: 300px; /* Khoảng cách bên trái tương ứng với chiều rộng của nav */
+  margin-left: 250px; /* Khi sidebar mở */
+  width: calc(
+    100% - 250px
+  ); /* Đảm bảo phần còn lại của nội dung vừa với màn hình */
   padding: 20px;
-  transition: margin-left 0.3s ease;
+  transition: margin-left 0.3s ease, width 0.3s ease;
 
   &.shrink {
-    margin-left: 0; /* Đặt margin-left về 0 khi nav bị ẩn */
+    margin-left: 0; /* Khi sidebar đóng, phần nội dung kéo rộng ra toàn màn hình */
+    width: 100%; /* Phần còn lại sẽ bao phủ toàn bộ màn hình */
+  }
+
+  .admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f5f6fa;
+    border: 1px solid #e1e1e1;
+
+    h1 {
+      font-size: 24px;
+      margin-right: 20px;
+    }
+
+    p {
+      margin: 0;
+      color: #6b6b6b;
+    }
+
+    .toggle-nav-btn {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #2d325a;
+      margin-top: 4px;
+      margin-left: 20px;
+    }
+  }
+
+  .stats-cards {
+    display: flex;
+    gap: 20px;
+    margin: 20px 0;
+
+    .card {
+      flex: 1;
+      padding: 20px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+
+      h2 {
+        font-size: 36px;
+        margin: 0 0 10px 0;
+      }
+
+      p {
+        color: #6b6b6b;
+      }
+    }
   }
 }

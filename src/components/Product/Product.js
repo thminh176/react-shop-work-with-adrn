@@ -10,6 +10,11 @@ const Product = ({
   isInCart,
   openModal,
 }) => {
+  // Kiểm tra nếu sản phẩm chỉ có ID và barcode
+  if (!product.name || !product.price) {
+    return null; // Không render nếu không có tên hoặc giá
+  }
+
   return (
     <div className="wrapper" onClick={() => openModal(product)}>
       {" "}

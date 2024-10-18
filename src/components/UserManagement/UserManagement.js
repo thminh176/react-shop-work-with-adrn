@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { fetchUsers, addUser, updateUser, deleteUser } from "../api"; // Cập nhật đường dẫn nếu cần
-
+import "./UserManagement.scss";
 const UserManagement = () => {
   const [users, setUsers] = useState([]);
   const [newUser, setNewUser] = useState({ name: "", email: "", password: "" });

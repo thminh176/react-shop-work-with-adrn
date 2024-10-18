@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { fetchData, updateProduct, deleteProduct } from "../api"; // Điều chỉnh đường dẫn nếu cần
+import { fetchData, updateProduct, deleteProduct } from "../api";
+import ProductEditPopup from "./ProductEditPopup"; // Import Popup
+import Barcode from "react-barcode"; // Import barcode library
 
+import "./ProductManagement.scss"; // File SCSS cho modal
 const ProductManagement = () => {
   const [products, setProducts] = useState([]);
   const [editingProduct, setEditingProduct] = useState(null);
+  const [isPopupOpen, setIsPopupOpen] = useState(false); // Quản lý trạng thái mở popup
 
   useEffect(() => {
     const getProducts = async () => {
@@ -15,6 +19,7 @@ const ProductManagement = () => {
 
   const handleEdit = (product) => {
     setEditingProduct(product);
+    setIsPopupOpen(true); // Mở popup khi chỉnh sửa
   };
 
   const handleSave = async () => {
@@ -23,7 +28,7 @@ const ProductManagement = () => {
       product.id === editingProduct.id ? editingProduct : product
     );
     setProducts(updatedProducts);
-    setEditingProduct(null); // Đóng form chỉnh sửa sau khi lưu
+    setIsPopupOpen(false); // Đóng popup sau khi lưu
   };
 
   const handleChange = (e) => {
@@ -41,11 +46,30 @@ const ProductManagement = () => {
     }
   };
 
+  // Tách sản phẩm chưa khai báo thông tin
+  const unregisteredProducts = products.filter(
+    (product) =>
+      !product.name ||
+      !product.price ||
+      !product.description ||
+      !product.image ||
+      !product.shelfId
+  );
+  const registeredProducts = products.filter(
+    (product) =>
+      product.name &&
+      product.price &&
+      product.description &&
+      product.image &&
+      product.shelfId
+  );
+
   return (
     <div className="product-management">
       <h1>Quản lý sản phẩm</h1>
 
-      {/* List of Products */}
+      {/* List of Registered Products */}
+      <h2>Sản phẩm đã khai báo thông tin</h2>
       <table>
         <thead>
           <tr>
@@ -54,12 +78,13 @@ const ProductManagement = () => {
             <th>Mô tả</th>
             <th>Hình ảnh</th>
             <th>Kệ hàng</th>
+            <th>Barcode</th>
             <th>Chỉnh sửa</th>
             <th>Xóa</th>
           </tr>
         </thead>
         <tbody>
-          {products.map((product) => (
+          {registeredProducts.map((product) => (
             <tr key={product.id}>
               <td>{product.name}</td>
               <td>{product.price}</td>
@@ -67,8 +92,10 @@ const ProductManagement = () => {
               <td>
                 <img src={product.image} alt={product.name} width="50" />
               </td>
-              <td>{`Kệ Số ${product.shelfId}`}</td>{" "}
-              {/* Hiển thị thông tin kệ hàng */}
+              <td>{`Kệ Số ${product.shelfId}`}</td>
+              <td>
+                <Barcode value={product.barcode} /> {/* Hiển thị mã vạch */}
+              </td>
               <td>
                 <button onClick={() => handleEdit(product)}>Chỉnh sửa</button>
               </td>
@@ -80,67 +107,40 @@ const ProductManagement = () => {
         </tbody>
       </table>
 
-      {/* Edit Form */}
-      {editingProduct && (
-        <div className="edit-form">
-          <h2>Chỉnh sửa sản phẩm</h2>
-          <form>
-            <label>
-              Tên sản phẩm:
-              <input
-                type="text"
-                name="name"
-                value={editingProduct.name}
-                onChange={handleChange}
-              />
-            </label>
-            <label>
-              Giá:
-              <input
-                type="number"
-                name="price"
-                value={editingProduct.price}
-                onChange={handleChange}
-              />
-            </label>
-            <label>
-              Mô tả:
-              <textarea
-                name="description"
-                value={editingProduct.description}
-                onChange={handleChange}
-              />
-            </label>
-            <label>
-              Hình ảnh URL:
-              <input
-                type="text"
-                name="image"
-                value={editingProduct.image}
-                onChange={handleChange}
-              />
-            </label>
-            <label>
-              Kệ hàng:
-              <select
-                name="shelfId"
-                value={editingProduct.shelfId}
-                onChange={handleChange}
-              >
-                {/* Giả định bạn có từ 1 đến 18 kệ hàng */}
-                {Array.from({ length: 18 }, (_, index) => (
-                  <option key={index + 1} value={index + 1}>
-                    Kệ Số {index + 1}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <button type="button" onClick={handleSave}>
-              Lưu
-            </button>
-          </form>
-        </div>
-      )}
+      {/* List of Unregistered Products */}
+      <h2>Sản phẩm chưa khai báo thông tin</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>ID sản phẩm</th>
+            <th>Barcode</th>
+            <th>Khai báo</th>
+          </tr>
+        </thead>
+        <tbody>
+          {unregisteredProducts.map((product) => (
+            <tr key={product.id}>
+              <td>{product.id}</td>
+              <td>
+                <Barcode className="barcode" value={product.barcode} />{" "}
+                {/* Hiển thị mã vạch */}
+              </td>
+              <td>
+                <button onClick={() => handleEdit(product)}>Khai báo</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      {/* Popup */}
+      <ProductEditPopup
+        product={editingProduct}
+        isOpen={isPopupOpen}
+        onClose={() => setIsPopupOpen(false)}
+        onSave={handleSave}
+        onChange={handleChange}
+      />
     </div>
   );
 };

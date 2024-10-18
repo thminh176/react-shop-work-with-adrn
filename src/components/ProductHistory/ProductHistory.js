@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { fetchData } from "../api";
+import './ProductHistory.scss'
 
 const ProductHistory = () => {
   const [products, setProducts] = useState([]);

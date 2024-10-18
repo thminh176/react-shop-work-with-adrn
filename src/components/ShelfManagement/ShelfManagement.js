@@ -7,7 +7,11 @@ const ShelfManagement = () => {
   const [products, setProducts] = useState([]); // Thêm state cho sản phẩm
   const [selectedShelf, setSelectedShelf] = useState(null);
   const [position, setPosition] = useState({ x: 0, y: 0, z: 0 });
+  const pinCode = () => {
+    var pin = prompt("nhập mã pin");
 
+    return pin;
+  };
   useEffect(() => {
     const loadShelvesAndProducts = async () => {
       const shelvesData = await fetchShelves();
@@ -33,15 +37,20 @@ const ShelfManagement = () => {
   };
 
   const handleUpdateShelf = async () => {
-    if (selectedShelf) {
-      const updatedShelf = { ...selectedShelf, position };
-      await updateShelf(updatedShelf);
-      setShelves((prev) =>
-        prev.map((shelf) =>
-          shelf.id === updatedShelf.id ? updatedShelf : shelf
-        )
-      );
-      setSelectedShelf(null);
+    if (pinCode().toString() === "6789") {
+      if (selectedShelf) {
+        const updatedShelf = { ...selectedShelf, position };
+        await updateShelf(updatedShelf);
+        setShelves((prev) =>
+          prev.map((shelf) =>
+            shelf.id === updatedShelf.id ? updatedShelf : shelf
+          )
+        );
+        setSelectedShelf(null);
+        alert("Done");
+      }
+    } else {
+      alert("Sai Mã Pin");
     }
   };
 

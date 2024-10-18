@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom"; // Import Link từ react-router-dom
+import { Link, useNavigate } from "react-router-dom"; // Thêm useNavigate
 import LoginPopup from "../LoginPopup/LoginPopup";
+import { FaUserShield } from "react-icons/fa"; // Import biểu tượng cho quản trị
 import "./Header.scss";
 import logo from "./logo.png";
 
@@ -8,6 +9,7 @@ const Header = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
+  const navigate = useNavigate(); // Khởi tạo navigate
 
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
@@ -26,16 +28,26 @@ const Header = () => {
   };
 
   const handleLogin = (user) => {
-    setUsername(user.username); // Cập nhật tên người dùng từ đối tượng
+    setUsername(user.username);
     setIsLoggedIn(true);
-    localStorage.setItem("username", user.username); // Lưu tên người dùng vào localStorage
+    localStorage.setItem("username", user.username);
+
+    // Kiểm tra xem người dùng có phải admin không và lưu vào localStorage
+    if (user.isAdmin) {
+      localStorage.setItem("isAdmin", "1");
+    } else {
+      localStorage.setItem("isAdmin", "0");
+    }
+
     setIsPopupOpen(false);
   };
 
   const handleLogout = () => {
     setUsername("");
     setIsLoggedIn(false);
-    localStorage.removeItem("username"); // Xóa tên người dùng khỏi localStorage
+    localStorage.removeItem("username");
+    localStorage.removeItem("isAdmin"); // Xóa thông tin admin khi đăng xuất
+    navigate("/"); // Chuyển hướng về trang chính
   };
 
   return (
@@ -46,7 +58,13 @@ const Header = () => {
             <img src={logo} alt="Logo" />
           </Link>
         </div>
-        <nav>{isLoggedIn && <Link to="/admin">Quản Trị</Link>}</nav>
+        <nav>
+          {isLoggedIn && (
+            <Link to="/admin" className="admin-icon">
+              <FaUserShield size={24} />
+            </Link>
+          )}
+        </nav>
         <div className="login-section">
           {!isLoggedIn ? (
             <button onClick={openPopup}>Login / Register</button>

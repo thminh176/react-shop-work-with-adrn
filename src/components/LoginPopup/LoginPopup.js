@@ -6,6 +6,7 @@ const LoginPopup = ({ onClose, onLogin }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false); // Thêm trạng thái cho admin
   const [error, setError] = useState("");
 
   // Hàm lấy danh sách người dùng
@@ -15,7 +16,8 @@ const LoginPopup = ({ onClose, onLogin }) => {
         "https://api.jsonbin.io/v3/b/670832e7e41b4d34e4408744",
         {
           headers: {
-            "X-Master-Key": "$2a$10$IWuBSH64Cm23zw/qcXEgvuIJolfqH2nxhtdHJG710zexULWE9c6SS", // Thay bằng master key của bạn
+            "X-Master-Key":
+              "$2a$10$IWuBSH64Cm23zw/qcXEgvuIJolfqH2nxhtdHJG710zexULWE9c6SS", // Thay bằng master key của bạn
           },
         }
       );
@@ -37,6 +39,7 @@ const LoginPopup = ({ onClose, onLogin }) => {
     const newUser = {
       username: username,
       password: password,
+      isAdmin: isAdmin, // Thêm trường isAdmin
     };
 
     try {
@@ -49,7 +52,8 @@ const LoginPopup = ({ onClose, onLogin }) => {
           method: "PUT", // Sử dụng PUT để cập nhật
           headers: {
             "Content-Type": "application/json",
-            "X-Master-Key": "$2a$10$IWuBSH64Cm23zw/qcXEgvuIJolfqH2nxhtdHJG710zexULWE9c6SS", // Thay bằng master key của bạn
+            "X-Master-Key":
+              "$2a$10$IWuBSH64Cm23zw/qcXEgvuIJolfqH2nxhtdHJG710zexULWE9c6SS", // Thay bằng master key của bạn
           },
           body: JSON.stringify({ users: updatedUsers }), // Cập nhật lại danh sách người dùng
         }
@@ -76,7 +80,7 @@ const LoginPopup = ({ onClose, onLogin }) => {
       );
 
       if (user) {
-        onLogin({ username: user.username });
+        onLogin({ username: user.username, isAdmin: user.isAdmin }); // Truyền isAdmin khi login
         onClose();
       } else {
         setError("Invalid username or password");
@@ -90,6 +94,7 @@ const LoginPopup = ({ onClose, onLogin }) => {
     setUsername("");
     setPassword("");
     setConfirmPassword("");
+    setIsAdmin(false); // Đặt lại trạng thái isAdmin
     setError("");
   };
 
@@ -117,15 +122,27 @@ const LoginPopup = ({ onClose, onLogin }) => {
         </div>
 
         {isRegister && (
-          <div className="form-group">
-            <input
-              type="password"
-              placeholder="Confirm Password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-            />
-          </div>
+          <>
+            <div className="form-group">
+              <input
+                type="password"
+                placeholder="Confirm Password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={isAdmin}
+                  onChange={() => setIsAdmin(!isAdmin)} // Toggle isAdmin
+                />
+                Đặt là quản trị viên
+              </label>
+            </div>
+          </>
         )}
 
         {error && <p className="error">{error}</p>}
@@ -139,7 +156,9 @@ const LoginPopup = ({ onClose, onLogin }) => {
           ) : (
             <>
               <button onClick={handleLogin}>Login</button>
-              <button onClick={() => setIsRegister(true)}>Go to Register</button>
+              <button onClick={() => setIsRegister(true)}>
+                Go to Register
+              </button>
             </>
           )}
           <button onClick={onClose} className="close-btn">

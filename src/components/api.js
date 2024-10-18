@@ -124,11 +124,12 @@ export const updateProduct = async (updatedProduct) => {
   try {
     const data = await fetchData();
 
-    // Đảm bảo price và shelfId là số
+    // Đảm bảo price, shelfId là số và giữ nguyên barcode
     const productToUpdate = {
       ...updatedProduct,
-      price: Number(updatedProduct.price), // Ép kiểu về số
-      shelfId: Number(updatedProduct.shelfId), // Ép kiểu về số
+      price: Number(updatedProduct.price),
+      shelfId: Number(updatedProduct.shelfId),
+      barcode: updatedProduct.barcode, // Giữ barcode không thay đổi
     };
 
     const updatedProducts = data.products.map((product) =>
@@ -148,10 +149,10 @@ export const updateProduct = async (updatedProduct) => {
       throw new Error("Failed to update product");
     }
 
-    return await response.json(); // Trả về dữ liệu phản hồi nếu cần
+    return await response.json();
   } catch (error) {
     console.error("Error updating product:", error);
-    throw error; // Ném lỗi để xử lý ở nơi gọi hàm
+    throw error;
   }
 };
 

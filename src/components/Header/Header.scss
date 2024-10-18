@@ -3,21 +3,39 @@
   top: 0;
   height: 68px;
   z-index: 3;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #ddd;
+  width: 100%;
+
   .header-container {
     margin: 0 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
-  background-color: #f8f9fa;
-  border-bottom: 1px solid #ddd;
-
-  width: 100%;
 
   .logo {
     img {
       height: 72px; /* Điều chỉnh kích thước logo */
       width: auto;
+    }
+  }
+
+  nav {
+    .admin-icon {
+      color: #007bff;
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+
+      &:hover {
+        color: #0056b3;
+      }
+
+      svg {
+        margin-left: 15px;
+        transition: color 0.3s ease;
+      }
     }
   }
 
@@ -27,6 +45,9 @@
     align-items: center;
     .welcome-msg {
       padding-right: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #343a40;
     }
     button {
       padding: 10px 20px;
@@ -35,6 +56,11 @@
       border: none;
       border-radius: 5px;
       cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #0056b3;
+      }
     }
 
     p {

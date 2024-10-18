@@ -1,63 +1,75 @@
 .product-management {
   padding: 20px;
-  font-family: Arial, sans-serif;
+  font-family: "Arial", sans-serif;
 
   h1 {
     text-align: center;
-    margin-bottom: 20px;
-    font-size: 28px;
-    color: #333;
+    margin-bottom: 25px; // Tăng khoảng cách dưới tiêu đề
+    font-size: 30px; // Tăng kích thước chữ cho tiêu đề
+    color: #2c3e50; // Màu sắc tối hơn để nổi bật hơn
+    text-transform: uppercase; // Viết hoa toàn bộ tiêu đề
+    letter-spacing: 1.2px; // Khoảng cách giữa các chữ cái
   }
 
   table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 10px;
+    margin-top: 15px;
 
     th,
     td {
-      padding: 12px;
+      padding: 15px; // Tăng khoảng cách padding để dễ nhìn hơn
       text-align: left;
       border: 1px solid #ddd;
     }
 
     th {
-      background-color: #f4f4f4;
+      background-color: #eaeaea; // Màu nền sáng hơn
       font-size: 16px;
-      color: #555;
+      color: #2c3e50; // Màu chữ tối hơn để tương phản tốt hơn
+      font-weight: bold; // Làm đậm chữ
     }
 
     tr:nth-child(even) {
-      background-color: #f9f9f9;
+      background-color: #f9f9f9; // Màu nền cho các dòng chẵn
     }
 
     tr:hover {
-      background-color: #f1f1f1;
+      background-color: #dfe6e9; // Màu nền khi hover
+      transition: background-color 0.3s ease; // Hiệu ứng chuyển màu mượt mà
     }
 
     td {
       font-size: 14px;
+      color: #333; // Màu chữ tối hơn
     }
 
     input {
       width: 90%;
-      padding: 8px;
+      padding: 10px; // Tăng khoảng cách padding cho input
       border: 1px solid #ccc;
       border-radius: 4px;
+      transition: border-color 0.3s;
+
+      &:focus {
+        border-color: #007bff; // Thay đổi màu viền khi input được chọn
+        outline: none; // Loại bỏ viền mặc định
+      }
     }
 
     button {
-      padding: 8px 12px;
-      background-color: #007bff;
+      padding: 10px 15px; // Tăng kích thước nút
+      background-color: #007bff; // Màu nền chính cho nút
       border: none;
       color: white;
       border-radius: 4px;
       cursor: pointer;
       font-size: 14px;
-      transition: background-color 0.3s;
+      transition: background-color 0.3s, transform 0.2s;
 
       &:hover {
-        background-color: #0056b3;
+        background-color: #0056b3; // Màu nền khi hover
+        transform: translateY(-2px); // Hiệu ứng nâng lên khi hover
       }
     }
 
@@ -65,7 +77,8 @@
       background-color: #dc3545;
 
       &:hover {
-        background-color: #c82333;
+        background-color: #c82333; // Màu nền khi hover
+        transform: translateY(-2px); // Hiệu ứng nâng lên khi hover
       }
     }
 
@@ -73,13 +86,19 @@
       background-color: #6c757d;
 
       &:hover {
-        background-color: #5a6268;
+        background-color: #5a6268; // Màu nền khi hover
+        transform: translateY(-2px); // Hiệu ứng nâng lên khi hover
       }
     }
   }
 
   .button-group {
     display: flex;
-    gap: 10px;
+    gap: 10px; // Khoảng cách giữa các nút
   }
+}
+.barcode {
+  width: 80%; /* Giảm chiều rộng xuống 80% */
+  max-width: 200px; /* Đặt chiều rộng tối đa */
+  height: auto; /* Để chiều cao tự động */
 }
