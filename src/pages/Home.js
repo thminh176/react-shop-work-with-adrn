@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Product from "../components/Product/Product"; // Giữ nguyên đường dẫn của bạn
-import Cart from "../components/Cart/Cart"; // Giữ nguyên đường dẫn của bạn
-import Loading from "../components/Loading/Loading"; // Giữ nguyên đường dẫn của bạn
+import Product from "../components/Product/Product";
+import Cart from "../components/Cart/Cart";
+import Loading from "../components/Loading/Loading";
 import ProductModal from "../components/ProductModal/ProductModal"; // Đảm bảo bạn đã import modal
 import "./Home.scss";
 
@@ -102,7 +102,9 @@ const Home = () => {
             cartItems={cartItems}
             removeFromCart={removeFromCart}
             handleCheckout={handleCheckout}
+            setCartItems={setCartItems} // Truyền hàm setCartItems
           />
+
           {/* Hiển thị modal khi isModalOpen là true */}
           {isModalOpen && (
             <ProductModal

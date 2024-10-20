@@ -3,7 +3,7 @@ import "./Cart.scss";
 import PaymentModal from "../PaymentModal/PaymentModal";
 import Loading from "../Loading/Loading";
 
-const Cart = ({ cartItems, removeFromCart }) => {
+const Cart = ({ cartItems, removeFromCart, setCartItems }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("");
   const [loading, setLoading] = useState(false);
@@ -16,9 +16,14 @@ const Cart = ({ cartItems, removeFromCart }) => {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
+  const clearCart = () => {
+    setCartItems([]); // Xóa toàn bộ giỏ hàng
+  };
+
   const confirmPayment = (method) => {
     setPaymentMethod(method);
     openBillWindow(cartItems, totalPrice, method);
+    clearCart(); // Xóa giỏ hàng sau khi in hóa đơn
     closeModal();
   };
 
@@ -111,8 +116,9 @@ const Cart = ({ cartItems, removeFromCart }) => {
           <PaymentModal
             isOpen={isModalOpen}
             onClose={closeModal}
-            onConfirm={confirmPayment}
+            onConfirm={(method) => confirmPayment(method)}
             totalPrice={totalPrice}
+            cartItems={cartItems} // Truyền cartItems
           />
         </>
       )}

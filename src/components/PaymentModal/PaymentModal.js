@@ -1,36 +1,60 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
+import { addOrderHistory } from "../api"; // Import API function
 import "./PaymentModal.scss";
 
 Modal.setAppElement("#root");
-const PaymentModal = ({ isOpen, onClose, onConfirm, totalPrice }) => {
+
+const PaymentModal = ({
+  isOpen,
+  onClose,
+  onConfirm,
+  totalPrice,
+  cartItems,
+}) => {
   const [paymentMethod, setPaymentMethod] = useState("");
-  const [qrCode, setQrCode] = useState(null); // State để quản lý mã QR
+  const [qrCode, setQrCode] = useState(null);
 
   const handlePaymentMethodChange = (method) => {
     setPaymentMethod(method);
   };
 
-  const handleConfirmPayment = () => {
+  const handleConfirmPayment = async () => {
     if (!paymentMethod) {
       alert("Please choose a payment method");
       return;
     }
-    onConfirm(paymentMethod); // Gọi hàm onConfirm để in hóa đơn sau khi xác nhận
+
+    // Add order history after confirmation
+    const orderHistory = {
+      id: Date.now(), // Unique ID for the order
+      totalPrice,
+      paymentMethod,
+      date: new Date().toISOString(),
+      products: cartItems.map((item) => ({
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        quantity: item.quantity,
+        shelfId: item.shelfId, // Thêm thông tin về kệ
+      })),
+    };
+
+    await addOrderHistory(orderHistory); // Add history to orders
+
+    onConfirm(paymentMethod); // Call onConfirm function
   };
 
-  const bankNumber = "666617678888"; // Số tài khoản
-  const amount = totalPrice; // Tổng số tiền từ cart
-  const qrCodeUrl = `https://img.vietqr.io/image/mbbank-${bankNumber}-compact.png?amount=${amount}`; // URL chứa tổng số tiền
+  const bankNumber = "666617678888";
+  const amount = totalPrice;
+  const qrCodeUrl = `https://img.vietqr.io/image/mbbank-${bankNumber}-compact.png?amount=${amount}`;
 
-  // Hàm đóng modal và reset QR code
   const handleClose = () => {
-    onClose(); // Đóng modal
-    setPaymentMethod(""); // Reset phương thức thanh toán
-    setQrCode(null); // Reset mã QR
+    onClose();
+    setPaymentMethod("");
+    setQrCode(null);
   };
 
-  // Định dạng tổng tiền thành VND
   const formattedTotalPrice = amount.toLocaleString("vi-VN", {
     style: "currency",
     currency: "VND",
@@ -39,7 +63,7 @@ const PaymentModal = ({ isOpen, onClose, onConfirm, totalPrice }) => {
   return (
     <Modal
       isOpen={isOpen}
-      onRequestClose={handleClose} // Đóng modal khi nhấn vào overlay
+      onRequestClose={handleClose}
       contentLabel="Payment Modal"
       className="payment-modal"
       overlayClassName="payment-overlay"
@@ -54,7 +78,7 @@ const PaymentModal = ({ isOpen, onClose, onConfirm, totalPrice }) => {
             value="cash"
             onChange={() => {
               handlePaymentMethodChange("cash");
-              setQrCode(null); // Reset mã QR khi chọn tiền mặt
+              setQrCode(null);
             }}
           />
           Tiền mặt
@@ -67,7 +91,7 @@ const PaymentModal = ({ isOpen, onClose, onConfirm, totalPrice }) => {
             value="transfer"
             onChange={() => {
               handlePaymentMethodChange("transfer");
-              setQrCode(qrCodeUrl); // Cập nhật mã QR khi chọn chuyển khoản
+              setQrCode(qrCodeUrl);
             }}
           />
           Chuyển khoản

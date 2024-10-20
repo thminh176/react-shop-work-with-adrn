@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { fetchOrders, addOrder, deleteOrder } from "../api"; // Cập nhật đường dẫn nếu cần
+import { fetchOrders, deleteOrder } from "../api"; // Cập nhật đường dẫn nếu cần
+import "./OrderHistory.scss";
 
 const OrderHistory = () => {
   const [orders, setOrders] = useState([]);
-  const [newOrder, setNewOrder] = useState({
-    userId: "",
-    productId: "",
-    amount: 0,
-  });
 
   useEffect(() => {
     const getOrders = async () => {
@@ -17,15 +13,6 @@ const OrderHistory = () => {
     getOrders();
   }, []);
 
-  const handleAddOrder = async () => {
-    const orderId = orders.length
-      ? Math.max(orders.map((order) => order.id)) + 1
-      : 1; // Tạo ID mới
-    const addedOrder = await addOrder({ id: orderId, ...newOrder });
-    setOrders((prevOrders) => [...prevOrders, addedOrder.record]);
-    setNewOrder({ userId: "", productId: "", amount: 0 }); // Reset input
-  };
-
   const handleDeleteOrder = async (orderId) => {
     await deleteOrder(orderId);
     setOrders((prevOrders) =>
@@ -34,37 +21,62 @@ const OrderHistory = () => {
   };
 
   return (
-    <div>
-      <h1>Lịch sử đơn hàng</h1>
-      <input
-        type="text"
-        placeholder="ID người dùng"
-        value={newOrder.userId}
-        onChange={(e) => setNewOrder({ ...newOrder, userId: e.target.value })}
-      />
-      <input
-        type="text"
-        placeholder="ID sản phẩm"
-        value={newOrder.productId}
-        onChange={(e) =>
-          setNewOrder({ ...newOrder, productId: e.target.value })
-        }
-      />
-      <input
-        type="number"
-        placeholder="Số lượng"
-        value={newOrder.amount}
-        onChange={(e) =>
-          setNewOrder({ ...newOrder, amount: parseInt(e.target.value) })
-        }
-      />
-      <button onClick={handleAddOrder}>Thêm đơn hàng</button>
-
+    <div className="order-history">
+      <h1>Lịch sử xuất, nhập kho</h1>
       <ul>
         {orders.map((order) => (
           <li key={order.id}>
-            Người dùng ID: {order.userId}, Sản phẩm ID: {order.productId}, Số
-            lượng: {order.amount}
+            <div>
+              <strong>ID:</strong> {order.id}
+            </div>
+            <div>
+              <strong>Tổng giá:</strong>{" "}
+              {order.totalPrice.toLocaleString("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              })}
+            </div>
+            <div>
+              <strong>Phương thức thanh toán:</strong> {order.paymentMethod}
+            </div>
+            <div>
+              <strong>Ngày:</strong>{" "}
+              {new Date(order.date).toLocaleString("vi-VN")}
+            </div>
+
+            {/* Hiển thị sản phẩm */}
+            <div className="order-products">
+              <strong>Sản phẩm:</strong>
+              <ul>
+                {/* Kiểm tra nếu products tồn tại và là mảng */}
+                {Array.isArray(order.products) && order.products.length > 0 ? (
+                  order.products.map((product) => (
+                    <li key={product.id}>
+                      <div>
+                        <strong>Tên:</strong> {product.name}
+                      </div>
+                      <div>
+                        <strong>Giá:</strong>{" "}
+                        {product.price.toLocaleString("vi-VN", {
+                          style: "currency",
+                          currency: "VND",
+                        })}
+                      </div>
+                      <div>
+                        <strong>Số lượng:</strong> {product.quantity}
+                      </div>
+                      <div>
+                        <strong>Kệ:</strong> {product.shelfId}{" "}
+                        {/* Hoặc thêm thông tin khác về kệ nếu có */}
+                      </div>
+                    </li>
+                  ))
+                ) : (
+                  <li>Không có sản phẩm nào trong đơn hàng.</li> // Hiển thị nếu không có sản phẩm
+                )}
+              </ul>
+            </div>
+
             <button onClick={() => handleDeleteOrder(order.id)}>Xóa</button>
           </li>
         ))}

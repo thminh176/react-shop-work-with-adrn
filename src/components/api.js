@@ -259,3 +259,24 @@ export const updateShelf = async (updatedShelf) => {
     return null;
   }
 };
+// Add order history
+export const addOrderHistory = async (orderHistory) => {
+  try {
+    const data = await fetchData();
+    const updatedOrders = [...data.orders, orderHistory];
+
+    const response = await fetch(API_URL, {
+      method: "PUT",
+      headers: {
+        "X-Master-Key": API_KEY,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ...data, orders: updatedOrders }),
+    });
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error adding order history:", error);
+    return null;
+  }
+};
