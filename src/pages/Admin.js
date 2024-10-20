@@ -8,6 +8,7 @@ import ProductManagement from "../components/ProductManagement/ProductManagement
 import ShelfManagement from "../components/ShelfManagement/ShelfManagement";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoClose } from "react-icons/io5";
+import { GoPackageDependents } from "react-icons/go";
 import ProtectedRoute from "../components/ProtectedRoute.js";
 import { FaUser, FaHistory, FaProductHunt, FaThLarge } from "react-icons/fa";
 import "./Admin.scss";
@@ -52,8 +53,8 @@ const Admin = () => {
               to="/admin/orders"
               className={({ isActive }) => (isActive ? "active" : "")}
             >
-              <FaHistory />
-              <span>Lịch sử mua hàng</span>
+              <GoPackageDependents />
+              <span>Lịch sử xuất , nhập kho</span>
             </NavLink>
           </li>
           <li>

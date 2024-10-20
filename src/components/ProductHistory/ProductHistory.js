@@ -19,7 +19,7 @@ const ProductHistory = () => {
 
   return (
     <div>
-      <h1>Lịch sử chỉnh sửa sản phẩm</h1>
+      <h1>Lịch sử xuất nhập kho</h1>
       <ul>
         {products.map((product) => (
           <li key={product.id}>

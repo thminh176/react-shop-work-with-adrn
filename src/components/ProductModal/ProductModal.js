@@ -1,7 +1,6 @@
 import React from "react";
 import { IoCartOutline } from "react-icons/io5"; // Icon cho nút thêm vào giỏ hàng
 import { IoTrashOutline } from "react-icons/io5"; // Icon cho nút xóa khỏi giỏ hàng
-import Barcode from "react-barcode"; // Import react-barcode
 import "./ProductModal.scss"; // Thêm styles cho modal
 
 const ProductModal = ({
@@ -42,14 +41,6 @@ const ProductModal = ({
               })}
             </p>
             <p className="product-modal-description">{product.description}</p>
-            <div className="product-modal-barcode">
-              <Barcode
-                value={product.barcode} // Giá trị barcode từ sản phẩm
-                width={1} // Chiều rộng mỗi thanh
-                height={30} // Chiều cao của barcode
-                displayValue={true} // Ẩn giá trị bên dưới barcode
-              />
-            </div>
           </div>
         </div>
 
