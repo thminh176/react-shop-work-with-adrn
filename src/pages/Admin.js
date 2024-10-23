@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Routes, Route, NavLink, Navigate } from "react-router-dom";
 import Dashboard from "../components/Dashboard/Dashboard";
 import UserManagement from "../components/UserManagement/UserManagement";
-import OrderHistory from "../components/OrderHistory/OrderHistory";
+import OrderHistory from "../components/ExportHistory/ExportHistory.js";
 import ProductHistory from "../components/ProductHistory/ProductHistory";
 import ProductManagement from "../components/ProductManagement/ProductManagement";
 import ShelfManagement from "../components/ShelfManagement/ShelfManagement";

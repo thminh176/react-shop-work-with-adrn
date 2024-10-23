@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import "./Cart.scss";
 import PaymentModal from "../PaymentModal/PaymentModal";
 import Loading from "../Loading/Loading";
+import { addExportHistory } from "../api"; // Đảm bảo import đúng hàm
 
 const Cart = ({ cartItems, removeFromCart, setCartItems }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState("");
   const [loading, setLoading] = useState(false);
 
   const totalPrice = cartItems.reduce(
@@ -20,11 +20,18 @@ const Cart = ({ cartItems, removeFromCart, setCartItems }) => {
     setCartItems([]); // Xóa toàn bộ giỏ hàng
   };
 
-  const confirmPayment = (method) => {
-    setPaymentMethod(method);
-    openBillWindow(cartItems, totalPrice, method);
-    clearCart(); // Xóa giỏ hàng sau khi in hóa đơn
-    closeModal();
+  const confirmPayment = async (method) => {
+    // Thực hiện xác nhận thanh toán
+    try {
+      await addExportHistory({
+        // Thông tin xuất kho cần thêm (có thể thêm ở đây)
+      });
+      clearCart(); // Xóa giỏ hàng sau khi in hóa đơn
+    } catch (error) {
+      console.error("Lỗi khi thêm lịch sử xuất kho:", error);
+    } finally {
+      closeModal();
+    }
   };
 
   const openBillWindow = (cartItems, totalPrice, paymentMethod) => {
@@ -116,7 +123,10 @@ const Cart = ({ cartItems, removeFromCart, setCartItems }) => {
           <PaymentModal
             isOpen={isModalOpen}
             onClose={closeModal}
-            onConfirm={(method) => confirmPayment(method)}
+            onConfirm={async (method) => {
+              openBillWindow(cartItems, totalPrice, method); // Gọi hàm in hóa đơn
+              await confirmPayment(method); // Gọi confirmPayment với await
+            }}
             totalPrice={totalPrice}
             cartItems={cartItems} // Truyền cartItems
           />

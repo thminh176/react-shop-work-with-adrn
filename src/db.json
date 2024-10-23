@@ -21,101 +21,46 @@
       "name": "Laptop Dell XPS 13",
       "price": 30000000,
       "description": "Laptop Dell XPS 13 với viền mỏng và màn hình Full HD",
-      "image": "https://cdn.tgdd.vn/Products/Images/44/327906/dell-xps-13-9340-ultra-5-xpsu5934w1-1-750x500.jpg",
-      "shelfId": 1
+      "image": "https://cdn.tgdd.vn/Products/Images/44/327906/dell-xps-13-9340-ultra-5-xpsu5934w1-1-750x500.jpg"
     },
     {
       "id": "2",
       "name": "Máy tính bảng Samsung Galaxy Tab S7",
       "price": 18000000,
       "description": "Máy tính bảng Samsung Galaxy Tab S7 với màn hình 120Hz",
-      "image": "https://cdn.viettelstore.vn/Images/Product/ProductImage/1252998352.jpeg",
-      "shelfId": 2
+      "image": "https://cdn.viettelstore.vn/Images/Product/ProductImage/1252998352.jpeg"
     },
     {
       "id": "3",
       "name": "Apple MacBook Pro M1",
       "price": 35000000,
       "description": "MacBook Pro M1 với chip Apple Silicon",
-      "image": "https://macone.vn/wp-content/uploads/2021/04/MacBook-Pro-M1-.jpg",
-      "shelfId": 3
+      "image": "https://macone.vn/wp-content/uploads/2021/04/MacBook-Pro-M1-.jpg"
     },
     {
       "id": "4",
       "name": "Tai nghe Sony WH-1000XM4",
       "price": 7000000,
       "description": "Tai nghe chống ồn Sony WH-1000XM4",
-      "image": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/g/r/group_17333.png",
-      "shelfId": 4
+      "image": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/g/r/group_17333.png"
     },
     {
       "id": "5",
       "name": "Loa Bluetooth JBL Charge 4",
       "price": 3000000,
       "description": "Loa Bluetooth JBL Charge 4 với âm bass mạnh mẽ",
-      "image": "https://cdn.dienmaygiakhanh.com/Products/Images/2162/235205/bluetoth-jbl-charge-4-den-1-org.jpg",
-      "shelfId": 5
+      "image": "https://cdn.dienmaygiakhanh.com/Products/Images/2162/235205/bluetoth-jbl-charge-4-den-1-org.jpg"
     },
     {
       "id": "6",
       "name": "Apple iPad Air 4",
       "price": 16000000,
       "description": "iPad Air 4 với chip A14 Bionic và màn hình 10.9 inch",
-      "image": "https://quangminhmobile.com/wp-content/uploads/2022/04/apple-ipad-air4-2020-3-450x413.webp",
-      "shelfId": 6
+      "image": "https://quangminhmobile.com/wp-content/uploads/2022/04/apple-ipad-air4-2020-3-450x413.webp"
     }
   ],
-  "orders": [
-    {
-      "id": 1,
-      "cartItems": [
-        {
-          "name": "Laptop Dell XPS 13",
-          "quantity": 1
-        },
-        {
-          "name": "Tai nghe Sony WH-1000XM4",
-          "quantity": 2
-        }
-      ],
-      "totalPrice": "44000000",
-      "paymentMethod": "Thẻ tín dụng"
-    },
-    {
-      "id": 2,
-      "cartItems": [
-        {
-          "name": "Apple MacBook Pro M1",
-          "quantity": 1
-        }
-      ],
-      "totalPrice": "35000000",
-      "paymentMethod": "Tiền mặt"
-    }
-  ],
-  "editHistory": [
-    {
-      "id": "0c13",
-      "productId": null,
-      "action": "Sửa",
-      "timestamp": "2024-10-09T06:05:38.117Z",
-      "changes": {
-        "image": "https://images.unsplash.com/photo-1576486950761-604a23429977?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDR8fGFua2VyJTIwbmVidWxhJTIwY2Fwc3VsbG8lMjlxlbnwwfHx8fDE2ODAwMTM4NzI&ixlib=rb-4.0.3&q=80&w=400"
-      }
-    },
-    {
-      "id": "47cc",
-      "productId": "7",
-      "action": "Xóa",
-      "timestamp": "2024-10-10T07:47:05.355Z"
-    },
-    {
-      "id": "8539",
-      "productId": "8",
-      "action": "Xóa",
-      "timestamp": "2024-10-10T07:47:05.838Z"
-    }
-  ],
+  "exportHistory": [],
+  "editHistory": [],
   "shelves": [
     {
       "id": 1,
@@ -124,7 +69,8 @@
         "x": 10,
         "y": 5,
         "z": 1
-      }
+      },
+      "productId": "1"
     },
     {
       "id": 2,
@@ -133,7 +79,8 @@
         "x": 20,
         "y": 10,
         "z": 2
-      }
+      },
+      "productId": "2"
     },
     {
       "id": 3,
@@ -142,7 +89,8 @@
         "x": 30,
         "y": 15,
         "z": 1
-      }
+      },
+      "productId": "3"
     },
     {
       "id": 4,
@@ -151,7 +99,8 @@
         "x": "34",
         "y": 20,
         "z": 2
-      }
+      },
+      "productId": "4"
     },
     {
       "id": 5,
@@ -160,7 +109,8 @@
         "x": 50,
         "y": 25,
         "z": 1
-      }
+      },
+      "productId": "5"
     },
     {
       "id": 6,
@@ -169,7 +119,8 @@
         "x": 60,
         "y": 30,
         "z": 2
-      }
+      },
+      "productId": "6"
     },
     {
       "id": 7,

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
-import { addOrderHistory } from "../api"; // Import API function
+import { addExportHistory, fetchShelves } from "../api"; // Import API function
 import "./PaymentModal.scss";
 
 Modal.setAppElement("#root");
@@ -21,9 +21,12 @@ const PaymentModal = ({
 
   const handleConfirmPayment = async () => {
     if (!paymentMethod) {
-      alert("Please choose a payment method");
+      alert("Vui lòng chọn phương thức thanh toán");
       return;
     }
+
+    // Fetch shelves data
+    const shelves = await fetchShelves();
 
     // Add order history after confirmation
     const orderHistory = {
@@ -31,16 +34,19 @@ const PaymentModal = ({
       totalPrice,
       paymentMethod,
       date: new Date().toISOString(),
-      products: cartItems.map((item) => ({
-        id: item.id,
-        name: item.name,
-        price: item.price,
-        quantity: item.quantity,
-        shelfId: item.shelfId, // Thêm thông tin về kệ
-      })),
+      products: cartItems.map((item) => {
+        const shelf = shelves.find((shelf) => shelf.productId === item.id); // Find the corresponding shelf
+        return {
+          id: item.id,
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity,
+          shelfId: shelf ? shelf.id : null, // Add shelfId if found, otherwise null
+        };
+      }),
     };
 
-    await addOrderHistory(orderHistory); // Add history to orders
+    await addExportHistory(orderHistory); // orderHistory phải là một mảng hoặc đối tượng hợp lệ
 
     onConfirm(paymentMethod); // Call onConfirm function
   };

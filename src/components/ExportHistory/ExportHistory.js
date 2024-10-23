@@ -1,56 +1,56 @@
 import React, { useEffect, useState } from "react";
-import { fetchOrders, deleteOrder } from "../api"; // Cập nhật đường dẫn nếu cần
-import "./OrderHistory.scss";
+import { fetchExportHistory, deleteExportHistory } from "../api"; // Cập nhật đường dẫn nếu cần
+import "./ExportHistory.scss";
 
-const OrderHistory = () => {
-  const [orders, setOrders] = useState([]);
+const ExportHistory = () => {
+  const [exportHistory, setExportHistory] = useState([]);
 
   useEffect(() => {
-    const getOrders = async () => {
-      const ordersData = await fetchOrders();
-      setOrders(ordersData);
+    const getExportHistory = async () => {
+      const exportHistoryData = await fetchExportHistory();
+      setExportHistory(exportHistoryData);
     };
-    getOrders();
+    getExportHistory();
   }, []);
 
-  const handleDeleteOrder = async (orderId) => {
-    await deleteOrder(orderId);
-    setOrders((prevOrders) =>
-      prevOrders.filter((order) => order.id !== orderId)
+  const handleDeleteExport = async (exportId) => {
+    await deleteExportHistory(exportId);
+    setExportHistory((prevExportHistory) =>
+      prevExportHistory.filter((exportEntry) => exportEntry.id !== exportId)
     );
   };
 
   return (
-    <div className="order-history">
-      <h1>Lịch sử xuất, nhập kho</h1>
+    <div className="export-history">
+      <h1>Lịch sử xuất kho</h1>
       <ul>
-        {orders.map((order) => (
-          <li key={order.id}>
+        {exportHistory.map((exportEntry) => (
+          <li key={exportEntry.id}>
             <div>
-              <strong>ID:</strong> {order.id}
+              <strong>ID:</strong> {exportEntry.id}
             </div>
             <div>
               <strong>Tổng giá:</strong>{" "}
-              {order.totalPrice.toLocaleString("vi-VN", {
+              {exportEntry.totalPrice.toLocaleString("vi-VN", {
                 style: "currency",
                 currency: "VND",
               })}
             </div>
             <div>
-              <strong>Phương thức thanh toán:</strong> {order.paymentMethod}
+              <strong>Phương thức thanh toán:</strong> {exportEntry.paymentMethod}
             </div>
             <div>
               <strong>Ngày:</strong>{" "}
-              {new Date(order.date).toLocaleString("vi-VN")}
+              {new Date(exportEntry.date).toLocaleString("vi-VN")}
             </div>
 
             {/* Hiển thị sản phẩm */}
-            <div className="order-products">
+            <div className="export-products">
               <strong>Sản phẩm:</strong>
               <ul>
                 {/* Kiểm tra nếu products tồn tại và là mảng */}
-                {Array.isArray(order.products) && order.products.length > 0 ? (
-                  order.products.map((product) => (
+                {Array.isArray(exportEntry.products) && exportEntry.products.length > 0 ? (
+                  exportEntry.products.map((product) => (
                     <li key={product.id}>
                       <div>
                         <strong>Tên:</strong> {product.name}
@@ -67,7 +67,6 @@ const OrderHistory = () => {
                       </div>
                       <div>
                         <strong>Kệ:</strong> {product.shelfId}{" "}
-                        {/* Hoặc thêm thông tin khác về kệ nếu có */}
                       </div>
                     </li>
                   ))
@@ -77,7 +76,7 @@ const OrderHistory = () => {
               </ul>
             </div>
 
-            <button onClick={() => handleDeleteOrder(order.id)}>Xóa</button>
+            <button onClick={() => handleDeleteExport(exportEntry.id)}>Xóa</button>
           </li>
         ))}
       </ul>
@@ -85,4 +84,4 @@ const OrderHistory = () => {
   );
 };
 
-export default OrderHistory;
+export default ExportHistory;
