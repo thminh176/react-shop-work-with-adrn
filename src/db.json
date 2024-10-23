@@ -80,8 +80,7 @@
           "shelfId": 3
         }
       ]
-    },
-    {}
+    }
   ],
   "editHistory": [],
   "shelves": [
@@ -253,5 +252,11 @@
         "z": 2
       }
     }
-  ]
+  ],
+
+  "paymentInfo": {
+    "name": "Đàm Thiên Minh",
+    "number": "666617678888",
+    "bank": "MB"
+  }
 }
