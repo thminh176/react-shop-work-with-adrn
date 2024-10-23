@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { Routes, Route, NavLink, Navigate } from "react-router-dom";
 import Dashboard from "../components/Dashboard/Dashboard";
 import UserManagement from "../components/UserManagement/UserManagement";
-import OrderHistory from "../components/ExportHistory/ExportHistory.js";
-import ProductHistory from "../components/ProductHistory/ProductHistory";
 import ProductManagement from "../components/ProductManagement/ProductManagement";
 import ShelfManagement from "../components/ShelfManagement/ShelfManagement";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -12,6 +10,7 @@ import { GoPackageDependents } from "react-icons/go";
 import ProtectedRoute from "../components/ProtectedRoute.js";
 import { FaUser, FaHistory, FaProductHunt, FaThLarge } from "react-icons/fa";
 import "./Admin.scss";
+import ExportHistory from "../components/ExportHistory/ExportHistory.js";
 
 const Admin = () => {
   const [navOpen, setNavOpen] = useState(true);
@@ -50,20 +49,11 @@ const Admin = () => {
           </li>
           <li>
             <NavLink
-              to="/admin/orders"
+              to="/admin/exportHistory"
               className={({ isActive }) => (isActive ? "active" : "")}
             >
               <GoPackageDependents />
               <span>Lịch sử xuất , nhập kho</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/admin/product-history"
-              className={({ isActive }) => (isActive ? "active" : "")}
-            >
-              <FaHistory />
-              <span>Lịch sử chỉnh sửa sản phẩm</span>
             </NavLink>
           </li>
           <li>
@@ -110,15 +100,9 @@ const Admin = () => {
             }
           />
           <Route
-            path="orders"
+            path="exportHistory"
             element={
-              <ProtectedRoute element={<OrderHistory />} isAdmin={isAdmin} />
-            }
-          />
-          <Route
-            path="product-history"
-            element={
-              <ProtectedRoute element={<ProductHistory />} isAdmin={isAdmin} />
+              <ProtectedRoute element={<ExportHistory />} isAdmin={isAdmin} />
             }
           />
           <Route

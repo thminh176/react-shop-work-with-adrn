@@ -16,7 +16,28 @@ export const fetchData = async () => {
     return null;
   }
 };
+// fetch paymentinfo
+export async function getPaymentInfo() {
+  try {
+    const response = await fetch(`${API_URL}/latest`, {
+      method: "GET",
+      headers: {
+        "X-Master-Key": API_KEY,
+        "Content-Type": "application/json",
+      },
+    });
 
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    const data = await response.json();
+    console.log(data.record.paymentInfo);
+    return data.record.paymentInfo; // Trả về data để dùng khi import
+  } catch (error) {
+    console.error("Error fetching payment info:", error);
+  }
+}
 // Fetch users
 export const fetchUsers = async () => {
   const data = await fetchData();

@@ -1,25 +1,48 @@
 import React, { useState, useEffect } from "react";
-import { fetchData, updateProduct, deleteProduct } from "../api";
-import ProductEditPopup from "./ProductEditPopup"; // Import Popup
-import Barcode from "react-barcode"; // Import barcode library
+import { fetchData, fetchShelves, updateProduct, deleteProduct } from "../api";
+import ProductEditPopup from "./ProductEditPopup";
+import Barcode from "react-barcode";
 
-import "./ProductManagement.scss"; // File SCSS cho modal
+import "./ProductManagement.scss";
+
 const ProductManagement = () => {
   const [products, setProducts] = useState([]);
+  const [shelves, setShelves] = useState([]); // Store shelf data
   const [editingProduct, setEditingProduct] = useState(null);
-  const [isPopupOpen, setIsPopupOpen] = useState(false); // Quản lý trạng thái mở popup
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [shelfMapping, setShelfMapping] = useState({});
 
+  // Fetch products and shelves on component mount
   useEffect(() => {
-    const getProducts = async () => {
-      const data = await fetchData();
-      setProducts(data.products);
+    const getProductsAndShelves = async () => {
+      const productData = await fetchData();
+      const shelfData = await fetchShelves(); // Fetch shelves
+
+      setProducts(productData.products);
+      setShelves(shelfData);
+
+      // Create a mapping of productId to shelf names (array)
+      const shelfMapping = {};
+      shelfData.forEach((shelf) => {
+        if (!shelfMapping[shelf.productId]) {
+          shelfMapping[shelf.productId] = [];
+        }
+        shelfMapping[shelf.productId].push(shelf.name); // Thêm tên kệ vào mảng
+      });
+      setShelfMapping(shelfMapping);
     };
-    getProducts();
+    getProductsAndShelves();
   }, []);
+
+  // Get shelf names by ID
+  const getShelfNames = (productId) => {
+    const shelfNames = shelfMapping[productId];
+    return shelfNames ? shelfNames.join(", ") : "Không xác định"; // Trả về danh sách tên kệ
+  };
 
   const handleEdit = (product) => {
     setEditingProduct(product);
-    setIsPopupOpen(true); // Mở popup khi chỉnh sửa
+    setIsPopupOpen(true);
   };
 
   const handleSave = async () => {
@@ -28,7 +51,7 @@ const ProductManagement = () => {
       product.id === editingProduct.id ? editingProduct : product
     );
     setProducts(updatedProducts);
-    setIsPopupOpen(false); // Đóng popup sau khi lưu
+    setIsPopupOpen(false);
   };
 
   const handleChange = (e) => {
@@ -46,29 +69,27 @@ const ProductManagement = () => {
     }
   };
 
-  // Tách sản phẩm chưa khai báo thông tin
   const unregisteredProducts = products.filter(
     (product) =>
       !product.name ||
-      !product.price ||
+      product.price === undefined ||
       !product.description ||
-      !product.image ||
-      !product.shelfId
+      !product.image
   );
+
   const registeredProducts = products.filter(
     (product) =>
+      shelves.some((shelf) => shelf.productId === product.id) && // Check if product is in shelves
       product.name &&
-      product.price &&
+      product.price !== undefined &&
       product.description &&
-      product.image &&
-      product.shelfId
+      product.image
   );
 
   return (
     <div className="product-management">
       <h1>Quản lý sản phẩm</h1>
 
-      {/* List of Registered Products */}
       <h2>Sản phẩm đã khai báo thông tin</h2>
       <table>
         <thead>
@@ -92,9 +113,10 @@ const ProductManagement = () => {
               <td>
                 <img src={product.image} alt={product.name} width="50" />
               </td>
-              <td>{`Kệ Số ${product.shelfId}`}</td>
+              <td>{getShelfNames(product.id)}</td>{" "}
+              {/* Hiển thị tất cả tên kệ */}
               <td>
-                <Barcode value={product.barcode} /> {/* Hiển thị mã vạch */}
+                <Barcode value={product.barcode} />
               </td>
               <td>
                 <button onClick={() => handleEdit(product)}>Chỉnh sửa</button>
@@ -107,7 +129,6 @@ const ProductManagement = () => {
         </tbody>
       </table>
 
-      {/* List of Unregistered Products */}
       <h2>Sản phẩm chưa khai báo thông tin</h2>
       <table>
         <thead>
@@ -122,8 +143,7 @@ const ProductManagement = () => {
             <tr key={product.id}>
               <td>{product.id}</td>
               <td>
-                <Barcode className="barcode" value={product.barcode} />{" "}
-                {/* Hiển thị mã vạch */}
+                <Barcode className="barcode" value={product.barcode} />
               </td>
               <td>
                 <button onClick={() => handleEdit(product)}>Khai báo</button>
@@ -133,7 +153,6 @@ const ProductManagement = () => {
         </tbody>
       </table>
 
-      {/* Popup */}
       <ProductEditPopup
         product={editingProduct}
         isOpen={isPopupOpen}

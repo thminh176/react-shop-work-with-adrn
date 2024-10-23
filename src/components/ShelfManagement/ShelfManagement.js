@@ -4,20 +4,21 @@ import "./ShelfManagement.scss"; // Import SCSS
 
 const ShelfManagement = () => {
   const [shelves, setShelves] = useState([]);
-  const [products, setProducts] = useState([]); // Thêm state cho sản phẩm
+  const [products, setProducts] = useState([]);
   const [selectedShelf, setSelectedShelf] = useState(null);
+  const [selectedProductId, setSelectedProductId] = useState(null); // Thêm state cho ID sản phẩm đang chọn
   const [position, setPosition] = useState({ x: 0, y: 0, z: 0 });
   const pinCode = () => {
     var pin = prompt("nhập mã pin");
-
     return pin;
   };
+
   useEffect(() => {
     const loadShelvesAndProducts = async () => {
       const shelvesData = await fetchShelves();
-      const productsData = await fetchProducts(); // Lấy sản phẩm
+      const productsData = await fetchProducts();
       setShelves(shelvesData);
-      setProducts(productsData); // Lưu trữ sản phẩm
+      setProducts(productsData);
     };
     loadShelvesAndProducts();
   }, []);
@@ -29,6 +30,9 @@ const ShelfManagement = () => {
       y: shelf.position.y,
       z: shelf.position.z,
     });
+
+    // Lấy ID sản phẩm tương ứng và đặt vào state
+    setSelectedProductId(shelf.productId);
   };
 
   const handlePositionChange = (e) => {
@@ -36,10 +40,18 @@ const ShelfManagement = () => {
     setPosition((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleProductChange = (e) => {
+    setSelectedProductId(e.target.value); // Cập nhật ID sản phẩm khi chọn từ dropdown
+  };
+
   const handleUpdateShelf = async () => {
     if (pinCode().toString() === "6789") {
       if (selectedShelf) {
-        const updatedShelf = { ...selectedShelf, position };
+        const updatedShelf = {
+          ...selectedShelf,
+          position,
+          productId: selectedProductId,
+        }; // Cập nhật productId
         await updateShelf(updatedShelf);
         setShelves((prev) =>
           prev.map((shelf) =>
@@ -47,6 +59,7 @@ const ShelfManagement = () => {
           )
         );
         setSelectedShelf(null);
+        setSelectedProductId(null); // Reset ID sản phẩm
         alert("Done");
       }
     } else {
@@ -56,20 +69,19 @@ const ShelfManagement = () => {
 
   const handleCloseEditShelf = () => {
     setSelectedShelf(null);
+    setSelectedProductId(null); // Reset ID sản phẩm chọn
   };
 
   // Phân chia kệ hàng thành hai nhóm: 1-9 và 10-18
-  const leftShelves = shelves.slice(0, 9); // Kệ 1-9
-  const rightShelves = shelves.slice(9, 18); // Kệ 10-18
+  const leftShelves = shelves.slice(0, 9);
+  const rightShelves = shelves.slice(9, 18);
 
   return (
     <div className="shelf-management">
       <h1>Quản Lý Kệ Hàng</h1>
       <div className="shelf-container">
-        {/* Bên trái */}
         <div className="left-shelves">
           <h2>Kệ 1 đến 9</h2>
-          {/* Chia thành các hàng nhỏ */}
           {[0, 1, 2].map((row) => (
             <div className="shelf-row" key={row}>
               {leftShelves.slice(row * 3, row * 3 + 3).map((shelf) => (
@@ -86,13 +98,13 @@ const ShelfManagement = () => {
                   <h4>Sản phẩm:</h4>
                   <ul>
                     {products
-                      .filter((product) => product.shelfId === shelf.id)
+                      .filter((product) => shelf.productId === product.id)
                       .map((product) => (
                         <li key={product.id}>{product.name}</li>
                       ))}
-                    {/* Hiển thị nếu không có sản phẩm */}
-                    {products.filter((product) => product.shelfId === shelf.id)
-                      .length === 0 && <li>Không có sản phẩm</li>}
+                    {products.filter(
+                      (product) => shelf.productId === product.id
+                    ).length === 0 && <li>Không có sản phẩm</li>}
                   </ul>
                 </div>
               ))}
@@ -100,10 +112,8 @@ const ShelfManagement = () => {
           ))}
         </div>
 
-        {/* Bên phải - Kệ 10 đến 18 */}
         <div className="right-shelves">
           <h2>Kệ 10 đến 18</h2>
-          {/* Chia thành các hàng nhỏ */}
           {[0, 1, 2].map((row) => (
             <div className="shelf-row" key={row}>
               {rightShelves.slice(row * 3, row * 3 + 3).map((shelf) => (
@@ -120,13 +130,13 @@ const ShelfManagement = () => {
                   <h4>Sản phẩm:</h4>
                   <ul>
                     {products
-                      .filter((product) => product.shelfId === shelf.id)
+                      .filter((product) => shelf.productId === product.id)
                       .map((product) => (
                         <li key={product.id}>{product.name}</li>
                       ))}
-                    {/* Hiển thị nếu không có sản phẩm */}
-                    {products.filter((product) => product.shelfId === shelf.id)
-                      .length === 0 && <li>Không có sản phẩm</li>}
+                    {products.filter(
+                      (product) => product.id === shelf.productId
+                    ).length === 0 && <li>Không có sản phẩm</li>}
                   </ul>
                 </div>
               ))}
@@ -134,7 +144,6 @@ const ShelfManagement = () => {
           ))}
         </div>
 
-        {/* Bên phải - Form cập nhật */}
         <div className={`edit-shelf ${selectedShelf ? "active" : ""}`}>
           {selectedShelf ? (
             <>
@@ -166,9 +175,22 @@ const ShelfManagement = () => {
                   onChange={handlePositionChange}
                 />
               </label>
+              <label>
+                Sản phẩm:
+                <select
+                  value={selectedProductId || ""}
+                  onChange={handleProductChange}
+                >
+                  <option value="">Chọn sản phẩm...</option>
+                  {products.map((product) => (
+                    <option key={product.id} value={product.id}>
+                      {product.name}
+                    </option>
+                  ))}
+                </select>
+              </label>
               <button onClick={handleUpdateShelf}>Cập Nhật</button>
-              <button onClick={handleCloseEditShelf}>Đóng</button>{" "}
-              {/* Nút tắt form */}
+              <button onClick={handleCloseEditShelf}>Đóng</button>
             </>
           ) : (
             <p>Chọn một kệ hàng để chỉnh sửa...</p>

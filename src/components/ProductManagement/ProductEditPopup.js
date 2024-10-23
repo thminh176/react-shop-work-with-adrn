@@ -4,6 +4,19 @@ import "./ProductEditPopup.scss"; // File SCSS cho modal
 const ProductEditPopup = ({ product, isOpen, onClose, onSave, onChange }) => {
   if (!isOpen) return null;
 
+  const handleSave = () => {
+    // Lấy productId từ sản phẩm
+    const productId = product.id;
+
+    // Cập nhật sản phẩm
+    const updatedProductData = {
+      productId: productId,
+      // Không cập nhật kệ hàng nữa
+    };
+
+    onSave(updatedProductData); // Gọi onSave với dữ liệu sản phẩm mới
+  };
+
   return (
     <div className="modal-overlay">
       <div className="modal-content">
@@ -55,22 +68,6 @@ const ProductEditPopup = ({ product, isOpen, onClose, onSave, onChange }) => {
               />
             </label>
             <label>
-              Kệ hàng:
-              <select
-                name="shelfId"
-                value={product?.shelfId || ""}
-                onChange={onChange}
-                required={!product?.shelfId} // Yêu cầu nếu chưa có kệ hàng
-              >
-                <option value="">Chọn kệ</option>
-                {Array.from({ length: 18 }, (_, index) => (
-                  <option key={index + 1} value={index + 1}>
-                    Kệ Số {index + 1}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label>
               Barcode:
               <input
                 type="text"
@@ -80,10 +77,11 @@ const ProductEditPopup = ({ product, isOpen, onClose, onSave, onChange }) => {
                 required={!product?.barcode} // Yêu cầu nếu chưa có barcode
               />
             </label>
+            {/* Phần chọn kệ hàng đã được loại bỏ */}
           </form>
         </div>
         <div className="modal-footer">
-          <button onClick={onSave}>Lưu</button>
+          <button onClick={handleSave}>Lưu</button>
           <button onClick={onClose}>Hủy</button>
         </div>
       </div>

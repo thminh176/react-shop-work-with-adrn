@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./Cart.scss";
 import PaymentModal from "../PaymentModal/PaymentModal";
 import Loading from "../Loading/Loading";
-import { addExportHistory } from "../api"; // Đảm bảo import đúng hàm
 
 const Cart = ({ cartItems, removeFromCart, setCartItems }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -20,18 +19,12 @@ const Cart = ({ cartItems, removeFromCart, setCartItems }) => {
     setCartItems([]); // Xóa toàn bộ giỏ hàng
   };
 
-  const confirmPayment = async (method) => {
+  const confirmPayment = () => {
     // Thực hiện xác nhận thanh toán
-    try {
-      await addExportHistory({
-        // Thông tin xuất kho cần thêm (có thể thêm ở đây)
-      });
-      clearCart(); // Xóa giỏ hàng sau khi in hóa đơn
-    } catch (error) {
-      console.error("Lỗi khi thêm lịch sử xuất kho:", error);
-    } finally {
-      closeModal();
-    }
+
+    clearCart(); // Xóa giỏ hàng sau khi in hóa đơn
+
+    closeModal();
   };
 
   const openBillWindow = (cartItems, totalPrice, paymentMethod) => {

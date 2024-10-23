@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
-import { addExportHistory, fetchShelves } from "../api"; // Import API function
+import { getPaymentInfo, addExportHistory, fetchShelves } from "../api"; // Import API function
 import "./PaymentModal.scss";
 
 Modal.setAppElement("#root");
@@ -14,6 +14,16 @@ const PaymentModal = ({
 }) => {
   const [paymentMethod, setPaymentMethod] = useState("");
   const [qrCode, setQrCode] = useState(null);
+  const [paymentInfo, setPaymentInfo] = useState({}); // State để lưu thông tin từ API
+
+  useEffect(() => {
+    const fetchPaymentInfo = async () => {
+      const data = await getPaymentInfo();
+      setPaymentInfo(data); // Lưu thông tin thanh toán vào state
+    };
+
+    fetchPaymentInfo();
+  }, []);
 
   const handlePaymentMethodChange = (method) => {
     setPaymentMethod(method);
@@ -25,10 +35,8 @@ const PaymentModal = ({
       return;
     }
 
-    // Fetch shelves data
     const shelves = await fetchShelves();
 
-    // Add order history after confirmation
     const orderHistory = {
       id: Date.now(), // Unique ID for the order
       totalPrice,
@@ -46,18 +54,16 @@ const PaymentModal = ({
       }),
     };
 
-    console.log("Order History:", orderHistory); // Log order history
     const response = await addExportHistory(orderHistory);
-    console.log("Response from API:", response); // Log phản hồi từ API
 
     if (response) {
-      onConfirm(paymentMethod); // Call onConfirm function
+      onConfirm(paymentMethod);
     }
   };
-
-  const bankNumber = "666617678888";
+  const bankReciverName = paymentInfo.name;
+  const bankNumber = paymentInfo.number;
   const amount = totalPrice;
-  const qrCodeUrl = `https://img.vietqr.io/image/mbbank-${bankNumber}-compact.png?amount=${amount}`;
+  const qrCodeUrl = `https://img.vietqr.io/image/mbbank-${bankNumber}-compact.png?amount=${amount}`; // Sử dụng số tài khoản từ API
 
   const handleClose = () => {
     onClose();
@@ -112,8 +118,10 @@ const PaymentModal = ({
         <div className="qr-code">
           <h3>Quét Mã QR Để Chuyển Tiền</h3>
           <img src={qrCode} alt="VietQR - MB Bank" />
-          <p>Ngân Hàng: MB Bank</p>
+          <p>Ngân Hàng: {paymentInfo.bank || "MB Bank"}</p>{" "}
+          {/* Hiển thị tên ngân hàng từ API */}
           <p>Số Tài Khoản: {bankNumber}</p>
+          <p>Tên Người Thụ Hưởng: {bankReciverName}</p>
           <p>Số Tiền: {formattedTotalPrice}</p>
         </div>
       )}
