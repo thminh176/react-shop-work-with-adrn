@@ -35,20 +35,24 @@ const PaymentModal = ({
       paymentMethod,
       date: new Date().toISOString(),
       products: cartItems.map((item) => {
-        const shelf = shelves.find((shelf) => shelf.productId === item.id); // Find the corresponding shelf
+        const shelf = shelves.find((shelf) => shelf.productId === item.id);
         return {
           id: item.id,
           name: item.name,
           price: item.price,
           quantity: item.quantity,
-          shelfId: shelf ? shelf.id : null, // Add shelfId if found, otherwise null
+          shelfId: shelf ? shelf.id : null,
         };
       }),
     };
 
-    await addExportHistory(orderHistory); // orderHistory phải là một mảng hoặc đối tượng hợp lệ
+    console.log("Order History:", orderHistory); // Log order history
+    const response = await addExportHistory(orderHistory);
+    console.log("Response from API:", response); // Log phản hồi từ API
 
-    onConfirm(paymentMethod); // Call onConfirm function
+    if (response) {
+      onConfirm(paymentMethod); // Call onConfirm function
+    }
   };
 
   const bankNumber = "666617678888";

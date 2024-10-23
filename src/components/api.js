@@ -124,9 +124,12 @@ export const updateProduct = async (updatedProduct) => {
   try {
     const data = await fetchData();
 
+    // Đảm bảo price, shelfId là số và giữ nguyên barcode
     const productToUpdate = {
       ...updatedProduct,
       price: Number(updatedProduct.price),
+      shelfId: Number(updatedProduct.shelfId),
+      barcode: updatedProduct.barcode, // Giữ barcode không thay đổi
     };
 
     const updatedProducts = data.products.map((product) =>
@@ -177,6 +180,56 @@ export const deleteProduct = async (productId) => {
   }
 };
 
+// Fetch orders
+export const fetchOrders = async () => {
+  const data = await fetchData();
+  return data ? data.orders : [];
+};
+
+// Add order
+export const addOrder = async (newOrder) => {
+  try {
+    const data = await fetchData();
+    const updatedOrders = [...data.orders, newOrder];
+
+    const response = await fetch(API_URL, {
+      method: "PUT",
+      headers: {
+        "X-Master-Key": API_KEY,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ...data, orders: updatedOrders }),
+    });
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error adding order:", error);
+    return null;
+  }
+};
+
+// Delete order
+export const deleteOrder = async (orderId) => {
+  try {
+    const data = await fetchData();
+    const updatedOrders = data.orders.filter((order) => order.id !== orderId);
+
+    const response = await fetch(API_URL, {
+      method: "PUT",
+      headers: {
+        "X-Master-Key": API_KEY,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ...data, orders: updatedOrders }),
+    });
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error deleting order:", error);
+    return null;
+  }
+};
+
 // Fetch shelves
 export const fetchShelves = async () => {
   const data = await fetchData();
@@ -206,28 +259,37 @@ export const updateShelf = async (updatedShelf) => {
     return null;
   }
 };
-
-// Fetch export history
-export const fetchExportHistory = async () => {
+// Add order history
+export const addOrderHistory = async (orderHistory) => {
   try {
+    const data = await fetchData();
+    const updatedOrders = [...data.orders, orderHistory];
+
     const response = await fetch(API_URL, {
+      method: "PUT",
       headers: {
         "X-Master-Key": API_KEY,
+        "Content-Type": "application/json",
       },
+      body: JSON.stringify({ ...data, orders: updatedOrders }),
     });
-    const data = await response.json();
-    return data.record.exportHistory || []; // Trả về exportHistory
+
+    return await response.json();
   } catch (error) {
-    console.error("Error fetching export history:", error);
-    return [];
+    console.error("Error adding order history:", error);
+    return null;
   }
+}; // Fetch export history
+export const fetchExportHistory = async () => {
+  const data = await fetchData();
+  return data ? data.exportHistory : [];
 };
 
 // Add to export history
-export const addExportHistory = async (newExportHistory) => {
+export const addExportHistory = async (newOrder) => {
   try {
-    const data = await fetchExportHistory();
-    const updatedExportHistory = [...data, ...newExportHistory]; // Thêm vào exportHistory hiện tại
+    const data = await fetchData();
+    const updatedExportHistory = [...data.exportHistory, newOrder];
 
     const response = await fetch(API_URL, {
       method: "PUT",
@@ -245,12 +307,12 @@ export const addExportHistory = async (newExportHistory) => {
   }
 };
 
-// Update export history (if needed)
-export const updateExportHistory = async (updatedHistory) => {
+// Delete from export history
+export const deleteExportHistory = async (orderId) => {
   try {
-    const data = await fetchExportHistory();
-    const updatedExportHistory = data.map((history) =>
-      history.id === updatedHistory.id ? updatedHistory : history
+    const data = await fetchData();
+    const updatedExportHistory = data.exportHistory.filter(
+      (order) => order.id !== orderId
     );
 
     const response = await fetch(API_URL, {
@@ -264,30 +326,7 @@ export const updateExportHistory = async (updatedHistory) => {
 
     return await response.json();
   } catch (error) {
-    console.error("Error updating export history:", error);
-    return null;
-  }
-};
-// Delete from export history
-export const deleteExportHistory = async (exportId) => {
-  try {
-    const data = await fetchExportHistory(); // Lấy dữ liệu exportHistory hiện tại
-    const updatedExportHistory = data.filter(
-      (history) => history.id !== exportId
-    ); // Loại bỏ phần tử có exportId
-
-    const response = await fetch(API_URL, {
-      method: "PUT",
-      headers: {
-        "X-Master-Key": API_KEY,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ ...data, exportHistory: updatedExportHistory }), // Cập nhật lại exportHistory
-    });
-
-    return await response.json();
-  } catch (error) {
-    console.error("Error deleting export history:", error);
+    console.error("Error deleting from export history:", error);
     return null;
   }
 };

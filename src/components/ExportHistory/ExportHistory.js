@@ -31,17 +31,22 @@ const ExportHistory = () => {
             </div>
             <div>
               <strong>Tổng giá:</strong>{" "}
-              {exportEntry.totalPrice.toLocaleString("vi-VN", {
-                style: "currency",
-                currency: "VND",
-              })}
+              {exportEntry.totalPrice
+                ? exportEntry.totalPrice.toLocaleString("vi-VN", {
+                    style: "currency",
+                    currency: "VND",
+                  })
+                : "Chưa xác định"}
             </div>
             <div>
-              <strong>Phương thức thanh toán:</strong> {exportEntry.paymentMethod}
+              <strong>Phương thức thanh toán:</strong>{" "}
+              {exportEntry.paymentMethod}
             </div>
             <div>
               <strong>Ngày:</strong>{" "}
-              {new Date(exportEntry.date).toLocaleString("vi-VN")}
+              {exportEntry.date
+                ? new Date(exportEntry.date).toLocaleString("vi-VN")
+                : "Chưa xác định"}
             </div>
 
             {/* Hiển thị sản phẩm */}
@@ -49,7 +54,8 @@ const ExportHistory = () => {
               <strong>Sản phẩm:</strong>
               <ul>
                 {/* Kiểm tra nếu products tồn tại và là mảng */}
-                {Array.isArray(exportEntry.products) && exportEntry.products.length > 0 ? (
+                {Array.isArray(exportEntry.products) &&
+                exportEntry.products.length > 0 ? (
                   exportEntry.products.map((product) => (
                     <li key={product.id}>
                       <div>
@@ -57,16 +63,18 @@ const ExportHistory = () => {
                       </div>
                       <div>
                         <strong>Giá:</strong>{" "}
-                        {product.price.toLocaleString("vi-VN", {
-                          style: "currency",
-                          currency: "VND",
-                        })}
+                        {product.price
+                          ? product.price.toLocaleString("vi-VN", {
+                              style: "currency",
+                              currency: "VND",
+                            })
+                          : "Chưa xác định"}
                       </div>
                       <div>
                         <strong>Số lượng:</strong> {product.quantity}
                       </div>
                       <div>
-                        <strong>Kệ:</strong> {product.shelfId}{" "}
+                        <strong>Kệ:</strong> {product.shelfId}
                       </div>
                     </li>
                   ))
@@ -76,7 +84,9 @@ const ExportHistory = () => {
               </ul>
             </div>
 
-            <button onClick={() => handleDeleteExport(exportEntry.id)}>Xóa</button>
+            <button onClick={() => handleDeleteExport(exportEntry.id)}>
+              Xóa
+            </button>
           </li>
         ))}
       </ul>
