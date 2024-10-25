@@ -1,24 +1,63 @@
 import React, { useEffect, useState } from "react";
-import { fetchUsers, fetchProducts, fetchShelves } from "../api"; // Import các hàm API của bạn
+import {
+  fetchUsers,
+  fetchProducts,
+  fetchShelves,
+  getPaymentInfo,
+  updatePaymentInfo,
+} from "../api"; // Import các hàm API của bạn
+import "./Dashboard.scss";
 
 const Dashboard = () => {
   const [users, setUsers] = useState([]);
   const [products, setProducts] = useState([]);
   const [shelves, setShelves] = useState([]);
+  const [paymentInfo, setPaymentInfo] = useState({
+    name: "",
+    number: "",
+    bank: "",
+  }); // Trạng thái cho paymentInfo
+  const [isEditing, setIsEditing] = useState(false); // Trạng thái cho chế độ chỉnh sửa
 
   useEffect(() => {
     const loadData = async () => {
-      const usersData = await fetchUsers();
-      const productsData = await fetchProducts();
-      const shelvesData = await fetchShelves();
+      try {
+        const [usersData, productsData, shelvesData, paymentData] =
+          await Promise.all([
+            fetchUsers(),
+            fetchProducts(),
+            fetchShelves(),
+            getPaymentInfo(),
+          ]);
 
-      setUsers(usersData);
-      setProducts(productsData);
-      setShelves(shelvesData);
+        setUsers(usersData);
+        setProducts(productsData);
+        setShelves(shelvesData);
+        setPaymentInfo(paymentData || { name: "", number: "", bank: "" }); // Đảm bảo có dữ liệu mặc định
+      } catch (error) {
+        console.error("Error loading data:", error);
+      }
     };
 
     loadData();
   }, []);
+
+  // Hàm cập nhật paymentInfo
+  const handlePaymentInfoChange = (e) => {
+    const { name, value } = e.target;
+    setPaymentInfo({ ...paymentInfo, [name]: value });
+  };
+
+  const handleEditPaymentInfo = () => {
+    setIsEditing(true); // Bật chế độ chỉnh sửa
+  };
+
+  const handleSavePaymentInfo = async () => {
+    const updatedInfo = await updatePaymentInfo(paymentInfo); // Gọi API để cập nhật paymentInfo
+    if (updatedInfo) {
+      setIsEditing(false); // Tắt chế độ chỉnh sửa nếu thành công
+    }
+  };
 
   return (
     <div className="dashboard">
@@ -102,6 +141,44 @@ const Dashboard = () => {
             ))}
           </tbody>
         </table>
+      </div>
+
+      <div className="section">
+        <h2>Payment Information</h2>
+        {isEditing ? (
+          <div>
+            <input
+              type="text"
+              name="name"
+              value={paymentInfo.name}
+              onChange={handlePaymentInfoChange}
+              placeholder="Name"
+            />
+            <input
+              type="text"
+              name="number"
+              value={paymentInfo.number}
+              onChange={handlePaymentInfoChange}
+              placeholder="Number"
+            />
+            <input
+              type="text"
+              name="bank"
+              value={paymentInfo.bank}
+              onChange={handlePaymentInfoChange}
+              placeholder="Bank"
+            />
+            <button onClick={handleSavePaymentInfo}>Save</button>
+            <button onClick={() => setIsEditing(false)}>Cancel</button>
+          </div>
+        ) : (
+          <div>
+            <p>Name: {paymentInfo.name}</p>
+            <p>Number: {paymentInfo.number}</p>
+            <p>Bank: {paymentInfo.bank}</p>
+            <button onClick={handleEditPaymentInfo}>Edit</button>
+          </div>
+        )}
       </div>
     </div>
   );
