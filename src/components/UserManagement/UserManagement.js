@@ -1,26 +1,31 @@
 import React, { useEffect, useState } from "react";
-import { fetchUsers, addUser, updateUser, deleteUser } from "../api"; // Cập nhật đường dẫn nếu cần
+import { fetchUsers, addUser, updateUser, deleteUser } from "../api"; // Đảm bảo đường dẫn đúng
 import "./UserManagement.scss";
+
 const UserManagement = () => {
   const [users, setUsers] = useState([]);
-  const [newUser, setNewUser] = useState({ name: "", email: "", password: "" });
-  const [editingUser, setEditingUser] = useState(null); // Để chỉnh sửa mật khẩu
+  const [newUser, setNewUser] = useState({
+    username: "",
+    email: "",
+    password: "",
+    isAdmin: 0,
+  });
+  const [editingUser, setEditingUser] = useState(null);
+  const [editPassword, setEditPassword] = useState("");
 
   useEffect(() => {
-    const getUsers = async () => {
+    const loadUsers = async () => {
       const usersData = await fetchUsers();
       setUsers(usersData);
     };
-    getUsers();
+    loadUsers();
   }, []);
 
   const handleAddUser = async () => {
-    const userId = users.length
-      ? Math.max(...users.map((user) => user.id)) + 1
-      : 1; // Tạo ID mới
-    const addedUser = await addUser({ id: userId, ...newUser });
+    const newId = users.length ? Math.max(...users.map((u) => u.id)) + 1 : 1;
+    const addedUser = await addUser({ id: newId, ...newUser });
     setUsers((prevUsers) => [...prevUsers, addedUser.record]);
-    setNewUser({ name: "", email: "", password: "" }); // Reset input
+    setNewUser({ username: "", email: "", password: "", isAdmin: 0 });
   };
 
   const handleDeleteUser = async (userId) => {
@@ -28,71 +33,115 @@ const UserManagement = () => {
     setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
   };
 
-  const handleEditPassword = async (userId, newPassword) => {
-    const updatedUser = await updateUser(userId, { password: newPassword });
+  const handleEditPassword = async (userId) => {
+    await updateUser(userId, { password: editPassword });
+    setEditPassword("");
+    setEditingUser(null);
+  };
+
+  const handleUpdateAdminStatus = async (userId, isAdmin) => {
+    await updateUser(userId, { isAdmin: isAdmin ? 0 : 1 });
     setUsers((prevUsers) =>
       prevUsers.map((user) =>
-        user.id === userId
-          ? { ...user, password: updatedUser.record.password }
-          : user
+        user.id === userId ? { ...user, isAdmin: isAdmin ? 0 : 1 } : user
       )
     );
-    setEditingUser(null); // Kết thúc chỉnh sửa
   };
 
   return (
-    <div>
-      <h1>Quản lý người dùng</h1>
+    <div className="user-management-container">
+      <h1 className="user-management-title">Quản lý Người Dùng</h1>
 
-      {/* Thêm người dùng */}
-      <input
-        type="text"
-        placeholder="Tên người dùng"
-        value={newUser.name}
-        onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
-      />
-      <input
-        type="email"
-        placeholder="Email"
-        value={newUser.email}
-        onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
-      />
-      <input
-        type="password"
-        placeholder="Mật khẩu"
-        value={newUser.password}
-        onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
-      />
-      <button onClick={handleAddUser}>Thêm người dùng</button>
+      {/* Form Thêm Người Dùng */}
+      <div className="user-form">
+        <h2 className="user-form-title">Thêm Người Dùng</h2>
+        <input
+          className="user-input"
+          type="text"
+          placeholder="Tên người dùng"
+          value={newUser.username}
+          onChange={(e) => setNewUser({ ...newUser, username: e.target.value })}
+        />
+        <input
+          className="user-input"
+          type="email"
+          placeholder="Email"
+          value={newUser.email}
+          onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
+        />
+        <input
+          className="user-input"
+          type="password"
+          placeholder="Mật khẩu"
+          value={newUser.password}
+          onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
+        />
+        <label className="admin-checkbox">
+          <input
+            type="checkbox"
+            checked={newUser.isAdmin}
+            onChange={(e) =>
+              setNewUser({ ...newUser, isAdmin: e.target.checked ? 1 : 0 })
+            }
+          />
+          Admin
+        </label>
+        <button className="add-user-btn" onClick={handleAddUser}>
+          Thêm Người Dùng
+        </button>
+      </div>
 
-      {/* Danh sách người dùng */}
-      <ul>
+      {/* Danh Sách Người Dùng */}
+      <ul className="user-list">
         {users.map((user) => (
-          <li key={user.id}>
-            <strong>ID:</strong> {user.id} - {user.username} ({user.email}){" "}
-            {editingUser === user.id ? (
-              <span>
-                <input
-                  type="password"
-                  placeholder="Nhập mật khẩu mới"
-                  onChange={(e) =>
-                    setEditingUser({ id: user.id, password: e.target.value })
-                  }
-                />
+          <li className="user-item" key={user.id}>
+            <strong>ID:</strong> {user.id} - <strong>Tên:</strong>{" "}
+            {user.username} (<strong>Email:</strong> {user.email}) -{" "}
+            <strong>Admin:</strong> {user.isAdmin ? "Có" : "Không"}
+            <div className="user-actions">
+              {editingUser === user.id ? (
+                <div className="edit-password-container">
+                  <input
+                    className="password-input"
+                    type="password"
+                    placeholder="Nhập mật khẩu mới"
+                    value={editPassword}
+                    onChange={(e) => setEditPassword(e.target.value)}
+                  />
+                  <button
+                    className="save-password-btn"
+                    onClick={() => handleEditPassword(user.id)}
+                  >
+                    Lưu
+                  </button>
+                  <button
+                    className="cancel-edit-btn"
+                    onClick={() => setEditingUser(null)}
+                  >
+                    Hủy
+                  </button>
+                </div>
+              ) : (
                 <button
-                  onClick={() =>
-                    handleEditPassword(user.id, editingUser.password)
-                  }
+                  className="edit-password-btn"
+                  onClick={() => setEditingUser(user.id)}
                 >
-                  Lưu mật khẩu
+                  Sửa Mật Khẩu
                 </button>
-              </span>
-            ) : (
-              <button onClick={() => setEditingUser(user.id)}>
-                Sửa mật khẩu
+              )}
+              <button
+                className="admin-toggle-btn"
+                onClick={() => handleUpdateAdminStatus(user.id, user.isAdmin)}
+              >
+                {user.isAdmin ? "Bỏ Admin" : "Cấp Admin"}
               </button>
-            )}
-            <button onClick={() => handleDeleteUser(user.id)}>Xóa</button>
+              <button
+                className="delete-user-btn"
+                onClick={() => handleDeleteUser(user.id)}
+              >
+                Xóa
+              </button>
+            </div>
           </li>
         ))}
       </ul>
