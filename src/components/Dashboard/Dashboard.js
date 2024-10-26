@@ -135,8 +135,7 @@ const Dashboard = () => {
               <tr key={shelf.id}>
                 <td>{shelf.id}</td>
                 <td>{shelf.name}</td>
-                <td>{`X: ${shelf.position.x}, Y: ${shelf.position.y}, Z: ${shelf.position.z}`}</td>
-                <td>{shelf.productId || "N/A"}</td>
+              	<td>{shelf.productId || "Kệ Không Chứa Sản Phẩm"}</td>
               </tr>
             ))}
           </tbody>
