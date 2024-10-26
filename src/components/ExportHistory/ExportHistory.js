@@ -1,30 +1,61 @@
 import React, { useEffect, useState } from "react";
-import { fetchExportHistory, deleteExportHistory } from "../api"; // Cập nhật đường dẫn nếu cần
+import { fetchExportHistory, deleteExportHistory } from "../api";
 import "./ExportHistory.scss";
-
 const ExportHistory = () => {
   const [exportHistory, setExportHistory] = useState([]);
+  const [filteredHistory, setFilteredHistory] = useState([]);
+  const [filterDate, setFilterDate] = useState("");
 
   useEffect(() => {
     const getExportHistory = async () => {
       const exportHistoryData = await fetchExportHistory();
       setExportHistory(exportHistoryData);
+      setFilteredHistory(exportHistoryData);
     };
     getExportHistory();
   }, []);
+  const handleFilterChange = (event) => {
+    const selectedDate = event.target.value;
+    setFilterDate(selectedDate);
+
+    if (selectedDate) {
+      const filtered = exportHistory.filter((entry) =>
+        new Date(entry.date).toLocaleDateString("vi-VN") ===
+        new Date(selectedDate).toLocaleDateString("vi-VN")
+      );
+      setFilteredHistory(filtered);
+    } else {
+      setFilteredHistory(exportHistory);
+    }
+  };
+  const resetFilter = () => {
+    setFilterDate("");
+    setFilteredHistory(exportHistory);
+  };
 
   const handleDeleteExport = async (exportId) => {
     await deleteExportHistory(exportId);
     setExportHistory((prevExportHistory) =>
       prevExportHistory.filter((exportEntry) => exportEntry.id !== exportId)
     );
+    setFilteredHistory((prevFilteredHistory) =>
+      prevFilteredHistory.filter((exportEntry) => exportEntry.id !== exportId)
+    );
   };
 
   return (
     <div className="export-history">
       <h1>Lịch sử xuất kho</h1>
+      <div className="date-filter">
+        <input
+          type="date"
+          value={filterDate}
+          onChange={handleFilterChange}
+        />
+        <button onClick={resetFilter}>Reset</button>
+      </div>
       <ul>
-        {exportHistory.map((exportEntry) => (
+        {filteredHistory.map((exportEntry) => (
           <li key={exportEntry.id}>
             <div>
               <strong>ID:</strong> {exportEntry.id}
@@ -79,7 +110,7 @@ const ExportHistory = () => {
                     </li>
                   ))
                 ) : (
-                  <li>Không có sản phẩm nào trong đơn hàng.</li> // Hiển thị nếu không có sản phẩm
+                  <li>Không có sản phẩm nào trong đơn hàng.</li>
                 )}
               </ul>
             </div>

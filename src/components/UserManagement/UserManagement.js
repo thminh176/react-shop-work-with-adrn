@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchUsers, addUser, updateUser, deleteUser } from "../api"; // Đảm bảo đường dẫn đúng
+import { fetchUsers, addUser, updateUser, deleteUser } from "../api";
 import "./UserManagement.scss";
 
 const UserManagement = () => {
@@ -95,9 +95,24 @@ const UserManagement = () => {
       <ul className="user-list">
         {users.map((user) => (
           <li className="user-item" key={user.id}>
-            <strong>ID:</strong> {user.id} - <strong>Tên:</strong>{" "}
-            {user.username} (<strong>Email:</strong> {user.email}) -{" "}
-            <strong>Admin:</strong> {user.isAdmin ? "Có" : "Không"}
+            <div className="user-info">
+              <div className="user-info-row">
+                <span>ID:</span>
+                <span>{user.id}</span>
+              </div>
+              <div className="user-info-row">
+                <span>Tên:</span>
+                <span>{user.username}</span>
+              </div>
+              <div className="user-info-row">
+                <span>Email:</span>
+                <span>{user.email}</span>
+              </div>
+              <div className="user-info-row">
+                <span>Admin:</span>
+                <span>{user.isAdmin ? "Có" : "Không"}</span>
+              </div>
+            </div>
             <div className="user-actions">
               {editingUser === user.id ? (
                 <div className="edit-password-container">

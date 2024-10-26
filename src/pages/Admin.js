@@ -7,11 +7,12 @@ import ShelfManagement from "../components/ShelfManagement/ShelfManagement";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoClose } from "react-icons/io5";
 import ProtectedRoute from "../components/ProtectedRoute.js";
-import { FaUser, FaProductHunt, FaThLarge } from "react-icons/fa";
+import { FaProductHunt, FaThLarge } from "react-icons/fa";
 import "./Admin.scss";
 import ExportHistory from "../components/ExportHistory/ExportHistory.js";
 import { RiChatHistoryFill } from "react-icons/ri";
-
+import { MdManageAccounts } from "react-icons/md";
+import { MdShelves } from "react-icons/md";
 const Admin = () => {
   const [navOpen, setNavOpen] = useState(true);
   const isAdmin = localStorage.getItem("isAdmin") === "1"; // Kiểm tra nếu là admin
@@ -43,7 +44,7 @@ const Admin = () => {
               to="/admin/users"
               className={({ isActive }) => (isActive ? "active" : "")}
             >
-              <FaUser />
+              <MdManageAccounts size={27} />
               <span>Quản lý người dùng</span>
             </NavLink>
           </li>
@@ -52,7 +53,7 @@ const Admin = () => {
               to="/admin/exportHistory"
               className={({ isActive }) => (isActive ? "active" : "")}
             >
-              <RiChatHistoryFill />
+              <RiChatHistoryFill size={27} />
               <span>Lịch sử xuất , nhập kho</span>
             </NavLink>
           </li>
@@ -61,7 +62,7 @@ const Admin = () => {
               to="/admin/products"
               className={({ isActive }) => (isActive ? "active" : "")}
             >
-              <FaProductHunt />
+              <FaProductHunt size={21} />
               <span>Quản lý sản phẩm</span>
             </NavLink>
           </li>
@@ -70,13 +71,12 @@ const Admin = () => {
               to="/admin/shelves"
               className={({ isActive }) => (isActive ? "active" : "")}
             >
-              <FaThLarge />
+              <MdShelves size={22} />
               <span>Quản lý kệ hàng</span>
             </NavLink>
           </li>
         </ul>
       </nav>
-
       <div className={`admin-content ${navOpen ? "" : "shrink"}`}>
         <header className="admin-header">
           <button className="toggle-nav-btn" onClick={toggleNav}>
