@@ -17,6 +17,8 @@ const Admin = () => {
   const [navOpen, setNavOpen] = useState(true);
   const isAdmin = localStorage.getItem("isAdmin") === "1"; // Kiểm tra nếu là admin
 
+  const storedUsername = localStorage.getItem("username");
+
   const toggleNav = () => {
     setNavOpen(!navOpen);
   };
@@ -82,7 +84,7 @@ const Admin = () => {
           <button className="toggle-nav-btn" onClick={toggleNav}>
             {navOpen ? <IoClose /> : <GiHamburgerMenu />}
           </button>
-          <h1>Xin Chào, Admin</h1>
+          <h1>Xin Chào, {storedUsername}</h1>
         </header>
 
         <Routes>
