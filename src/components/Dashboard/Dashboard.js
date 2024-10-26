@@ -126,7 +126,6 @@ const Dashboard = () => {
             <tr>
               <th>ID</th>
               <th>Tên</th>
-              <th>Vị Trí</th>
               <th>ID Sản Phẩm Chứa</th>
             </tr>
           </thead>
