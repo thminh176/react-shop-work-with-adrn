@@ -24,12 +24,13 @@ const Dashboard = () => {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const [usersData, productsData, shelvesData, paymentData] = await Promise.all([
-          fetchUsers(),
-          fetchProducts(),
-          fetchShelves(),
-          getPaymentInfo(),
-        ]);
+        const [usersData, productsData, shelvesData, paymentData] =
+          await Promise.all([
+            fetchUsers(),
+            fetchProducts(),
+            fetchShelves(),
+            getPaymentInfo(),
+          ]);
 
         setUsers(usersData);
         setProducts(productsData);
@@ -67,11 +68,22 @@ const Dashboard = () => {
           <div className="shelves-region">
             <h3>Kệ Hàng 1</h3>
             <div className="shelves-grid">
-              {shelvesRegion1.map((shelf) => (                <div className="shelf-box" key={shelf.id}>
-                  <p><strong>ID:</strong> {shelf.id}</p>
-                  <p><strong>Tên:</strong> {shelf.name}</p>
-                  <p><strong>Vị trí:</strong> X: {shelf.position.x}, Y: {shelf.position.y}, Z: {shelf.position.z}</p>
-                  <p><strong>ID Sản Phẩm:</strong> {shelf.productId || "Không có sản phẩm trong kệ này"}</p>
+              {shelvesRegion1.map((shelf) => (
+                <div className="shelf-box" key={shelf.id}>
+                  <p>
+                    <strong>ID:</strong> {shelf.id}
+                  </p>
+                  <p>
+                    <strong>Tên:</strong> {shelf.name}
+                  </p>
+                  <p>
+                    <strong>Vị trí:</strong> X: {shelf.position.x}, Y:{" "}
+                    {shelf.position.y}, Z: {shelf.position.z}
+                  </p>
+                  <p>
+                    <strong>ID Sản Phẩm:</strong>{" "}
+                    {shelf.productId || "Không có sản phẩm trong kệ này"}
+                  </p>
                 </div>
               ))}
             </div>
@@ -81,10 +93,19 @@ const Dashboard = () => {
             <div className="shelves-grid">
               {shelvesRegion2.map((shelf) => (
                 <div className="shelf-box" key={shelf.id}>
-                  <p><strong>ID:</strong> {shelf.id}</p>
-                  <p><strong>Tên:</strong> {shelf.name}</p>
-                  <p><strong>Vị trí:</strong> X: {shelf.position.x}, Y: {shelf.position.y}, Z: {shelf.position.z}</p>
-                  <p><strong>ID Sản Phẩm:</strong> {shelf.productId || "N/A"}</p>
+                  <p>
+                    <strong>ID:</strong> {shelf.id}
+                  </p>
+                  <p>
+                    <strong>Tên:</strong> {shelf.name}
+                  </p>
+                  <p>
+                    <strong>Vị trí:</strong> X: {shelf.position.x}, Y:{" "}
+                    {shelf.position.y}, Z: {shelf.position.z}
+                  </p>
+                  <p>
+                    <strong>ID Sản Phẩm:</strong> {shelf.productId || "N/A"}
+                  </p>
                 </div>
               ))}
             </div>
@@ -94,5 +115,4 @@ const Dashboard = () => {
     </div>
   );
 };
-
 export default Dashboard;

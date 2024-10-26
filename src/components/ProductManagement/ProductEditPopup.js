@@ -18,15 +18,15 @@ const ProductEditPopup = ({ product, isOpen, onClose, onSave, onChange }) => {
   };
 
   return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <div className="modal-header">
+    <div className="product-edit-modal-overlay">
+      <div className="product-edit-modal-content">
+        <div className="product-edit-modal-header">
           <h2>{product?.name ? "Chỉnh sửa sản phẩm" : "Khai báo sản phẩm"}</h2>
-          <button className="close-button" onClick={onClose}>
+          <button className="product-edit-close-button" onClick={onClose}>
             &times;
           </button>
         </div>
-        <div className="modal-body">
+        <div className="product-edit-modal-body">
           <form>
             <label>
               Tên sản phẩm:
@@ -81,9 +81,13 @@ const ProductEditPopup = ({ product, isOpen, onClose, onSave, onChange }) => {
             {/* Phần chọn kệ hàng đã được loại bỏ */}
           </form>
         </div>
-        <div className="modal-footer">
-          <button className="save" onClick={handleSave}>Lưu</button>
-          <button className="cancel" onClick={onClose}>Hủy</button>
+        <div className="product-edit-modal-footer">
+          <button className="product-edit-save" onClick={handleSave}>
+            Lưu
+          </button>
+          <button className="product-edit-cancel" onClick={onClose}>
+            Hủy
+          </button>
         </div>
       </div>
     </div>

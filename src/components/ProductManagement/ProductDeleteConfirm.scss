@@ -1,5 +1,5 @@
 /* ProductDeleteConfirm.scss */
-.modal-overlay {
+.product-delete-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -12,7 +12,7 @@
   z-index: 1000;
 }
 
-.modal-content {
+.product-delete-modal-content {
   background-color: white;
   padding: 20px;
   border-radius: 8px;
@@ -21,13 +21,13 @@
   text-align: center;
 }
 
-.modal-actions {
+.product-delete-modal-actions {
   margin-top: 20px;
   display: flex;
   justify-content: space-around;
 }
 
-.confirm-button {
+.product-delete-confirm-button {
   background-color: #d9534f;
   color: white;
   padding: 10px 20px;
@@ -36,7 +36,7 @@
   cursor: pointer;
 }
 
-.cancel-button {
+.product-delete-cancel-button {
   background-color: #5bc0de;
   color: white;
   padding: 10px 20px;

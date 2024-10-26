@@ -72,8 +72,12 @@ const ExportHistory = () => {
 
       <div className="date-filter">
         <input type="date" value={filterDate} onChange={handleFilterChange} />
-        <button onClick={resetFilter}>Reset</button>
-        <button onClick={downloadExcel}>Tải Excel</button>
+        <button className="reset-btn" onClick={resetFilter}>
+          Reset
+        </button>
+        <button classname="download-btn" onClick={downloadExcel}>
+          Tải Excel
+        </button>
       </div>
 
       <ul>

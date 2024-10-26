@@ -63,7 +63,7 @@ const Header = () => {
         </nav>
         <div className="login-section">
           {!isLoggedIn ? (
-            <button onClick={openPopup}>Login / Register</button>
+            <button onClick={openPopup}>Đăng nhập / đăng ký</button>
           ) : (
             <>
               <button onClick={handleLogout}>Đăng xuất</button>
