@@ -4,106 +4,107 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.6); // Tăng độ đậm của nền
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 9999;
 }
-
 .modal-content {
   background: #ffffff;
-  padding: 30px; // Tăng khoảng cách bên trong
-  border-radius: 10px; // Tăng độ cong của viền
-  width: 500px;
-  max-width: 90%; // Giảm bớt kích thước tối đa
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); // Làm cho bóng đổ mạnh hơn
-  transition: all 0.3s ease; // Thêm hiệu ứng chuyển tiếp
+  padding: 20px;
+  border-radius: 10px;
+  width: 900px;
+  height: 750px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  overflow-y: auto;
 }
 
 .modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid #eee; // Dùng đường viền dày hơn
-  margin-bottom: 20px; // Tăng khoảng cách dưới
-  padding-bottom: 10px; // Thêm khoảng cách dưới
+  border-bottom: 2px solid #eee;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
 }
-
 .modal-header h2 {
-  font-size: 1.5rem; // Tăng kích thước tiêu đề
-  color: #333; // Màu sắc tiêu đề
-  margin: 0; // Bỏ margin
+  font-size: 1.5rem;
+  color: #333;
+  margin: 0;
 }
-
 .close-button {
-  background: transparent; // Làm cho nút trong suốt
+  background: transparent;
   border: none;
   font-size: 24px;
-  color: #ff6b6b; // Thay đổi màu sắc nút đóng
+  color: #ff6b6b;
   cursor: pointer;
-  transition: color 0.3s; // Thêm hiệu ứng chuyển tiếp cho màu sắc
-
+  transition: color 0.3s;
   &:hover {
-    color: #ff4d4d; // Thay đổi màu khi hover
+    color: #ff4d4d;
   }
 }
-
 .modal-body {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  flex-grow: 1;
+  overflow-y: auto;
+  margin-bottom: 15px;
 }
-
 .modal-body form {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
 }
-
 .modal-body label {
-  margin-bottom: 10px;
-  font-weight: bold; // Làm đậm chữ label
-  color: #555; // Màu sắc chữ
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555; 
 }
-
-.modal-body input,
-.modal-body textarea {
-  padding: 12px; // Thêm khoảng cách cho input và textarea
-  border: 1px solid #ddd; // Đường viền sáng
-  border-radius: 5px; // Làm cho viền cong
-  margin-bottom: 15px; // Thêm khoảng cách dưới
-  transition: border 0.3s; // Thêm hiệu ứng chuyển tiếp cho border
-
+.modal-body input, .modal-body textarea {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  width: calc(100% - 24px);
+  transition: border 0.3s, box-shadow 0.3s;
   &:focus {
-    border-color: #007bff; // Thay đổi màu đường viền khi focus
-    outline: none; // Bỏ outline mặc định
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
   }
 }
-
+.modal-body textarea {
+  height: 240px;
+  resize: none;
+}
 .modal-footer {
   display: flex;
   justify-content: flex-end;
-  margin-top: 20px; // Tăng khoảng cách trên
+  margin-top: 10px;
 }
-
 .modal-footer button {
   margin-left: 10px;
-  padding: 10px 15px; // Thay đổi padding cho button
+  padding: 10px 15px;
   border: none;
-  border-radius: 5px; // Làm cho viền cong
-  background-color: #007bff; // Màu nền button
-  color: #fff; // Màu chữ
+  border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s; // Thêm hiệu ứng chuyển tiếp cho màu nền
-
+  transition: background-color 0.3s;
+}
+.modal-footer button.save {
+  background-color: #28a745;
+  color: #fff;
   &:hover {
-    background-color: #0056b3; // Thay đổi màu khi hover
+    background-color: #218838;
   }
 }
-
 .modal-footer button.cancel {
-  background-color: #ff6b6b; // Màu nền cho nút hủy
-}
+  background-color: #ff6b6b; 
+  color: #fff;
 
-.modal-footer button.cancel:hover {
-  background-color: #ff4d4d; // Màu khi hover cho nút hủy
+  &:hover {
+    background-color: #ff4d4d;
+  }
 }

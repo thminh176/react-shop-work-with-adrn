@@ -149,7 +149,6 @@ const ProductManagement = () => {
             <th>Barcode</th>
             <th>Chỉnh sửa</th>
             <th>Xóa</th>
-            <th>Di chuyển</th>
           </tr>
         </thead>
         <tbody>
@@ -163,18 +162,17 @@ const ProductManagement = () => {
               </td>
               <td>{getShelfNames(product.id)}</td>{" "}
               {/* Hiển thị tất cả tên kệ */}
+              <td>{product.barcode}</td>
               <td>
-                <Barcode value={product.barcode} />
+                <button className="edit" onClick={() => handleEdit(product)}>
+                  Chỉnh Sửa
+                </button>
               </td>
               <td>
-                <button onClick={() => handleEdit(product)}>Chỉnh sửa</button>
-              </td>
-              <td>
-                <button onClick={() => handleDelete(product.id)}>Xóa</button>
-              </td>
-              <td>
-                <button onClick={() => openMovePopup(product)}>
-                  Di chuyển
+                <button
+                  className="delete"
+                  onClick={() => handleDelete(product.id)}>
+                  Xóa
                 </button>
               </td>
             </tr>

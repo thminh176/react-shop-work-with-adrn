@@ -41,11 +41,12 @@ const ProductEditPopup = ({ product, isOpen, onClose, onSave, onChange }) => {
             <label>
               Giá:
               <input
-                type="number"
+                type="text"
                 name="price"
                 value={product?.price || ""}
                 onChange={onChange}
                 required={!product?.price} // Yêu cầu nếu chưa có giá
+                pattern="^\d+(\.\d{1,2})?$" // Giới hạn để chỉ nhập số với tối đa 2 chữ số thập phân
               />
             </label>
             <label>
@@ -81,8 +82,8 @@ const ProductEditPopup = ({ product, isOpen, onClose, onSave, onChange }) => {
           </form>
         </div>
         <div className="modal-footer">
-          <button onClick={handleSave}>Lưu</button>
-          <button onClick={onClose}>Hủy</button>
+          <button className="save" onClick={handleSave}>Lưu</button>
+          <button className="cancel" onClick={onClose}>Hủy</button>
         </div>
       </div>
     </div>

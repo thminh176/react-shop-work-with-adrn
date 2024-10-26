@@ -4,11 +4,11 @@
 
   h1 {
     text-align: center;
-    margin-bottom: 25px; // Tăng khoảng cách dưới tiêu đề
-    font-size: 30px; // Tăng kích thước chữ cho tiêu đề
-    color: #2c3e50; // Màu sắc tối hơn để nổi bật hơn
-    text-transform: uppercase; // Viết hoa toàn bộ tiêu đề
-    letter-spacing: 1.2px; // Khoảng cách giữa các chữ cái
+    margin-bottom: 25px;
+    font-size: 30px;
+    color: #2c3e50;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
   }
 
   table {
@@ -18,87 +18,94 @@
 
     th,
     td {
-      padding: 15px; // Tăng khoảng cách padding để dễ nhìn hơn
+      padding: 15px;
       text-align: left;
       border: 1px solid #ddd;
     }
 
     th {
-      background-color: #eaeaea; // Màu nền sáng hơn
+      background-color: #eaeaea;
       font-size: 16px;
-      color: #2c3e50; // Màu chữ tối hơn để tương phản tốt hơn
-      font-weight: bold; // Làm đậm chữ
+      color: #2c3e50;
+      font-weight: bold;
     }
 
     tr:nth-child(even) {
-      background-color: #f9f9f9; // Màu nền cho các dòng chẵn
+      background-color: #f9f9f9;
     }
 
     tr:hover {
-      background-color: #dfe6e9; // Màu nền khi hover
-      transition: background-color 0.3s ease; // Hiệu ứng chuyển màu mượt mà
+      background-color: #dfe6e9;
+      transition: background-color 0.3s ease;
     }
 
     td {
       font-size: 14px;
-      color: #333; // Màu chữ tối hơn
+      color: #333;
     }
 
     input {
       width: 90%;
-      padding: 10px; // Tăng khoảng cách padding cho input
+      padding: 10px;
       border: 1px solid #ccc;
       border-radius: 4px;
       transition: border-color 0.3s;
 
       &:focus {
-        border-color: #007bff; // Thay đổi màu viền khi input được chọn
-        outline: none; // Loại bỏ viền mặc định
+        border-color: #007bff;
+        outline: none;
       }
     }
 
     button {
-      padding: 10px 15px; // Tăng kích thước nút
-      background-color: #007bff; // Màu nền chính cho nút
       border: none;
       color: white;
       border-radius: 4px;
       cursor: pointer;
       font-size: 14px;
       transition: background-color 0.3s, transform 0.2s;
+      white-space: nowrap; 
 
-      &:hover {
-        background-color: #0056b3; // Màu nền khi hover
-        transform: translateY(-2px); // Hiệu ứng nâng lên khi hover
+      &.edit {
+        padding: 10px 20px;
+        background-color: #007bff;
+
+        &:hover {
+          background-color: #0056b3;
+          transform: translateY(-2px);
+        }
+      }
+
+      &.delete {
+        padding: 10px 18px; 
+        background-color: #dc3545;
+
+        &:hover {
+          background-color: #c82333;
+          transform: translateY(-2px);
+        }
+      }
+
+      &.cancel {
+        padding: 8px 14px; 
+        background-color: #6c757d;
+
+        &:hover {
+          background-color: #5a6268;
+          transform: translateY(-2px);
+        }
       }
     }
 
-    button.delete {
-      background-color: #dc3545;
-
-      &:hover {
-        background-color: #c82333; // Màu nền khi hover
-        transform: translateY(-2px); // Hiệu ứng nâng lên khi hover
-      }
-    }
-
-    button.cancel {
-      background-color: #6c757d;
-
-      &:hover {
-        background-color: #5a6268; // Màu nền khi hover
-        transform: translateY(-2px); // Hiệu ứng nâng lên khi hover
-      }
+    .button-group {
+      display: flex;
+      gap: 10px;
     }
   }
 
-  .button-group {
-    display: flex;
-    gap: 10px; // Khoảng cách giữa các nút
+  .barcode {
+    width: 80%;
+    max-width: 200px;
+    height: auto;
   }
-}
-.barcode {
-  width: 80%; /* Giảm chiều rộng xuống 80% */
-  max-width: 200px; /* Đặt chiều rộng tối đa */
-  height: auto; /* Để chiều cao tự động */
 }
