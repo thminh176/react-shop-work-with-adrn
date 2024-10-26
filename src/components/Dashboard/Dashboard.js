@@ -64,14 +64,14 @@ const Dashboard = () => {
       <h1>Dashboard</h1>
 
       <div className="section">
-        <h2>Users</h2>
+        <h2>Danh Sách Người Dùng</h2>
         <table>
           <thead>
             <tr>
               <th>ID</th>
               <th>Username</th>
               <th>Email</th>
-              <th>Is Admin</th>
+              <th>Admin</th>
             </tr>
           </thead>
           <tbody>
@@ -80,7 +80,7 @@ const Dashboard = () => {
                 <td>{user.id}</td>
                 <td>{user.username}</td>
                 <td>{user.email}</td>
-                <td>{user.isAdmin ? "Yes" : "No"}</td>
+                <td>{user.isAdmin ? "Có" : "Không"}</td>
               </tr>
             ))}
           </tbody>
@@ -88,15 +88,15 @@ const Dashboard = () => {
       </div>
 
       <div className="section">
-        <h2>Products</h2>
+        <h2>Danh Sách Sản Phẩm</h2>
         <table>
           <thead>
             <tr>
               <th>ID</th>
-              <th>Name</th>
-              <th>Price</th>
-              <th>Description</th>
-              <th>Image</th>
+              <th>Tên</th>
+              <th>Giá</th>
+              <th>Mô Tả</th>
+              <th>Ảnh</th>
             </tr>
           </thead>
           <tbody>
@@ -120,14 +120,14 @@ const Dashboard = () => {
       </div>
 
       <div className="section">
-        <h2>Shelves</h2>
+        <h2>Kệ Hàng</h2>
         <table>
           <thead>
             <tr>
               <th>ID</th>
-              <th>Name</th>
-              <th>Position</th>
-              <th>Product ID</th>
+              <th>Tên</th>
+              <th>Vị Trí</th>
+              <th>ID Sản Phẩm Chứa</th>
             </tr>
           </thead>
           <tbody>
@@ -144,7 +144,7 @@ const Dashboard = () => {
       </div>
 
       <div className="section">
-        <h2>Payment Information</h2>
+        <h2>Thông Tin Thanh Toán</h2>
         {isEditing ? (
           <div>
             <input
@@ -152,11 +152,11 @@ const Dashboard = () => {
               name="name"
               value={paymentInfo.name}
               onChange={handlePaymentInfoChange}
-              placeholder="Name"
+              placeholder="Tên"
             />
             <input
               type="text"
-              name="number"
+              name="Số Tài Khoản"
               value={paymentInfo.number}
               onChange={handlePaymentInfoChange}
               placeholder="Number"
@@ -166,16 +166,16 @@ const Dashboard = () => {
               name="bank"
               value={paymentInfo.bank}
               onChange={handlePaymentInfoChange}
-              placeholder="Bank"
+              placeholder="Ngân Hàng Nhận"
             />
-            <button onClick={handleSavePaymentInfo}>Save</button>
-            <button onClick={() => setIsEditing(false)}>Cancel</button>
+            <button onClick={handleSavePaymentInfo}>Lưu</button>
+            <button onClick={() => setIsEditing(false)}>Hủy</button>
           </div>
         ) : (
           <div>
-            <p>Name: {paymentInfo.name}</p>
-            <p>Number: {paymentInfo.number}</p>
-            <p>Bank: {paymentInfo.bank}</p>
+            <p>Tên: {paymentInfo.name}</p>
+            <p>STK: {paymentInfo.number}</p>
+            <p>Ngân Hàng: {paymentInfo.bank}</p>
             <button onClick={handleEditPaymentInfo}>Edit</button>
           </div>
         )}

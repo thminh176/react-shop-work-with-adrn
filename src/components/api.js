@@ -430,3 +430,42 @@ export const updatePaymentInfo = async (updatedPaymentInfo) => {
     return null;
   }
 };
+// Move product from one shelf to another
+export const moveProduct = async (productId, oldShelfId, newShelfId) => {
+  try {
+    const data = await fetchData();
+
+    // Cập nhật shelves
+    const updatedShelves = data.shelves.map((shelf) => {
+      if (shelf.id === oldShelfId) {
+        // Xóa productId khỏi kệ cũ
+        return { ...shelf, productId: null };
+      }
+      if (shelf.id === newShelfId) {
+        // Thêm productId vào kệ mới
+        return { ...shelf, productId };
+      }
+      return shelf; // Trả về kệ không thay đổi
+    });
+
+    // Cập nhật dữ liệu mới cho shelves
+    const response = await axios.put(
+      API_URL,
+      {
+        ...data,
+        shelves: updatedShelves,
+      },
+      {
+        headers: {
+          "X-Master-Key": API_KEY,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Error moving product:", error);
+    return null;
+  }
+};

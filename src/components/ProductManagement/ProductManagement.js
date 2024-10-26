@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { fetchData, fetchShelves, updateProduct, deleteProduct } from "../api";
+import {
+  fetchData,
+  fetchShelves,
+  updateProduct,
+  deleteProduct,
+  updateShelf,
+} from "../api";
 import ProductEditPopup from "./ProductEditPopup";
 import Barcode from "react-barcode";
-
+import MoveProductPopup from "./MoveProductPopup";
 import "./ProductManagement.scss";
 
 const ProductManagement = () => {
@@ -11,6 +17,8 @@ const ProductManagement = () => {
   const [editingProduct, setEditingProduct] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [shelfMapping, setShelfMapping] = useState({});
+  const [isMovePopupOpen, setIsMovePopupOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   // Fetch products and shelves on component mount
   useEffect(() => {
@@ -33,6 +41,45 @@ const ProductManagement = () => {
     };
     getProductsAndShelves();
   }, []);
+  const handleMove = async (oldShelfId, newShelfId) => {
+    try {
+      // Cập nhật kệ trong state
+      const updatedShelves = shelves.map((shelf) => {
+        // Xóa productId khỏi kệ cũ
+        if (shelf.id === oldShelfId) return { ...shelf, productId: null };
+        // Thêm productId vào kệ mới
+        if (shelf.id === newShelfId)
+          return { ...shelf, productId: selectedProduct.id };
+        return shelf;
+      });
+
+      // Cập nhật dữ liệu shelves trong state
+      setShelves(updatedShelves);
+
+      // Cập nhật API với kệ mới
+      await updateShelf(oldShelfId, null); // Cập nhật kệ cũ
+      await updateShelf(newShelfId, selectedProduct.id); // Cập nhật kệ mới
+
+      alert("Sản phẩm đã được di chuyển thành công!");
+    } catch (error) {
+      console.error("Error moving product:", error);
+      alert("Đã xảy ra lỗi khi di chuyển sản phẩm.");
+    }
+  };
+
+  const openMovePopup = (product) => {
+    if (product) {
+      const currentShelf = shelves.find(
+        (shelf) => shelf.productId === product.id
+      );
+      if (currentShelf) {
+        setSelectedProduct(product);
+        setIsMovePopupOpen(true);
+      } else {
+        alert("Sản phẩm không có kệ nào để di chuyển.");
+      }
+    }
+  };
 
   // Get shelf names by ID
   const getShelfNames = (productId) => {
@@ -102,6 +149,7 @@ const ProductManagement = () => {
             <th>Barcode</th>
             <th>Chỉnh sửa</th>
             <th>Xóa</th>
+            <th>Di chuyển</th>
           </tr>
         </thead>
         <tbody>
@@ -123,6 +171,11 @@ const ProductManagement = () => {
               </td>
               <td>
                 <button onClick={() => handleDelete(product.id)}>Xóa</button>
+              </td>
+              <td>
+                <button onClick={() => openMovePopup(product)}>
+                  Di chuyển
+                </button>
               </td>
             </tr>
           ))}
@@ -159,6 +212,13 @@ const ProductManagement = () => {
         onClose={() => setIsPopupOpen(false)}
         onSave={handleSave}
         onChange={handleChange}
+      />
+      <MoveProductPopup
+        product={selectedProduct}
+        shelves={shelves}
+        isOpen={isMovePopupOpen}
+        onClose={() => setIsMovePopupOpen(false)}
+        onMove={handleMove}
       />
     </div>
   );
