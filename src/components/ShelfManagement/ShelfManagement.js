@@ -81,7 +81,7 @@ const ShelfManagement = () => {
       <h1>Quản Lý Kệ Hàng</h1>
       <div className="shelf-container">
         <div className="left-shelves">
-          <h2>Kệ 1 đến 9</h2>
+          <h2>Kệ Hàng 1</h2>
           {[0, 1, 2].map((row) => (
             <div className="shelf-row" key={row}>
               {leftShelves.slice(row * 3, row * 3 + 3).map((shelf) => (
@@ -92,8 +92,7 @@ const ShelfManagement = () => {
                 >
                   <h3>{shelf.name}</h3>
                   <p>
-                    Vị trí: x: {shelf.position.x}, y: {shelf.position.y}, z:{" "}
-                    {shelf.position.z}
+                    Vị trí: x: {shelf.position.x}, y: {shelf.position.y}
                   </p>
                   <h4>Sản phẩm:</h4>
                   <ul>
@@ -113,7 +112,7 @@ const ShelfManagement = () => {
         </div>
 
         <div className="right-shelves">
-          <h2>Kệ 10 đến 18</h2>
+          <h2>Kệ Hàng 2</h2>
           {[0, 1, 2].map((row) => (
             <div className="shelf-row" key={row}>
               {rightShelves.slice(row * 3, row * 3 + 3).map((shelf) => (
@@ -124,8 +123,7 @@ const ShelfManagement = () => {
                 >
                   <h3>{shelf.name}</h3>
                   <p>
-                    Vị trí: x: {shelf.position.x}, y: {shelf.position.y}, z:{" "}
-                    {shelf.position.z}
+                    Vị trí: x: {shelf.position.x}, y: {shelf.position.y}
                   </p>
                   <h4>Sản phẩm:</h4>
                   <ul>

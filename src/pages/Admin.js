@@ -6,11 +6,11 @@ import ProductManagement from "../components/ProductManagement/ProductManagement
 import ShelfManagement from "../components/ShelfManagement/ShelfManagement";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoClose } from "react-icons/io5";
-import { GoPackageDependents } from "react-icons/go";
 import ProtectedRoute from "../components/ProtectedRoute.js";
-import { FaUser, FaHistory, FaProductHunt, FaThLarge } from "react-icons/fa";
+import { FaUser, FaProductHunt, FaThLarge } from "react-icons/fa";
 import "./Admin.scss";
 import ExportHistory from "../components/ExportHistory/ExportHistory.js";
+import { RiChatHistoryFill } from "react-icons/ri";
 
 const Admin = () => {
   const [navOpen, setNavOpen] = useState(true);
@@ -52,7 +52,7 @@ const Admin = () => {
               to="/admin/exportHistory"
               className={({ isActive }) => (isActive ? "active" : "")}
             >
-              <GoPackageDependents />
+              <RiChatHistoryFill />
               <span>Lịch sử xuất , nhập kho</span>
             </NavLink>
           </li>
