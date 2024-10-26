@@ -7,42 +7,43 @@ import {
 } from "../api";
 import ProductEditPopup from "./ProductEditPopup";
 import Barcode from "react-barcode";
+import ProductDeleteConfirm from "./ProductDeleteConfirm"; // Import modal xác nhận
 import "./ProductManagement.scss";
 
 const ProductManagement = () => {
   const [products, setProducts] = useState([]);
-  const [shelves, setShelves] = useState([]); // Store shelf data
+  const [shelves, setShelves] = useState([]);
   const [editingProduct, setEditingProduct] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false); // Trạng thái mở modal xác nhận xoá
   const [shelfMapping, setShelfMapping] = useState({});
+  const [productToDelete, setProductToDelete] = useState(null); // ID sản phẩm để xóa
 
   // Fetch products and shelves on component mount
   useEffect(() => {
     const getProductsAndShelves = async () => {
       const productData = await fetchData();
-      const shelfData = await fetchShelves(); // Fetch shelves
-
+      const shelfData = await fetchShelves();
       setProducts(productData.products);
       setShelves(shelfData);
 
-      // Create a mapping of productId to shelf names (array)
-      const shelfMapping = {};
+      // Tạo mapping của productId tới tên kệ
+      const mapping = {};
       shelfData.forEach((shelf) => {
-        if (!shelfMapping[shelf.productId]) {
-          shelfMapping[shelf.productId] = [];
+        if (!mapping[shelf.productId]) {
+          mapping[shelf.productId] = [];
         }
-        shelfMapping[shelf.productId].push(shelf.name); // Thêm tên kệ vào mảng
+        mapping[shelf.productId].push(shelf.name);
       });
-      setShelfMapping(shelfMapping);
+      setShelfMapping(mapping);
     };
     getProductsAndShelves();
   }, []);
 
-
-  // Get shelf names by ID
+  // Lấy tên kệ theo productId
   const getShelfNames = (productId) => {
     const shelfNames = shelfMapping[productId];
-    return shelfNames ? shelfNames.join(", ") : "Không xác định"; // Trả về danh sách tên kệ
+    return shelfNames ? shelfNames.join(", ") : "Không xác định";
   };
 
   const handleEdit = (product) => {
@@ -64,13 +65,17 @@ const ProductManagement = () => {
     setEditingProduct({ ...editingProduct, [name]: value });
   };
 
-  const handleDelete = async (productId) => {
-    const confirmDelete = window.confirm(
-      "Bạn có chắc chắn muốn xóa sản phẩm này?"
-    );
-    if (confirmDelete) {
-      await deleteProduct(productId);
-      setProducts(products.filter((product) => product.id !== productId));
+  const handleDelete = (productId) => {
+    setProductToDelete(productId); // Lưu ID sản phẩm để xóa
+    setIsDeleteConfirmOpen(true); // Mở modal xác nhận xoá
+  };
+
+  const confirmDelete = async () => {
+    if (productToDelete) {
+      await deleteProduct(productToDelete);
+      setProducts(products.filter((product) => product.id !== productToDelete));
+      setIsDeleteConfirmOpen(false); // Đóng modal
+      setProductToDelete(null); // Reset ID sản phẩm cần xóa
     }
   };
 
@@ -84,7 +89,7 @@ const ProductManagement = () => {
 
   const registeredProducts = products.filter(
     (product) =>
-      shelves.some((shelf) => shelf.productId === product.id) && // Check if product is in shelves
+      shelves.some((shelf) => shelf.productId === product.id) &&
       product.name &&
       product.price !== undefined &&
       product.description &&
@@ -118,8 +123,7 @@ const ProductManagement = () => {
               <td>
                 <img src={product.image} alt={product.name} width="50" />
               </td>
-              <td>{getShelfNames(product.id)}</td>{" "}
-              {/* Hiển thị tất cả tên kệ */}
+              <td>{getShelfNames(product.id)}</td>
               <td>{product.barcode}</td>
               <td>
                 <button className="edit" onClick={() => handleEdit(product)}>
@@ -129,7 +133,8 @@ const ProductManagement = () => {
               <td>
                 <button
                   className="delete"
-                  onClick={() => handleDelete(product.id)}>
+                  onClick={() => handleDelete(product.id)}
+                >
                   Xóa
                 </button>
               </td>
@@ -168,6 +173,13 @@ const ProductManagement = () => {
         onClose={() => setIsPopupOpen(false)}
         onSave={handleSave}
         onChange={handleChange}
+      />
+
+      {/* Modal xác nhận xóa */}
+      <ProductDeleteConfirm
+        isOpen={isDeleteConfirmOpen}
+        onClose={() => setIsDeleteConfirmOpen(false)} // Sửa thành onClose
+        onConfirm={confirmDelete}
       />
     </div>
   );

@@ -12,6 +12,8 @@ const Dashboard = () => {
   const [users, setUsers] = useState([]);
   const [products, setProducts] = useState([]);
   const [shelves, setShelves] = useState([]);
+  const shelvesRegion1 = shelves.slice(0, 9); // Lấy 9 phần tử đầu tiên từ shelves
+  const shelvesRegion2 = shelves.slice(9, 18); // Lấy 9 phần tử tiếp theo từ shelves
   const [paymentInfo, setPaymentInfo] = useState({
     name: "",
     number: "",
@@ -121,24 +123,70 @@ const Dashboard = () => {
 
       <div className="section">
         <h2>Kệ Hàng</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Tên</th>
-              <th>ID Sản Phẩm Chứa</th>
-            </tr>
-          </thead>
-          <tbody>
-            {shelves.map((shelf) => (
-              <tr key={shelf.id}>
-                <td>{shelf.id}</td>
-                <td>{shelf.name}</td>
-              	<td>{shelf.productId || "Kệ Không Chứa Sản Phẩm"}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="shelves-container">
+          <div className="shelves-region">
+            <h3>Kệ Hàng 1</h3>
+            <div className="shelves-grid">
+              {shelvesRegion1.map((shelf) => (
+                <div className="shelf-box" key={shelf.id}>
+                  <p>
+                    <strong>Ô Hàng:</strong> {shelf.id}
+                  </p>
+                  <p>
+                    <strong>Sản Phẩm:</strong>{" "}
+                    {products
+                      .filter(
+                        (productItem) => shelf.productId === productItem.id
+                      )
+                      .map((product) => <p key={product.id}>{product.name}</p>)
+                      .length === 0 ? (
+                      <p>Không có sản phẩm</p>
+                    ) : (
+                      products
+                        .filter(
+                          (productItem) => shelf.productId === productItem.id
+                        )
+                        .map((product) => (
+                          <p key={product.id}>{product.name}</p>
+                        ))
+                    )}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="shelves-region">
+            <h3>Kệ Hàng 2</h3>
+            <div className="shelves-grid">
+              {shelvesRegion2.map((shelf) => (
+                <div className="shelf-box" key={shelf.id}>
+                  <p>
+                    <strong>Ô Hàng:</strong> {shelf.id}
+                  </p>
+                  <p>
+                    <strong>Sản Phẩm:</strong>{" "}
+                    {products
+                      .filter(
+                        (productItem) => shelf.productId === productItem.id
+                      )
+                      .map((product) => <p key={product.id}>{product.name}</p>)
+                      .length === 0 ? (
+                      <p>Không có sản phẩm</p>
+                    ) : (
+                      products
+                        .filter(
+                          (productItem) => shelf.productId === productItem.id
+                        )
+                        .map((product) => (
+                          <p key={product.id}>{product.name}</p>
+                        ))
+                    )}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="section">

@@ -8,13 +8,11 @@ import logo from "./logo.png";
 const Header = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [username, setUsername] = useState("");
   const navigate = useNavigate(); // Khởi tạo navigate
 
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
     if (storedUsername) {
-      setUsername(storedUsername);
       setIsLoggedIn(true);
     }
   }, []);
@@ -28,7 +26,6 @@ const Header = () => {
   };
 
   const handleLogin = (user) => {
-    setUsername(user.username);
     setIsLoggedIn(true);
     localStorage.setItem("username", user.username);
 
@@ -43,7 +40,6 @@ const Header = () => {
   };
 
   const handleLogout = () => {
-    setUsername("");
     setIsLoggedIn(false);
     localStorage.removeItem("username");
     localStorage.removeItem("isAdmin"); // Xóa thông tin admin khi đăng xuất
@@ -61,7 +57,7 @@ const Header = () => {
         <nav>
           {isLoggedIn && (
             <Link to="/admin" className="admin-icon">
-              <FaUserShield size={24} />
+              <FaUserShield size={42} />
             </Link>
           )}
         </nav>
@@ -70,7 +66,6 @@ const Header = () => {
             <button onClick={openPopup}>Login / Register</button>
           ) : (
             <>
-              <p className="welcome-msg">Xin chào, {username}!</p>
               <button onClick={handleLogout}>Đăng xuất</button>
             </>
           )}

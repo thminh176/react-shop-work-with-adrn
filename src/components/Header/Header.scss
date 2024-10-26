@@ -8,6 +8,7 @@
   width: 100%;
 
   .header-container {
+    height: 68px;
     margin: 0 20px;
     display: flex;
     justify-content: space-between;
@@ -16,8 +17,12 @@
 
   .logo {
     img {
-      height: 72px; /* Điều chỉnh kích thước logo */
+      height: 80px; /* Điều chỉnh kích thước logo */
       width: auto;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      &:hover {
+        transform: scale(1.15);
+      }
     }
   }
 
@@ -27,9 +32,11 @@
       display: flex;
       align-items: center;
       text-decoration: none;
+      transition: background-color 0.3s ease, transform 0.3s ease;
 
       &:hover {
-        color: #0056b3;
+        color: #0086b3;
+        transform: translateY(-2px)
       }
 
       svg {
@@ -45,27 +52,28 @@
     align-items: center;
     .welcome-msg {
       padding-right: 20px;
-      font-size: 18px;
+      font-size: 22px;
       font-weight: bold;
       color: #343a40;
     }
     button {
-      padding: 10px 20px;
+      padding: 13px 17px;
       background-color: #007bff;
       color: white;
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: background-color 0.3s ease, transform 0.3s ease;
 
       &:hover {
         background-color: #0056b3;
+        transform: translateY(-2px);
       }
     }
 
     p {
       margin: 0;
-      font-size: 18px;
+      font-size: 22px;
     }
   }
 }

@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import "./Cart.scss";
 import PaymentModal from "../PaymentModal/PaymentModal";
-import Loading from "../Loading/Loading";
 
 const Cart = ({ cartItems, removeFromCart, setCartItems }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   const totalPrice = cartItems.reduce(
     (acc, item) => acc + (item.price * item.quantity || 0),
@@ -78,53 +76,49 @@ const Cart = ({ cartItems, removeFromCart, setCartItems }) => {
 
   return (
     <div className="cart">
-      {loading ? (
-        <Loading />
-      ) : (
-        <>
-          <h2>Giỏ Hàng</h2>
+      <>
+        <h2>Giỏ Hàng</h2>
 
-          <div className="cart-items">
-            {cartItems.map((item) => (
-              <div key={item.id} className="cart-item">
-                <div className="item-details">
-                  <span className="item-quantity">{item.quantity}</span>
-                  <span className="item-name">{item.name}</span>
-                  <span className="item-price">
-                    {item.price.toLocaleString("vi-VN", {
-                      style: "currency",
-                      currency: "VND",
-                    })}
-                  </span>
-                  {/* Nút xóa sản phẩm khỏi giỏ hàng */}
-                  <button
-                    className="remove-button"
-                    onClick={() => removeFromCart(item.id)}
-                    title="Xóa khỏi giỏ hàng"
-                  >
-                    Xóa
-                  </button>
-                </div>
+        <div className="cart-items">
+          {cartItems.map((item) => (
+            <div key={item.id} className="cart-item">
+              <div className="item-details">
+                <span className="item-quantity">{item.quantity}</span>
+                <span className="item-name">{item.name}</span>
+                <span className="item-price">
+                  {item.price.toLocaleString("vi-VN", {
+                    style: "currency",
+                    currency: "VND",
+                  })}
+                </span>
+                {/* Nút xóa sản phẩm khỏi giỏ hàng */}
+                <button
+                  className="remove-button"
+                  onClick={() => removeFromCart(item.id)}
+                  title="Xóa khỏi giỏ hàng"
+                >
+                  Xóa
+                </button>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
+        </div>
 
-          <p className="total-cash">Tổng Tiền: {formattedTotalPrice}</p>
-          <button className="checkout-btn" onClick={openModal}>
-            Thanh Toán
-          </button>
-          <PaymentModal
-            isOpen={isModalOpen}
-            onClose={closeModal}
-            onConfirm={async (method) => {
-              openBillWindow(cartItems, totalPrice, method); // Gọi hàm in hóa đơn
-              await confirmPayment(method); // Gọi confirmPayment với await
-            }}
-            totalPrice={totalPrice}
-            cartItems={cartItems} // Truyền cartItems
-          />
-        </>
-      )}
+        <p className="total-cash">Tổng Tiền: {formattedTotalPrice}</p>
+        <button className="checkout-btn" onClick={openModal}>
+          Thanh Toán
+        </button>
+        <PaymentModal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          onConfirm={async (method) => {
+            openBillWindow(cartItems, totalPrice, method); // Gọi hàm in hóa đơn
+            await confirmPayment(method); // Gọi confirmPayment với await
+          }}
+          totalPrice={totalPrice}
+          cartItems={cartItems} // Truyền cartItems
+        />
+      </>
     </div>
   );
 };
