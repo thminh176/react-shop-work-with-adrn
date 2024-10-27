@@ -27,34 +27,47 @@ const Cart = ({ cartItems, removeFromCart, setCartItems }) => {
 
   const openBillWindow = (cartItems, totalPrice, paymentMethod) => {
     const newWindow = window.open("", "_blank", "width=800,height=600");
-    newWindow.document.write(` 
+    newWindow.document.write(`
       <html>
         <head>
           <title>Hóa Đơn</title>
           <style>
-            body { font-family: Arial, sans-serif; padding: 20px; }
-            .bill { max-width: 300px; margin: 0 auto; padding: 10px; border: 1px solid #000; }
-            h2 { text-align: center; font-size: 18px; margin-bottom: 10px; }
-            ul { list-style: none; padding: 0; font-size: 14px; }
-            ul li { margin-bottom: 5px; }
-            p { margin: 5px 0; font-size: 14px; }
-            .thank-you { text-align: center; margin-top: 15px; font-size: 16px; font-weight: bold; }
+            body { font-family: Arial, sans-serif; padding: 20px; background-color: #f5f5f5; }
+            .bill {
+              max-width: 400px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; background-color: #fff;
+              box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); border-radius: 8px;
+            }
+            h2 { text-align: center; font-size: 24px; margin-bottom: 20px; color: #333; }
+            table { width: 100%; border-collapse: collapse; font-size: 16px; margin-bottom: 15px; }
+            th, td { padding: 10px; text-align: left; border-bottom: 1px solid #ddd; }
+            th { font-weight: bold; color: #555; }
+            .total { font-weight: bold; font-size: 18px; color: #d9534f; }
+            .thank-you { text-align: center; margin-top: 20px; font-size: 18px; font-weight: bold; color: #5cb85c; }
           </style>
         </head>
         <body>
           <div class="bill">
-            <h2>Hóa Đơn</h2>
-            <ul>
+            <h2>Hóa Đơn Mua Hàng</h2>
+            <table>
+              <tr>
+                <th>Sản Phẩm</th>
+                <th>Số Lượng</th>
+                <th>Đơn Giá</th>
+                <th>Thành Tiền</th>
+              </tr>
               ${cartItems
                 .map(
                   (item) =>
-                    `<li>${item.name} - ${item.quantity} ${Number(
-                      item.price
-                    ).toLocaleString("vi-VN")} VND</li>`
+                    `<tr>
+                      <td>${item.name}</td>
+                      <td>${item.quantity}</td>
+                      <td>${Number(item.price).toLocaleString("vi-VN")} VND</td>
+                      <td>${(item.quantity * item.price).toLocaleString("vi-VN")} VND</td>
+                    </tr>`
                 )
                 .join("")}
-            </ul>
-            <p>Tổng Tiền: ${Number(totalPrice).toLocaleString("vi-VN")} VND</p>
+            </table>
+            <p class="total">Tổng Tiền: ${Number(totalPrice).toLocaleString("vi-VN")} VND</p>
             <p>Phương Thức Thanh Toán: ${
               paymentMethod === "cash" ? "Tiền Mặt" : "Chuyển Khoản"
             }</p>
@@ -63,11 +76,12 @@ const Cart = ({ cartItems, removeFromCart, setCartItems }) => {
         </body>
       </html>
     `);
-
+  
     newWindow.document.close();
     newWindow.focus();
     newWindow.print();
   };
+  
 
   const formattedTotalPrice = totalPrice.toLocaleString("vi-VN", {
     style: "currency",

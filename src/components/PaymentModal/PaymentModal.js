@@ -49,13 +49,13 @@ const PaymentModal = ({
       date: new Date().toISOString(),
       products: cartItems.map((item) => {
         const shelf = shelves.find((shelf) => shelf.productId === item.id);
-        return {
+        alert(`x : ${shelf.position.x} , y : ${shelf.position.y} , z : ${shelf.position.z}`);
+        return { 
           id: item.id,
           name: item.name,
           price: item.price,
           quantity: item.quantity,
           shelfId: shelf ? shelf.id : null,
-          shelfPosition: shelf.position,
         };
         
       }),
