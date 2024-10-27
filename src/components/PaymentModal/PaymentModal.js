@@ -55,10 +55,12 @@ const PaymentModal = ({
           price: item.price,
           quantity: item.quantity,
           shelfId: shelf ? shelf.id : null,
+          shelfPosition: shelf.position,
         };
+        
       }),
     };
-
+        
     const response = await addExportHistory(orderHistory);
 
     if (response) {
