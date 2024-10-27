@@ -1,4 +1,3 @@
-/* Overlay bao quanh modal */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -15,24 +14,22 @@
   transition: visibility 0s, opacity 0.3s ease-in-out;
 }
 
-/* Hiển thị overlay và modal khi active */
 .modal-overlay.active {
   visibility: visible;
   opacity: 1;
 }
 
-/* ShelfEditModal.scss */
 .edit-shelf-modal {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 400px;
-  background-color: #333;
-  color: #fff;
+  background-color: #fff; /* Nền trắng */
+  color: #333; /* Màu chữ đen nhạt */
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
   display: none;
   z-index: 1000;
 
@@ -43,6 +40,7 @@
   h2 {
     text-align: center;
     margin-bottom: 20px;
+    color: #444;
   }
 
   .input-group {
@@ -52,6 +50,7 @@
 
     label {
       margin-bottom: 5px;
+      color: #555;
     }
 
     input {
@@ -59,10 +58,12 @@
       font-size: 16px;
       border: 1px solid #ccc;
       border-radius: 4px;
+      background-color: #fafafa;
     }
 
     input[disabled] {
-      background-color: #f5f5f5;
+      background-color: #e0e0e0;
+      cursor: not-allowed;
     }
   }
 
@@ -74,15 +75,24 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    transition: background-color 0.3s;
 
     &:first-of-type {
       background-color: #4caf50;
       color: #fff;
     }
 
+    &:first-of-type:hover {
+      background-color: #45a049;
+    }
+
     &:last-of-type {
       background-color: #f44336;
       color: #fff;
+    }
+
+    &:last-of-type:hover {
+      background-color: #e53935;
     }
 
     &:disabled {
