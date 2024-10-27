@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { fetchShelves, fetchProducts, updateShelf } from "../api"; // Import các hàm API
-import ShelfEditModal from "./ShelfEditModal";
 import "./ShelfManagement.scss"; // Import SCSS
 
 const ShelfManagement = () => {
@@ -9,6 +8,10 @@ const ShelfManagement = () => {
   const [selectedShelf, setSelectedShelf] = useState(null);
   const [selectedProductId, setSelectedProductId] = useState(null); // Thêm state cho ID sản phẩm đang chọn
   const [position, setPosition] = useState({ x: 0, y: 0, z: 0 });
+  const pinCode = () => {
+    var pin = prompt("nhập mã pin");
+    return pin;
+  };
 
   useEffect(() => {
     const loadShelvesAndProducts = async () => {
@@ -22,7 +25,11 @@ const ShelfManagement = () => {
 
   const handleShelfClick = (shelf) => {
     setSelectedShelf(shelf);
-    setPosition(shelf.position);
+    setPosition({
+      x: shelf.position.x,
+      y: shelf.position.y,
+      z: shelf.position.z,
+    });
 
     // Lấy ID sản phẩm tương ứng và đặt vào state
     setSelectedProductId(shelf.productId);
@@ -38,22 +45,23 @@ const ShelfManagement = () => {
   };
 
   const handleUpdateShelf = async () => {
-    const pin = prompt("Nhập mã PIN");
-    if (pin === "6789" && selectedShelf) {
-      const updatedShelf = {
-        ...selectedShelf,
-        position,
-        productId: selectedProductId,
-      };
-      await updateShelf(updatedShelf);
-      setShelves((prev) =>
-        prev.map((shelf) =>
-          shelf.id === updatedShelf.id ? updatedShelf : shelf
-        )
-      );
-      setSelectedShelf(null);
-      setSelectedProductId(null);
-      alert("Đã hoàn thành");
+    if (pinCode().toString() === "6789") {
+      if (selectedShelf) {
+        const updatedShelf = {
+          ...selectedShelf,
+          position,
+          productId: selectedProductId,
+        }; // Cập nhật productId
+        await updateShelf(updatedShelf);
+        setShelves((prev) =>
+          prev.map((shelf) =>
+            shelf.id === updatedShelf.id ? updatedShelf : shelf
+          )
+        );
+        setSelectedShelf(null);
+        setSelectedProductId(null); // Reset ID sản phẩm
+        alert("Done");
+      }
     } else {
       alert("Sai Mã Pin");
     }
@@ -139,18 +147,61 @@ const ShelfManagement = () => {
               </div>
             ))}
           </div>
+
+          <div className={`edit-shelf ${selectedShelf ? "active" : ""}`}>
+            {selectedShelf ? (
+              <>
+                <h2>Chỉnh Sửa {selectedShelf.name}</h2>
+                <label>
+                  X:
+                  <input
+                    type="number"
+                    name="x"
+                    value={position.x}
+                    onChange={handlePositionChange}
+                  />
+                </label>
+                <label>
+                  Y:
+                  <input
+                    type="number"
+                    name="y"
+                    value={position.y}
+                    onChange={handlePositionChange}
+                  />
+                </label>
+                <label>
+                  Z:
+                  <input
+                    type="number"
+                    name="z"
+                    value={position.z}
+                    onChange={handlePositionChange}
+                  />
+                </label>
+                <label>
+                  Sản phẩm:
+                  <select
+                    value={selectedProductId || ""}
+                    onChange={handleProductChange}
+                  >
+                    <option value="">Chọn sản phẩm...</option>
+                    {products.map((product) => (
+                      <option key={product.id} value={product.id}>
+                        {product.name}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <button onClick={handleUpdateShelf}>Cập Nhật</button>
+                <button onClick={handleCloseEditShelf}>Đóng</button>
+              </>
+            ) : (
+              <p>Chọn một kệ hàng để chỉnh sửa...</p>
+            )}
+          </div>
         </div>
       </div>
-      <ShelfEditModal
-        selectedShelf={selectedShelf}
-        position={position}
-        selectedProductId={selectedProductId}
-        onPositionChange={handlePositionChange}
-        onProductChange={handleProductChange}
-        onUpdateShelf={handleUpdateShelf}
-        onClose={handleCloseEditShelf}
-        producs={products}
-      />
     </div>
   );
 };

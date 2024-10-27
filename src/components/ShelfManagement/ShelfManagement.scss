@@ -1,80 +1,64 @@
-.shelf-management {
-  display: flex;
-  flex-direction: column; // Để các phần tử nằm dọc
-  align-items: flex-start; // Căn chỉnh các phần tử ở bên trái
+.shelf-management-section {
+  margin: 20px 0;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
-  .shelf-container {
-    display: flex; // Để các phần tử nằm ngang
-    justify-content: space-between;
-    width: 100%; // Đảm bảo chiếm toàn bộ chiều rộng
-    margin-bottom: 20px; // Khoảng cách dưới cùng
-    gap: 20px; // Thêm khoảng cách giữa hai bên
+  h2 {
+    margin-bottom: 15px;
   }
 
-  .left-shelves,
-  .right-shelves {
-    flex: 1; // Chiếm cùng một không gian
+  .shelves-container {
     display: flex;
-    flex-direction: column;
-  }
+    gap: 20px;
 
-  .shelf-row {
-    display: flex;
-    justify-content: space-between; // Để các ô kệ nằm ngang
-    margin-bottom: 10px; // Khoảng cách giữa các hàng
-  }
+    .shelves-region {
+      flex: 1;
+      background-color: #e2e2e2;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 
-  .shelf {
-    flex: 1; // Chiếm cùng một không gian
-    margin-right: 10px; // Khoảng cách giữa các ô kệ
-    padding: 5px; // Giảm padding bên trong
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    transition: transform 0.2s;
-    display: flex; // Để căn chỉnh các phần tử bên trong
-    flex-direction: column; // Để sắp xếp theo chiều dọc
-    justify-content: flex-start; // Căn chỉnh phần tử lên trên
-    height: 160px; // Đặt chiều cao cố định cho các ô
+      h3 {
+        text-align: center;
+        margin-bottom: 15px;
+      }
 
-    h3,
-    p,
-    h4 {
-      margin: 2px 0; // Giảm margin cho tiêu đề và các phần tử khác
-      padding-left: 0; // Loại bỏ khoảng cách bên trái
-      font-size: 14px; // Điều chỉnh kích thước chữ cho tiêu đề
-    }
-    ul {
-      margin-left: 0;
-      list-style-type: none; // Để các hàng nằm dọc
-      padding-left: 0; // Loại bỏ khoảng cách bên trái
-    }
-    li {
-      margin: 2px 0; // Thêm khoảng cách giữa các sản phẩm
-      font-size: 12px; // Điều chỉnh kích thước chữ cho sản phẩm
-    }
+      .shelves-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
 
-    &:hover {
-      transform: scale(1.05); // Hiệu ứng phóng to khi di chuột
-    }
+        .shelf-box {
+          height: 175px;
+          background-color: #fff;
+          border: 1px solid #ddd;
+          border-radius: 12px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: flex-start;
+          padding: 15px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
 
-    &:last-child {
-      margin-right: 0; // Bỏ khoảng cách cho ô kệ cuối cùng
-    }
-  }
+          p {
+            margin: 5px 0;
+            font-size: 16px;
+            text-align: left;
+          }
 
-  .edit-shelf {
-    width: 300px; // Đặt chiều rộng cho form
-    background-color: #fff;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    transition: opacity 0.2s;
-    display: none; // Ẩn mặc định
+          strong {
+            color: #333;
+          }
 
-    &.active {
-      display: block; // Hiển thị khi có kệ được chọn
-      visibility: visible; // Đảm bảo form có thể nhìn thấy
+          &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+          }
+        }
+      }
     }
   }
 }

@@ -1,0 +1,26 @@
+.edit-shelf-modal {
+    display: none; /* Ẩn modal khi không có lớp active */
+    position: fixed; /* Đặt vị trí cố định */
+    top: 0; /* Căn lề trên */
+    left: 0; /* Căn lề trái */
+    width: 100%; /* Chiếm toàn bộ chiều rộng màn hình */
+    height: 100%; /* Chiếm toàn bộ chiều cao màn hình */
+    background: rgba(0, 0, 0, 0.5); /* Nền mờ đục */
+    justify-content: center; /* Căn giữa nội dung */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    z-index: 1000; /* Đảm bảo modal nổi lên trên các phần khác */
+  
+    &.active {
+      display: flex; /* Hiển thị modal khi có lớp active */
+    }
+  
+    > div {
+      background: white; /* Nền trắng cho nội dung modal */
+      padding: 20px; /* Khoảng cách bên trong */
+      border-radius: 8px; /* Bo góc */
+      max-width: 400px; /* Chiều rộng tối đa của modal */
+      width: 100%; /* Chiếm toàn bộ chiều rộng của modal */
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Đổ bóng */
+    }
+  }
+  
