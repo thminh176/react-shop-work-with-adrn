@@ -1,60 +1,69 @@
-import React from "react";
-import "./ShelfEditModal.scss"; // Nhập file CSS tương ứng
+import React, { useState } from "react";
+import "./ShelfEditModal.scss";
 
 const ShelfEditModal = ({
   selectedShelf,
   position,
-  selectedProductId,
   onPositionChange,
-  onProductChange,
   onUpdateShelf,
   onClose,
-  products,
 }) => {
+  const [pin, setPin] = useState("");
+  const [isPinCorrect, setIsPinCorrect] = useState(false);
+
+  const handlePinChange = (e) => {
+    const inputPin = e.target.value;
+    setPin(inputPin);
+    setIsPinCorrect(inputPin === "6789");
+  };
+
   return (
     <div className={`edit-shelf-modal ${selectedShelf ? "active" : ""}`}>
       {selectedShelf ? (
         <>
           <h2>Chỉnh Sửa Kệ {selectedShelf.name}</h2>
-          <label>
-            X:
-            <input
-              type="number"
-              name="x"
-              value={position.x}
-              onChange={onPositionChange}
-            />
-          </label>
-          <label>
-            Y:
-            <input
-              type="number"
-              name="y"
-              value={position.y}
-              onChange={onPositionChange}
-            />
-          </label>
-          <label>
-            Z:
-            <input
-              type="number"
-              name="z"
-              value={position.z}
-              onChange={onPositionChange}
-            />
-          </label>
-          <label>
-            Sản phẩm:
-            <select value={selectedProductId || ""} onChange={onProductChange}>
-              <option value="">Chọn sản phẩm...</option>
-              {products.map((product) => (
-                <option key={product.id} value={product.id}>
-                  {product.name}
-                </option>
-              ))}
-            </select>
-          </label>
-          <button onClick={onUpdateShelf}>Cập Nhật</button>
+          {!isPinCorrect ? (
+            <div className="input-group">
+              <label>Nhập mã PIN:</label>
+              <input
+                type="password"
+                value={pin}
+                onChange={handlePinChange}
+                placeholder="Nhập mã PIN"
+              />
+            </div>
+          ) : (
+            <>
+              <div className="input-group">
+                <label>X:</label>
+                <input
+                  type="number"
+                  name="x"
+                  value={position.x}
+                  onChange={onPositionChange}
+                />
+              </div>
+              <div className="input-group">
+                <label>Y:</label>
+                <input
+                  type="number"
+                  name="y"
+                  value={position.y}
+                  onChange={onPositionChange}
+                />
+              </div>
+              <div className="input-group">
+                <label>Z:</label>
+                <input
+                  type="number"
+                  name="z"
+                  value={position.z}
+                  onChange={onPositionChange}
+                />
+              </div>
+              <button onClick={onUpdateShelf}>Cập Nhật</button>
+            </>
+          )}
           <button onClick={onClose}>Đóng</button>
         </>
       ) : (

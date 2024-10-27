@@ -1,26 +1,93 @@
+/* Overlay bao quanh modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.3s ease-in-out;
+}
+
+/* Hiển thị overlay và modal khi active */
+.modal-overlay.active {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* ShelfEditModal.scss */
 .edit-shelf-modal {
-    display: none; /* Ẩn modal khi không có lớp active */
-    position: fixed; /* Đặt vị trí cố định */
-    top: 0; /* Căn lề trên */
-    left: 0; /* Căn lề trái */
-    width: 100%; /* Chiếm toàn bộ chiều rộng màn hình */
-    height: 100%; /* Chiếm toàn bộ chiều cao màn hình */
-    background: rgba(0, 0, 0, 0.5); /* Nền mờ đục */
-    justify-content: center; /* Căn giữa nội dung */
-    align-items: center; /* Căn giữa theo chiều dọc */
-    z-index: 1000; /* Đảm bảo modal nổi lên trên các phần khác */
-  
-    &.active {
-      display: flex; /* Hiển thị modal khi có lớp active */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  display: none;
+  z-index: 1000;
+
+  &.active {
+    display: block;
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+
+    label {
+      margin-bottom: 5px;
     }
-  
-    > div {
-      background: white; /* Nền trắng cho nội dung modal */
-      padding: 20px; /* Khoảng cách bên trong */
-      border-radius: 8px; /* Bo góc */
-      max-width: 400px; /* Chiều rộng tối đa của modal */
-      width: 100%; /* Chiếm toàn bộ chiều rộng của modal */
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Đổ bóng */
+
+    input {
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    input[disabled] {
+      background-color: #f5f5f5;
     }
   }
-  
+
+  button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:first-of-type {
+      background-color: #4caf50;
+      color: #fff;
+    }
+
+    &:last-of-type {
+      background-color: #f44336;
+      color: #fff;
+    }
+
+    &:disabled {
+      background-color: #9e9e9e;
+      cursor: not-allowed;
+    }
+  }
+}

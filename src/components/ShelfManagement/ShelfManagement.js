@@ -33,10 +33,6 @@ const ShelfManagement = () => {
     setPosition((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleProductChange = (e) => {
-    setSelectedProductId(e.target.value); // Cập nhật ID sản phẩm khi chọn từ dropdown
-  };
-
   const handleUpdateShelf = async () => {
     const pin = prompt("Nhập mã PIN");
     if (pin === "6789" && selectedShelf) {
@@ -141,16 +137,17 @@ const ShelfManagement = () => {
           </div>
         </div>
       </div>
-      <ShelfEditModal
-        selectedShelf={selectedShelf}
-        position={position}
-        selectedProductId={selectedProductId}
-        onPositionChange={handlePositionChange}
-        onProductChange={handleProductChange}
-        onUpdateShelf={handleUpdateShelf}
-        onClose={handleCloseEditShelf}
-        producs={products}
-      />
+      {selectedShelf && (
+        <div className={`modal-overlay ${selectedShelf ? "active" : ""}`}>
+          <ShelfEditModal
+            selectedShelf={selectedShelf}
+            position={position}
+            onPositionChange={handlePositionChange}
+            onUpdateShelf={handleUpdateShelf}
+            onClose={handleCloseEditShelf}
+          />
+        </div>
+      )}
     </div>
   );
 };
