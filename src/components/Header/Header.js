@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import LoginPopup from "../LoginPopup/LoginPopup";
-import { FaUserShield } from "react-icons/fa";
+import LoginPopup from "../LoginPopup/LoginPopup";import { MdManageAccounts } from "react-icons/md";
 import "./Header.scss";
 import logo from "./logo.png";
 
@@ -57,7 +56,7 @@ const Header = () => {
         <nav>
           {isLoggedIn && (
             <Link to="/admin" className="admin-icon">
-              <FaUserShield size={42} />
+              <MdManageAccounts size={42} />
             </Link>
           )}
         </nav>
