@@ -29,7 +29,7 @@
     height: 350px;
     display: flex;
     flex-direction: column;
-    cursor: pointer; 
+    cursor: pointer;
 
     .top {
       height: 200px;
@@ -78,6 +78,7 @@
     margin-top: auto;
     transition: all 0.3s ease, transform 0.3s ease;
     user-select: none;
+
     .buy {
       font-size: 14px;
       background: #f0f0f0;
@@ -88,75 +89,150 @@
       cursor: pointer;
       transition: background-color 0.3s ease, transform 0.3s ease,
         border-color 0.3s ease;
-
       display: flex;
       align-items: center;
       justify-content: flex-start;
 
       svg {
         color: #254053;
-        margin-right: 8px; 
+        margin-right: 8px;
       }
 
       span {
         margin-left: auto;
-        font-weight: 600; 
-        color: #254053; 
+        font-weight: 600;
+        color: #254053;
       }
 
       &:hover {
         transform: translateY(-2px);
         background-color: #e0e0e0;
-        border-color: #aaa; /* Thay đổi màu viền khi hover */
+        border-color: #aaa;
+      }
+
+      &.adding {
+        animation: add-to-cart 0.5s ease; // Hiệu ứng thêm vào giỏ hàng
       }
     }
+
     .button-group {
       display: flex;
-      justify-content: flex-start; /* Căn trái cho nhóm nút */
-      width: 100%; /* Đảm bảo nhóm nút chiếm toàn bộ chiều rộng */
+      justify-content: flex-start;
+      width: 100%;
 
       .buy {
-        font-size: 14px; /* Kích thước chữ nhỏ hơn */
         background: #f0f0f0;
         padding: 10px;
-        border: 1px solid #ccc; /* Thêm viền cho nút */
+        border: 1px solid #ccc;
         border-radius: 4px;
         cursor: pointer;
         transition: background-color 0.3s ease, transform 0.3s ease,
-          border-color 0.3s ease; /* Thêm hiệu ứng cho viền */
-
-        display: flex; /* Đặt chế độ flex cho nút */
-        align-items: center; /* Căn giữa theo chiều dọc */
-        justify-content: flex-start; /* Căn lề trái cho icon và text */
+          border-color 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
 
         svg {
           color: #254053;
-          margin-right: 8px; /* Khoảng cách giữa icon và chữ */
+          margin-right: 8px;
         }
 
         span {
-          margin-left: auto; /* Đẩy chữ về bên phải */
-          font-weight: 600; /* Tăng độ đậm của chữ */
-          color: #254053; /* Đặt màu chữ gần giống với màu của icon */
+          margin-left: auto;
+          font-weight: 600;
+          color: #254053;
         }
 
         &:hover {
           transform: translateY(-2px);
           background-color: #e0e0e0;
-          border-color: #aaa; /* Thay đổi màu viền khi hover */
+          border-color: #aaa;
         }
       }
 
       .remove {
-        background: #ff4d4d; /* Màu nền đỏ cho nút xóa */
-        color: white; /* Màu chữ trắng */
-        margin-left: 10px; /* Khoảng cách giữa nút xóa và nút thêm */
-        border: 1px solid transparent; /* Đảm bảo có viền trong trường hợp không có màu */
-        border-radius: 4px; /* Đảm bảo viền mềm mại */
+        background: #ff4d4d;
+        color: white;
+        margin-left: 10px;
+        border: 1px solid transparent;
+        border-radius: 4px;
 
         &:hover {
-          background: #ff1a1a; /* Màu khi hover */
+          background: #ff1a1a;
         }
+
+        &.removing {
+          animation: remove-from-cart 0.5s ease; // Hiệu ứng xóa khỏi giỏ hàng
+        }
+      }
+    }
+  }
+}
+
+// Keyframes cho hiệu ứng thêm vào giỏ hàng (thu lại về trái)
+@keyframes slide-out {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+// Keyframes cho hiệu ứng xóa khỏi giỏ hàng (xuất hiện từ trái)
+@keyframes slide-in {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.wrapper {
+  .button-container {
+    display: flex;
+    align-items: center;
+
+    .buy {
+      font-size: 14px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      opacity: 1;
+    }
+
+    .adding {
+      animation: slide-out 0.5s forwards; // Hiệu ứng thu về trái khi thêm vào giỏ hàng
+    }
+
+    .removing {
+      animation: slide-in 0.5s forwards; // Hiệu ứng xuất hiện từ trái khi xóa khỏi giỏ hàng
+    }
+
+    .remove {
+      background: #ff4d4d;
+      color: white;
+      margin-left: 10px;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      display: none; // Ẩn nút xóa khỏi giỏ hàng ban đầu
+
+      &.active {
+        display: flex; // Hiện nút khi có class .active
+      }
+
+      &:hover {
+        background: #ff1a1a;
       }
     }
   }

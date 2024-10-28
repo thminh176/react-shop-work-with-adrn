@@ -46,7 +46,7 @@ const Admin = () => {
               to="/admin/users"
               className={({ isActive }) => (isActive ? "active" : "")}
             >
-              <MdManageAccounts size={27} />
+              <MdManageAccounts size={30} />
               <span>Quản lý người dùng</span>
             </NavLink>
           </li>
@@ -55,7 +55,7 @@ const Admin = () => {
               to="/admin/exportHistory"
               className={({ isActive }) => (isActive ? "active" : "")}
             >
-              <RiChatHistoryFill size={27} />
+              <RiChatHistoryFill size={30} />
               <span>Lịch sử xuất , nhập kho</span>
             </NavLink>
           </li>

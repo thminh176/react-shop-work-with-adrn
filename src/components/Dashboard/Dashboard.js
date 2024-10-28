@@ -117,7 +117,7 @@ const Dashboard = () => {
                 key={product.id}
                 className={`${isExpired(product.expiredDate) ? "expired" : ""} ${
                   isUnregistered(product) ? "unregistered" : ""
-                }`}
+                } product-item`}
               >
                 <td>{product.id}</td>
                 <td>{product.name || "Chưa khai báo"}</td>

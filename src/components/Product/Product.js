@@ -1,31 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Product.scss";
 import { IoCartOutline } from "react-icons/io5";
 import { IoTrashOutline } from "react-icons/io5"; // Import icon cho nút xóa
 
-const Product = ({
-  product,
-  addToCart,
-  removeFromCart,
-  isInCart,
-  openModal,
-}) => {
-  // Kiểm tra nếu sản phẩm chỉ có ID và barcode
+const Product = ({ product, addToCart, removeFromCart, isInCart, openModal }) => {
+  const [isAdding, setIsAdding] = useState(false);
+  const [isRemoving, setIsRemoving] = useState(false);
+
   if (!product.name || !product.price) {
-    return null; // Không render nếu không có tên hoặc giá
+    return null; // Nếu thiếu tên hoặc giá sản phẩm, không hiển thị gì
   }
+
+  // Xử lý khi bấm vào nút "Thêm vào giỏ hàng"
+  const handleAddToCart = (e) => {
+    e.stopPropagation();
+    setIsAdding(true); // Bắt đầu hiệu ứng thêm vào giỏ hàng
+    addToCart(product); // Thêm sản phẩm vào giỏ hàng
+
+    // Đặt trạng thái lại sau khi hiệu ứng hoàn tất
+    setTimeout(() => {
+      setIsAdding(false);
+      setIsRemoving(true); // Hiện nút xóa khi quá trình thêm hoàn tất
+    }, 500); // Đồng bộ với thời gian của animation
+  };
+
+  // Xử lý khi bấm vào nút "Xóa khỏi giỏ hàng"
+  const handleRemoveFromCart = (e) => {
+    e.stopPropagation();
+    setIsRemoving(false); // Bắt đầu hiệu ứng xóa khỏi giỏ hàng
+    removeFromCart(product.id); // Xóa sản phẩm khỏi giỏ hàng
+  };
 
   return (
     <div className="wrapper" onClick={() => openModal(product)}>
-      {" "}
-      {/* Mở modal khi nhấn vào sản phẩm */}
       <div className="container">
         <div className="top">
-          <img
-            src={product.image}
-            alt={product.name}
-            className="product-image"
-          />
+          <img src={product.image} alt={product.name} className="product-image" />
         </div>
         <div className="bottom">
           <div className="info">
@@ -41,48 +51,22 @@ const Product = ({
           </div>
         </div>
         <div className="button-container">
-          {isInCart ? (
-            <div className="button-group">
-              {/* Nút thêm vào giỏ hàng */}
-              <div
-                className="buy"
-                style={{ width: "calc(50% - 4px)" }}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  addToCart(product);
-                }} // Gọi hàm thêm khi nhấn
-                title="Thêm vào giỏ hàng"
-              >
-                <IoCartOutline />
-                <span>Thêm Vào Giỏ Hàng</span>
-              </div>
-              {/* Nút xóa khỏi giỏ hàng nằm bên phải */}
-              <div
-                className="buy remove"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  removeFromCart(product.id);
-                }} // Gọi hàm xóa khi nhấn
-                title="Xóa Khỏi Giỏ Hàng"
-                style={{ width: "50%" }}
-              >
-                <IoTrashOutline />
-                <span>Xóa Khỏi Giỏ Hàng</span>
-              </div>
-            </div>
-          ) : (
-            <div
-              className="buy"
-              onClick={(e) => {
-                e.stopPropagation();
-                addToCart(product);
-              }} // Gọi hàm thêm khi nhấn
-              title="Thêm vào giỏ hàng"
-            >
-              <IoCartOutline />
-              <span>Thêm Vào Giỏ Hàng</span>
-            </div>
-          )}
+          <div
+            className={`buy ${isAdding ? "adding" : ""}`}
+            onClick={handleAddToCart}
+            title="Thêm vào giỏ hàng"
+          >
+            <IoCartOutline />
+            <span>Thêm Vào Giỏ Hàng</span>
+          </div>
+          <div
+            className={`buy remove ${isRemoving ? "active removing" : ""}`}
+            onClick={handleRemoveFromCart}
+            title="Xóa Khỏi Giỏ Hàng"
+          >
+            <IoTrashOutline />
+            <span>Xóa Khỏi Giỏ Hàng</span>
+          </div>
         </div>
       </div>
     </div>
