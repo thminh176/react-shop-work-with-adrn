@@ -5,21 +5,21 @@ import {
   fetchShelves,
   getPaymentInfo,
   updatePaymentInfo,
-} from "../api"; // Import các hàm API của bạn
+} from "../api";
 import "./Dashboard.scss";
 
 const Dashboard = () => {
   const [users, setUsers] = useState([]);
   const [products, setProducts] = useState([]);
   const [shelves, setShelves] = useState([]);
-  const shelvesRegion1 = shelves.slice(0, 9); // Lấy 9 phần tử đầu tiên từ shelves
-  const shelvesRegion2 = shelves.slice(9, 18); // Lấy 9 phần tử tiếp theo từ shelves
+  const shelvesRegion1 = shelves.slice(0, 9);
+  const shelvesRegion2 = shelves.slice(9, 18);
   const [paymentInfo, setPaymentInfo] = useState({
     name: "",
     number: "",
     bank: "",
-  }); // Trạng thái cho paymentInfo
-  const [isEditing, setIsEditing] = useState(false); // Trạng thái cho chế độ chỉnh sửa
+  });
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     const loadData = async () => {
@@ -35,7 +35,7 @@ const Dashboard = () => {
         setUsers(usersData);
         setProducts(productsData);
         setShelves(shelvesData);
-        setPaymentInfo(paymentData || { name: "", number: "", bank: "" }); // Đảm bảo có dữ liệu mặc định
+        setPaymentInfo(paymentData || { name: "", number: "", bank: "" });
       } catch (error) {
         console.error("Error loading data:", error);
       }
@@ -44,21 +44,31 @@ const Dashboard = () => {
     loadData();
   }, []);
 
-  // Hàm cập nhật paymentInfo
   const handlePaymentInfoChange = (e) => {
     const { name, value } = e.target;
     setPaymentInfo({ ...paymentInfo, [name]: value });
   };
 
   const handleEditPaymentInfo = () => {
-    setIsEditing(true); // Bật chế độ chỉnh sửa
+    setIsEditing(true);
   };
 
   const handleSavePaymentInfo = async () => {
-    const updatedInfo = await updatePaymentInfo(paymentInfo); // Gọi API để cập nhật paymentInfo
+    const updatedInfo = await updatePaymentInfo(paymentInfo);
     if (updatedInfo) {
-      setIsEditing(false); // Tắt chế độ chỉnh sửa nếu thành công
+      setIsEditing(false);
     }
+  };
+
+  const isExpired = (expiredDate) => {
+    return expiredDate && new Date(expiredDate) < new Date();
+  };
+
+  const isUnregistered = (product) => {
+    return (
+      product.barcode &&
+      (!product.name || !product.price || !product.description)
+    );
   };
 
   return (
@@ -103,17 +113,26 @@ const Dashboard = () => {
           </thead>
           <tbody>
             {products.map((product) => (
-              <tr key={product.id}>
+              <tr
+                key={product.id}
+                className={`${isExpired(product.expiredDate) ? "expired" : ""} ${
+                  isUnregistered(product) ? "unregistered" : ""
+                }`}
+              >
                 <td>{product.id}</td>
-                <td>{product.name}</td>
-                <td>{product.price.toLocaleString()} VND</td>
-                <td>{product.description}</td>
+                <td>{product.name || "Chưa khai báo"}</td>
+                <td>{product.price ? `${product.price.toLocaleString()} VND` : "Chưa khai báo"}</td>
+                <td>{product.description || "Chưa khai báo"}</td>
                 <td>
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    style={{ width: "100px" }}
-                  />
+                  {product.image ? (
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      style={{ width: "100px" }}
+                    />
+                  ) : (
+                    "Chưa khai báo"
+                  )}
                 </td>
               </tr>
             ))}
@@ -202,10 +221,10 @@ const Dashboard = () => {
             />
             <input
               type="text"
-              name="Số Tài Khoản"
+              name="number"
               value={paymentInfo.number}
               onChange={handlePaymentInfoChange}
-              placeholder="Number"
+              placeholder="Số Tài Khoản"
             />
             <input
               type="text"

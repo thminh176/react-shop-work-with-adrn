@@ -1,7 +1,14 @@
 .product-management {
   padding: 20px;
   font-family: "Arial", sans-serif;
-
+  .expired {
+    color: #fe5454;
+    font-weight: bold;
+  }
+  
+  .unregistered {
+    color: #fcfc87;
+  }
   h1 {
     text-align: center;
     margin-bottom: 25px;

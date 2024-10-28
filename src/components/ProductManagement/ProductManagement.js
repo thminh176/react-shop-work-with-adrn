@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  fetchData,
-  fetchShelves,
-  updateProduct,
-  deleteProduct,
-} from "../api";
+import { fetchData, fetchShelves, updateProduct, deleteProduct } from "../api";
 import ProductEditPopup from "./ProductEditPopup";
 import Barcode from "react-barcode";
 import ProductDeleteConfirm from "./ProductDeleteConfirm"; // Import modal xác nhận
@@ -12,22 +7,18 @@ import "./ProductManagement.scss";
 
 const ProductManagement = () => {
   const [products, setProducts] = useState([]);
-  const [shelves, setShelves] = useState([]);
   const [editingProduct, setEditingProduct] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false); // Trạng thái mở modal xác nhận xoá
+  const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
   const [shelfMapping, setShelfMapping] = useState({});
-  const [productToDelete, setProductToDelete] = useState(null); // ID sản phẩm để xóa
+  const [productToDelete, setProductToDelete] = useState(null);
 
-  // Fetch products and shelves on component mount
   useEffect(() => {
     const getProductsAndShelves = async () => {
       const productData = await fetchData();
       const shelfData = await fetchShelves();
       setProducts(productData.products);
-      setShelves(shelfData);
 
-      // Tạo mapping của productId tới tên kệ
       const mapping = {};
       shelfData.forEach((shelf) => {
         if (!mapping[shelf.productId]) {
@@ -40,7 +31,6 @@ const ProductManagement = () => {
     getProductsAndShelves();
   }, []);
 
-  // Lấy tên kệ theo productId
   const getShelfNames = (productId) => {
     const shelfNames = shelfMapping[productId];
     return shelfNames ? shelfNames.join(", ") : "Không xác định";
@@ -66,16 +56,16 @@ const ProductManagement = () => {
   };
 
   const handleDelete = (productId) => {
-    setProductToDelete(productId); // Lưu ID sản phẩm để xóa
-    setIsDeleteConfirmOpen(true); // Mở modal xác nhận xoá
+    setProductToDelete(productId);
+    setIsDeleteConfirmOpen(true);
   };
 
   const confirmDelete = async () => {
     if (productToDelete) {
       await deleteProduct(productToDelete);
       setProducts(products.filter((product) => product.id !== productToDelete));
-      setIsDeleteConfirmOpen(false); // Đóng modal
-      setProductToDelete(null); // Reset ID sản phẩm cần xóa
+      setIsDeleteConfirmOpen(false);
+      setProductToDelete(null);
     }
   };
 
@@ -89,12 +79,15 @@ const ProductManagement = () => {
 
   const registeredProducts = products.filter(
     (product) =>
-      shelves.some((shelf) => shelf.productId === product.id) &&
       product.name &&
       product.price !== undefined &&
-      product.description &&
-      product.image
+      product.description
   );
+
+  const isExpired = (expiredDate) => {
+    const today = new Date();
+    return new Date(expiredDate) < today;
+  };
 
   return (
     <div className="product-management">
@@ -110,13 +103,17 @@ const ProductManagement = () => {
             <th>Hình ảnh</th>
             <th>Kệ hàng</th>
             <th>Barcode</th>
+            <th>Hạn sử dụng</th>
             <th>Chỉnh sửa</th>
             <th>Xóa</th>
           </tr>
         </thead>
         <tbody>
           {registeredProducts.map((product) => (
-            <tr key={product.id}>
+            <tr
+              key={product.id}
+              className={isExpired(product.expiredDate) ? "expired" : ""}
+            >
               <td>{product.name}</td>
               <td>{product.price}</td>
               <td>{product.description}</td>
@@ -124,7 +121,10 @@ const ProductManagement = () => {
                 <img src={product.image} alt={product.name} width="50" />
               </td>
               <td>{getShelfNames(product.id)}</td>
-              <td>{product.barcode}</td>
+              <td>
+                <Barcode className="barcode" value={product.barcode} />
+              </td>
+              <td>{product.expiredDate || "Không có"}</td>
               <td>
                 <button className="edit" onClick={() => handleEdit(product)}>
                   Chỉnh Sửa
@@ -154,7 +154,7 @@ const ProductManagement = () => {
         </thead>
         <tbody>
           {unregisteredProducts.map((product) => (
-            <tr key={product.id}>
+            <tr key={product.id} className="unregistered">
               <td>{product.id}</td>
               <td>
                 <Barcode className="barcode" value={product.barcode} />
@@ -175,10 +175,9 @@ const ProductManagement = () => {
         onChange={handleChange}
       />
 
-      {/* Modal xác nhận xóa */}
       <ProductDeleteConfirm
         isOpen={isDeleteConfirmOpen}
-        onClose={() => setIsDeleteConfirmOpen(false)} // Sửa thành onClose
+        onClose={() => setIsDeleteConfirmOpen(false)}
         onConfirm={confirmDelete}
       />
     </div>

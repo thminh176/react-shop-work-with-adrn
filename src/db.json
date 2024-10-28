@@ -13,6 +13,13 @@
       "password": "user123",
       "email": "user1@example.com",
       "isAdmin": 0
+    },
+    {
+      "id": 3,
+      "username": "thminh",
+      "email": "thminh",
+      "password": "1",
+      "isAdmin": 0
     }
   ],
   "products": [
@@ -22,7 +29,8 @@
       "price": 30000000,
       "description": "Laptop Dell XPS 13 với viền mỏng và màn hình Full HD",
       "image": "https://cdn.tgdd.vn/Products/Images/44/327906/dell-xps-13-9340-ultra-5-xpsu5934w1-1-750x500.jpg",
-      "barcode": "123456789012"
+      "barcode": "123456789012",
+      "expiredDate": "2025-12-31"
     },
     {
       "id": "2",
@@ -30,7 +38,8 @@
       "price": 18000000,
       "description": "Máy tính bảng Samsung Galaxy Tab S7 với màn hình 120Hz",
       "image": "https://cdn.viettelstore.vn/Images/Product/ProductImage/1252998352.jpeg",
-      "barcode": "987654321098"
+      "barcode": "987654321098",
+      "expiredDate": "2024-05-15"
     },
     {
       "id": "3",
@@ -38,7 +47,8 @@
       "price": 35000000,
       "description": "MacBook Pro M1 với chip Apple Silicon",
       "image": "https://macone.vn/wp-content/uploads/2021/04/MacBook-Pro-M1-.jpg",
-      "barcode": "234567890123"
+      "barcode": "234567890123",
+      "expiredDate": "2026-08-20"
     },
     {
       "id": "4",
@@ -46,7 +56,8 @@
       "price": 7000000,
       "description": "Tai nghe chống ồn Sony WH-1000XM4",
       "image": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/g/r/group_17333.png",
-      "barcode": "345678901234"
+      "barcode": "345678901234",
+      "expiredDate": "2023-11-01"
     },
     {
       "id": "5",
@@ -54,30 +65,62 @@
       "price": 3000000,
       "description": "Loa Bluetooth JBL Charge 4 với âm bass mạnh mẽ",
       "image": "https://cdn.dienmaygiakhanh.com/Products/Images/2162/235205/bluetoth-jbl-charge-4-den-1-org.jpg",
-      "barcode": "456789012345"
+      "barcode": "456789012345",
+      "expiredDate": "2024-07-15"
     },
     {
       "id": "6",
       "name": "Apple iPad Air 4",
       "price": 16000000,
       "description": "iPad Air 4 với chip A14 Bionic và màn hình 10.9 inch",
-      "image": "https://quangminhmobile.com/wp-content/uploads/2022/04/apple-ipad-air4-2020-3-450x413.webp",
-      "barcode": "567890123456"
+      "image": "https://cdn.iphonedoc.vn/media/9-ipad/ipad-air/ipad-air-4-2020/ipad-air-4-2020-grey-64gb-256gb-iphonedoc-1.jpg",
+      "barcode": "567890123456",
+      "expiredDate": "2023-10-30"
+    },
+    {
+      "id": "7",
+      "name": "Smartphone Xiaomi Mi 11",
+      "price": 15000000,
+      "description": "Điện thoại Xiaomi Mi 11 với chip Snapdragon 888 và camera 108MP",
+      "image": "https://img.hungmobile.vn/hungmobile-vn/2021/04/mi-11-den.jpg",
+      "barcode": "678901234567",
+      "expiredDate": "2025-06-10",
+      "shelfId": null
+    },
+    {
+      "id": "8",
+      "name": "Bàn phím cơ Razer BlackWidow",
+      "price": 3000000,
+      "description": "Bàn phím cơ Razer BlackWidow với đèn LED RGB",
+      "image": "https://phucanhcdn.com/media/product/42033_key_raz_rz03_03541900_r3m1_a.jpg",
+      "barcode": "789012345678",
+      "expiredDate": "2024-09-22",
+      "shelfId": null
+    },
+    {
+      "id": "9",
+      "name": "Chuột không dây Logitech MX Master 3",
+      "price": 2500000,
+      "description": "Chuột không dây Logitech MX Master 3 với thiết kế công thái học",
+      "image": "https://ae-pic-a1.aliexpress-media.com/kf/Sde16921ed4de473d858fddf5c4c85015l/Logitech-mouse-sem-fio-mx-master-3s-mx-master-3-8000-dpi-autom-tico-shift-bluetooth.jpg_640x640Q90.jpg_.webp",
+      "barcode": "890123456789",
+      "expiredDate": "2024-12-31",
+      "shelfId": null
     }
   ],
   "exportHistory": [
     {
-      "id": 1729686984050,
-      "totalPrice": 70000000,
-      "paymentMethod": "transfer",
-      "date": "2024-10-23T12:36:24.050Z",
+      "id": 1730095912365,
+      "totalPrice": 16000000,
+      "paymentMethod": "cash",
+      "date": "2024-10-28T06:11:52.365Z",
       "products": [
         {
-          "id": "3",
-          "name": "Apple MacBook Pro M1",
-          "price": 35000000,
-          "quantity": 2,
-          "shelfId": 3
+          "id": "6",
+          "name": "Apple iPad Air 4",
+          "price": 16000000,
+          "quantity": 1,
+          "shelfId": 6
         }
       ]
     }
@@ -88,8 +131,8 @@
       "name": "Kệ Số 1",
       "position": {
         "x": 10,
-        "y": 5,
-        "z": 1
+        "y": "6",
+        "z": "1"
       },
       "productId": "1"
     },
@@ -168,7 +211,7 @@
         "x": 90,
         "y": 45,
         "z": 1
-      }
+      },"productId": "7"
     },
     {
       "id": 10,
@@ -186,7 +229,7 @@
         "x": 110,
         "y": 55,
         "z": 1
-      }
+      },"productId": "8"
     },
     {
       "id": 12,
@@ -249,12 +292,12 @@
         "x": 180,
         "y": 90,
         "z": 2
-      }
+      },"productId": "9"
     }
   ],
   "paymentInfo": {
-    "name": "Trương Tô Dân",
-    "number": "98464686",
+    "name": "Đàm Thiên Minh",
+    "number": "666617678888",
     "bank": "MB"
   }
 }
