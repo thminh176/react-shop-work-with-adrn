@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom"; // Thêm useNavigate
+import { Link, useNavigate } from "react-router-dom";
 import LoginPopup from "../LoginPopup/LoginPopup";
-import { FaUserShield } from "react-icons/fa"; // Import biểu tượng cho quản trị
+import { FaUserShield } from "react-icons/fa";
 import "./Header.scss";
 import logo from "./logo.png";
 
 const Header = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const navigate = useNavigate(); // Khởi tạo navigate
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
@@ -63,10 +63,10 @@ const Header = () => {
         </nav>
         <div className="login-section">
           {!isLoggedIn ? (
-            <button onClick={openPopup}>Đăng nhập / đăng ký</button>
+            <button className="button--outline" onClick={openPopup}>Đăng nhập</button>
           ) : (
             <>
-              <button onClick={handleLogout}>Đăng xuất</button>
+              <button className="button--outline" onClick={handleLogout}>Đăng xuất</button>
             </>
           )}
         </div>

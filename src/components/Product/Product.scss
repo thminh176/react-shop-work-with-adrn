@@ -74,33 +74,34 @@
 
   .button-container {
     display: flex;
-    justify-content: space-between; /* Đặt khoảng cách giữa 2 nút */
+    justify-content: space-between;
     margin-top: auto;
-    user-select: none; /* Đẩy xuống dưới cùng */
+    transition: all 0.3s ease, transform 0.3s ease;
+    user-select: none;
     .buy {
-      font-size: 14px; /* Kích thước chữ nhỏ hơn */
+      font-size: 14px;
       background: #f0f0f0;
       width: 100%;
       padding: 10px;
-      border: 1px solid #ccc; /* Thêm viền cho nút */
+      border: 1px solid #ccc;
       border-radius: 4px;
       cursor: pointer;
       transition: background-color 0.3s ease, transform 0.3s ease,
-        border-color 0.3s ease; /* Thêm hiệu ứng cho viền */
+        border-color 0.3s ease;
 
-      display: flex; /* Đặt chế độ flex cho nút */
-      align-items: center; /* Căn giữa theo chiều dọc */
-      justify-content: flex-start; /* Căn lề trái cho icon và text */
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
 
       svg {
         color: #254053;
-        margin-right: 8px; /* Khoảng cách giữa icon và chữ */
+        margin-right: 8px; 
       }
 
       span {
-        margin-left: auto; /* Đẩy chữ về bên phải */
-        font-weight: 600; /* Tăng độ đậm của chữ */
-        color: #254053; /* Đặt màu chữ gần giống với màu của icon */
+        margin-left: auto;
+        font-weight: 600; 
+        color: #254053; 
       }
 
       &:hover {

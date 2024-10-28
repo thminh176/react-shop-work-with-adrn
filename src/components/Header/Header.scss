@@ -3,7 +3,8 @@
   top: 0;
   height: 68px;
   z-index: 3;
-  background-color: #f8f9fa;
+  background-color: rgba(255,255,255,0.6);-webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   border-bottom: 1px solid #ddd;
   width: 100%;
 
@@ -17,7 +18,7 @@
 
   .logo {
     img {
-      height: 80px; /* Điều chỉnh kích thước logo */
+      height: 80px;
       width: auto;
       transition: background-color 0.3s ease, transform 0.3s ease;
       &:hover {
@@ -58,17 +59,10 @@
     }
     button {
       padding: 13px 17px;
-      background-color: #007bff;
-      color: white;
-      border: none;
       border-radius: 5px;
       cursor: pointer;
       transition: background-color 0.3s ease, transform 0.3s ease;
-
-      &:hover {
-        background-color: #0056b3;
-        transform: translateY(-2px);
-      }
+    
     }
 
     p {
@@ -76,4 +70,14 @@
       font-size: 22px;
     }
   }
+}
+.button--outline {
+  background-color: transparent;
+  color: #3790ee;
+  border: 2px solid #3790ee;
+}
+
+.button--outline:hover {
+    background-color: #3790ee;
+    color: white;
 }
